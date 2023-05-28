@@ -135,13 +135,43 @@ const searchAdmin = async(req, res) =>{
       }
 }
 
+//----------------------------------------------login administrador-------------------------------------------------------------------
+
+const loginAdmin = async (req, res) => {
+    const { user, password } = req.body;
+  
+    try {
+      // Buscar al administrador en la base de datos
+      const admin = await Admin.findOne({ user });
+  
+      // Verificar si el administrador existe
+      if (!admin) {
+        return res.status(401).json({ message: "Usuario no encontrado" });
+      }
+  
+      // Verificar la contraseña
+      const passwordValido = await bcrypt.compare(password, admin.password);
+  
+      if (!passwordValido) {
+        return res.status(401).json({ message: "Contraseña incorrecta" });
+      }
+  
+      // Envío de mensaje de éxito
+      res.json({ message: "Administrador autenticado correctamente" });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error en el servidor" });
+    }
+  };
+
 //-------------------------------------------------------exportaciones---------------------------------------------------------------------------
 
 module.exports = {
     createAdmin,
     searchAdmin,
     updateAdmin,
-    deleteAdmin
+    deleteAdmin,
+    loginAdmin
 }
 
 
