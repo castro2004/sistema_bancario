@@ -1,6 +1,6 @@
 'use strict'
 
-const Usuarios = require("./src/models/userModel");
+const Admin = require("./src/model/adminModel");
 const bcrypt = require('bcrypt');
 // const { generateJWT } = require("./src/helpers/create-jwt");
 
@@ -11,17 +11,16 @@ const defaultAdmin = async() => {
         const admin = new Admin();
         admin.user = 'ADMINB';
         admin.password = 'ADMINB';
-        const adminEncontrado = await Admin.findOne({user: admin.user});
+        const adminEncontrado = await Admin.findOne({admin: admin.user});
         if(adminEncontrado) return console.log('El administrador se ha instalado de fomra correcta')
         //Encripcion de contraseña
         admin.password = bcrypt.hashSync(admin.password, bcrypt.genSaltSync());
-        user = await Admin.save();
-
-        if(!user) return console.log('El admin no esta listo aun');
-        return console.log('El admin ya esta listo')
+        await admin.save();
+        if(!admin) return console.log('El admin no esta listo aun');
+        return console.log('El admin esta listo')
     }catch(err){
         console.log(err);
     }
 }
 
-module.exports = {defaultUser}
+module.exports = {defaultAdmin}

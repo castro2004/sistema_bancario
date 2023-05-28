@@ -12,6 +12,4 @@ const mongoose = require('mongoose');
         }
     })
 
-const Admin = mongoose.model('Admin', adminSchema);
-
-module.exports = Admin;
+module.exports = mongoose.model('Admin', adminSchema)
