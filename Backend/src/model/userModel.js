@@ -10,6 +10,11 @@ const mongoose = require('mongoose');
         required: true,
         unique: true 
         },
+    rol: {
+            type: String,
+            enum: ['USER', 'ADMIN'],
+            default: 'USER',
+    },
     acountNumber: {
         type: String,
         required: true,
