@@ -10,6 +10,7 @@ const createUser = async(req, res) => {
     try{
 
         let user = await User.findOne({email});
+        let nombre_usuario = await User.findOne({name})
 
         if(user){
             return res.status(400).send({
@@ -18,6 +19,14 @@ const createUser = async(req, res) => {
                 user: user
             });
         }
+
+        // if(!nombre_usuario){
+        //     return res.status(404).send({
+        //         msg: "Este nombre de usuario ya esta siendo utilizado por otra persona, porfavor utilizar otro nombre de usuario",
+        //         ok: false,
+        //         user: user
+        //     })
+        // }
 
         user = new User(req.body);
         
@@ -139,11 +148,42 @@ const deleteUser = async(req, res) =>{
 
 }
 
+//------------------------------------------------login-----------------------------------------------------------------
+
+const loginUser = async (req, res) => {
+    const { username, password } = req.body;
+    
+        try {
+        // Buscar al usuario en la base de datos
+            const user = await User.findOne({ username });
+        
+            // Verificar si el usuario existe
+            if (!user) {
+                return res.status(401).json({ message: "Usuario no encontrado" });
+            }
+        
+            // Verificar la contraseña
+            const passwordValido = await bcrypt.compare(password, user.password);
+        
+            if (!passwordValido) {
+                return res.status(401).json({ message: "Contraseña incorrecta" });
+            }
+        
+            // Envío de mensaje de éxito
+            res.json({ message: "Has ingresado de forma correcta" });
+        } catch (error) {
+        console.log(error);
+
+        res.status(500).json({ message: "Error en el servidor" });
+        }
+    };
+
 module.exports = {
     createUser,
     readUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    loginUser
 }
 
 
