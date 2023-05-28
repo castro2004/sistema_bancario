@@ -19,7 +19,7 @@ const createUser = async(req, res) => {
             });
         }
 
-        user = new user(req.body);
+        user = new User(req.body);
         
         const salt = bcrypt.genSaltSync();
         user.password = bcrypt.hashSync(password, salt);
@@ -82,10 +82,15 @@ const updateUser = async(req, res) => {
 
         const userComplete = await User.findByIdAndUpdate(id, userEdit, {new: true});
 
-        if(userComplete){
+        if(!userComplete){
             res.status(401).send({
                 msg: "El usuario que desea actualizar, no existe"
             });
+        }else{
+            // res.status(410).send({
+                return res.status(200).send({
+                    message: 'Perfil actualizado correctamente', userComplete,
+                });
         }
     
     }catch(err){
