@@ -68,28 +68,25 @@ const deleteAdmin = async(req, res) => {
 
     try {
         const idAdministrador = req.params.id;
-        const administrador = await Admin.findById(idAdministrador);
+        const admin = await Admin.findById(idAdministrador);
     
-        if (!administrador) {
+        if (!admin) {
           return res.status(404).json({ mensaje: 'Administrador no encontrado' });
         }
     
-        const idAdminAutenticado = req.headers.authorization; // Obtener el ID del administrador autenticado desde el encabezado de autorización
+        const userAdminAutenticado = req.headers.authorization; // Obtener el usuario del administrador autenticado desde el encabezado de autorización
     
-        if (idAdministrador !== idAdminAutenticado) {
+        if (admin.user !== userAdminAutenticado) {
           return res.status(403).json({ mensaje: 'No tienes permiso para eliminar esta cuenta' });
         }
     
-        // Si el ID del administrador coincide con el ID del administrador autenticado, se procede a eliminar la cuenta
+        // Si el usuario del administrador coincide con el usuario del administrador autenticado, se procede a eliminar la cuenta
         await Admin.findByIdAndDelete(idAdministrador);
         res.json({ mensaje: 'Cuenta eliminada correctamente' });
-
       } catch (error) {
-
         console.error('Error al eliminar la cuenta del administrador:', error);
         res.status(500).json({ mensaje: 'Error al eliminar la cuenta del administrador' });
-      
-    }
+      }
 }
 
 //---------------------------------------------------------update admin---------------------------------------------------------------------------------------------
