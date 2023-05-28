@@ -44,7 +44,7 @@ const createUser = async(req, res) => {
 
 //------------------------------------------------------list---------------------------------------------------
 
-const listUser = async(req, res) =>{
+const readUser = async(req, res) =>{
     try{
 
         const user = await User.find();
@@ -134,7 +134,12 @@ const deleteUser = async(req, res) =>{
 
 }
 
-
+module.export = {
+    createUser,
+    readUser,
+    updateUser,
+    deleteUser
+}
 
 
 
