@@ -62,9 +62,9 @@ const createAdmin = async(req, res) =>{
 // }
 
 
-//----------------------------------------------------------delete user--------------------------------------------------------------
+//----------------------------------------------------------delete admin--------------------------------------------------------------
 
-const deleteUser = async(req, res) => {
+const deleteAdmin = async(req, res) => {
 
     try {
         const idAdministrador = req.params.id;
@@ -138,7 +138,14 @@ const searchAdmin = async(req, res) =>{
       }
 }
 
+//-------------------------------------------------------exportaciones---------------------------------------------------------------------------
 
+module.exports = {
+    createAdmin,
+    searchAdmin,
+    updateAdmin,
+    deleteAdmin
+}
 
 
 
