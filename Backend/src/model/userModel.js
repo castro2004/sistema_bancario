@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
     const userSchema = new mongoose.Schema({
-    nombre: {
+    name: {
         type: String,
         required: true 
         },
@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
         required: true,
         unique: true 
         },
-    numeroCuenta: {
+    acountNumber: {
         type: String,
         required: true,
         unique: true 
@@ -19,15 +19,15 @@ const mongoose = require('mongoose');
         type: String,
         required: true 
         },
-    direccion: {
+    address: {
         type: String,
         required: true 
         },
-    celular: {
+    cellPhone: {
         type: String,
         required: true 
         },
-    correo: {
+    email: {
         type: String,
         required: true,
         unique: true 
@@ -36,15 +36,15 @@ const mongoose = require('mongoose');
         type: String,
         required: true 
         },
-    nombreTrabajo: {
+    nameWork: {
         type: String,
         required: true 
         },
-    ingresosMensuales: {
+    incomeMonth: {
         type: Number,
         required: true 
         },
-    saldo: {
+    balance: {
         type: Number,
         default: 0 
         },
