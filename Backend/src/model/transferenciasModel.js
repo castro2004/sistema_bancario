@@ -10,7 +10,7 @@ const transferenciasSchema = new mongoose.Schema({
         ref: 'User',
         require: true,
         default: function(){
-            return this.cuentaOrigen.acountNumber;
+            return this.populated('cuentaOrigen')? this.cuentaOrigen.acountNumber : null
         }
     },
     saldo: {
@@ -18,7 +18,7 @@ const transferenciasSchema = new mongoose.Schema({
         ref: 'User',
         require: true,
         default: function(){
-            return this.saldo.balance;
+            return this.populated('cuentaOrigen')? this.cuentaOrigen.balance : 0;
         }
     },
     cuentaDestino: {
