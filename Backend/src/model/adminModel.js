@@ -9,7 +9,12 @@ const mongoose = require('mongoose');
         password: {
             type: String,
             required: true
-        }
+        },
+        rol: {
+            type: String,
+            enum: ['USER', 'ADMIN'],
+            default: 'USER',
+    },
     })
 
 module.exports = mongoose.model('Admin', adminSchema)

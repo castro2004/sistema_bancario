@@ -8,6 +8,8 @@ const bcrypt = require('bcrypt')
 
 const createAdmin = async(req, res) =>{
 
+   if(req.user.rol === 'ADMIN'){
+
     const {user, password} = req.body;
 
     try{
@@ -36,8 +38,19 @@ const createAdmin = async(req, res) =>{
         });
 
     }catch(err){
-
+        console.log(err)
+        res.status(510).send({
+            ok: false,
+            msg: `No se a podido crear el usuario: ${name}`,
+            error: err,
+        });
     }
+
+   }else{
+    res.status(200).send({
+        msg: 'No tienes permisos para realizar esta acción ;D'
+    })
+   }
 
 }   
 

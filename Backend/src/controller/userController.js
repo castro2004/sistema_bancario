@@ -10,7 +10,6 @@ const createUser = async(req, res) => {
     try{
 
         let user = await User.findOne({email});
-        let nombre_usuario = await User.findOne({name})
 
         if(user){
             return res.status(400).send({
@@ -19,14 +18,6 @@ const createUser = async(req, res) => {
                 user: user
             });
         }
-
-        // if(!nombre_usuario){
-        //     return res.status(404).send({
-        //         msg: "Este nombre de usuario ya esta siendo utilizado por otra persona, porfavor utilizar otro nombre de usuario",
-        //         ok: false,
-        //         user: user
-        //     })
-        // }
 
         user = new User(req.body);
         
@@ -53,7 +44,7 @@ const createUser = async(req, res) => {
 
 //------------------------------------------------------list---------------------------------------------------
 
-const readUser = async(req, res) =>{
+/*const readUser = async(req, res) =>{
     try{
 
         const user = await User.find();
@@ -75,7 +66,7 @@ const readUser = async(req, res) =>{
         });
 
     }
-}
+}*/
 
 //-------------------------------------------update User------------------------------------------------------------------
 
@@ -178,12 +169,37 @@ const loginUser = async (req, res) => {
         }
     };
 
+//-----------------------------------------------------buscar usuario--------------------------------------------------------------
+
+const searchUser = async(req, res) =>{
+        
+        try{
+            const user = req.params.user;
+            const username = await User.findOne({user: user});
+        
+            if(!username){
+                return res.status(404).json({
+                    msg: "Usuario no encontrado"
+                })
+            }else {
+                res.json(username)
+            }
+     }catch(err){
+
+    }
+}
+
+
+//----------------------------------------------------exportaciones------------------------------------------------
+
+
 module.exports = {
     createUser,
-    readUser,
+    //readUser,
     updateUser,
     deleteUser,
-    loginUser
+    loginUser,
+    searchUser
 }
 
 
