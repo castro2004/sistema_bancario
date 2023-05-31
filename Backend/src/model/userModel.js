@@ -20,6 +20,10 @@ const mongoose = require('mongoose');
         required: true,
         unique: true 
         },
+    typeAcount: {
+        type: String,
+        enum: ['Monetaria', 'Corriente', 'Ahorros', 'Cheques' ]
+    },
     dpi: {
         type: String,
         required: true 
@@ -53,6 +57,17 @@ const mongoose = require('mongoose');
         type: Number,
         default: 0 
         },
+    transactions: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Transfers'
+        }
+    ]
     });
 
-module.exports = mongoose.model('User', userSchema)
+    userSchema.methods.historyTransaction = async function(){
+        await this.populate('transactions')
+        return this.transactions
+};
+
+module.exports = mongoose.model('User', userSchema);

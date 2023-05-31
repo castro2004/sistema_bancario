@@ -223,6 +223,31 @@ const viewBalance = async (req, res) => {
   };
 
 
+//------------------------------------------------------Historial de Transacciones------------------------------------------------
+
+const historyTransaction = async(req, res) => {
+
+    try{
+
+        const id = req.params.id;
+        const user = await User.findById(id)
+        const transactionHistory = await user.historyTransaction();
+        
+        if(!user){
+            console.log('Usuario no encontrado');
+        }else{
+            msg: "El historia de sus transacciones son:"
+            return(transactionHistory);
+        }
+        
+        return(transactionHistory);
+
+
+    }catch(err){
+        console.log(err)
+    }
+}
+
 
 //----------------------------------------------------exportaciones------------------------------------------------
 
@@ -234,7 +259,8 @@ module.exports = {
     deleteUser,
     loginUser,
     viewUserData,
-    viewBalance
+    viewBalance,
+    historyTransaction
 }
 
 

@@ -33,6 +33,10 @@ const transferenciasSchema = new mongoose.Schema({
     descripcion: {
         type: String,
         require: false
+    },
+    date: {
+        type: Date,
+        default: Date.now
     }
 });
 
