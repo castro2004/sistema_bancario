@@ -169,25 +169,59 @@ const loginUser = async (req, res) => {
         }
     };
 
-//-----------------------------------------------------buscar usuario--------------------------------------------------------------
+//-----------------------------------------------------visualizar datos del usuario--------------------------------------------------------------
 
-const searchUser = async(req, res) =>{
-        
-        try{
-            const user = req.params.user;
-            const username = await User.findOne({user: user});
-        
-            if(!username){
-                return res.status(404).json({
-                    msg: "Usuario no encontrado"
-                })
-            }else {
-                res.json(username)
-            }
-     }catch(err){
+/* Para el usuario pueda visualizar unicamente sus propios datos */
 
+const viewUserData = async (req, res) => {
+    const { username } = req.params;
+
+    try {
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(404).send({
+                msg: "Usuario no encontrado",
+            });
+        }
+
+        res.status(200).send({
+            msg: "Datos del usuario obtenidos exitosamente",
+            userData: user,
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send({
+            msg: "Error al obtener los datos del usuario",
+        });
     }
-}
+};
+
+//--------------------------------------------visualizacion de saldo actual---------------------------------------------------------
+
+/* Ver el balance actual del usuario */
+
+const viewBalance = async (req, res) => {
+    try {
+      // Obtener el ID del usuario autenticado desde la información proporcionada por el cliente
+      const userId = req.userId;
+  
+      // Buscar el usuario en la base de datos por su ID
+      const user = await User.findById(userId);
+  
+      // Verificar si el usuario existe
+      if (!user) {
+        return res.status(404).json({ msg: 'Usuario no encontrado' });
+      }
+  
+      // Devolver el balance del usuario
+      res.json({ balance: user.balance });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ msg: 'Error al obtener el balance del usuario' });
+    }
+  };
+
 
 
 //----------------------------------------------------exportaciones------------------------------------------------
@@ -199,7 +233,8 @@ module.exports = {
     updateUser,
     deleteUser,
     loginUser,
-    searchUser
+    viewUserData,
+    viewBalance
 }
 
 
