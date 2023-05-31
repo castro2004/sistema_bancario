@@ -27,6 +27,19 @@ const createTransferencias = async(req, res) => {
             })
         }
 
+        if(monto > 10000){
+            return res.status(400).send({
+                msg: "No se logrado realizar su transferencias",
+                msg: "El motivo es que a excedido el limite de dinero para una transferencia"
+            });
+        }
+
+        if(monto > balance){
+            return res.status(404).send({
+                msg: "Que el monto es mayor a la cantidad de su saldo actual en su cuneta bancaria"
+            })
+        }
+
         transfenciasOrigen.acountNumber  -= monto;
         transfenciasDestino.acountNumber  += monto;
 
@@ -40,7 +53,7 @@ const createTransferencias = async(req, res) => {
         await User.updateOne(
             { acountNumber: cuentaDestino },
             { $inc: { balance: monto } }
-          );
+        );
 
         const transferencia = new Transferencia({
             cuentaOrigen: cuentaOrigen,
