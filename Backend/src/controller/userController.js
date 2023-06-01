@@ -6,6 +6,9 @@ const bcrypt = require('bcrypt')
 
 //-----------------------------------------------------create User------------------------------------------------
 
+// * FUNCIONAL
+// ? FUNCION PARA CREAR EL USUARIO 
+
 const createUser = async(req, res) => {
     const {name, email, password, dpi, acountNumber, cellPhone, incomeMonth} = req.body
     try{
@@ -80,33 +83,10 @@ const createUser = async(req, res) => {
     }
 }
 
-//------------------------------------------------------list---------------------------------------------------
-
-/*const readUser = async(req, res) =>{
-    try{
-
-        const user = await User.find();
-        if(!user){
-            res.status(410).send({
-                msg: 'No hay usuarios disponibles'
-            });
-        }else{
-            res.status(200).send({usuarios_disponibles: user});
-        }
-
-    }catch(err){
-
-        console.log(err);
-        res.status(510).send({
-            ok: false,
-            msg: 'Error al listar el usuario',
-            error: err
-        });
-
-    }
-}*/
-
 //-------------------------------------------update User------------------------------------------------------------------
+
+// * FUNCIONAl 
+// ? FUNCION PARA ACTUALIZAR EL USUARIO */
 
 const updateUser = async(req, res) => {
     try{
@@ -145,6 +125,9 @@ const updateUser = async(req, res) => {
 
 //-------------------------------------------------delete User------------------------------------------
 
+// * FUNCIONAL
+// ? FUNCION ELIMINAR USUARIO 
+
 const deleteUser = async(req, res) =>{
 
     try{
@@ -179,6 +162,9 @@ const deleteUser = async(req, res) =>{
 
 //------------------------------------------------login-----------------------------------------------------------------
 
+// * FUNCIONAL
+// ? FUNCION PARA QUE EL USUARIO PUEDA LOGUEARSE 
+
 const loginUser = async (req, res) => {
     const { username, password } = req.body;
     
@@ -209,7 +195,8 @@ const loginUser = async (req, res) => {
 
 //-----------------------------------------------------visualizar datos del usuario--------------------------------------------------------------
 
-/* Para el usuario pueda visualizar unicamente sus propios datos */
+// * NO FUNCIONAL
+// ? FUNCION PARA QUE EL USUARIO PUEDA VISUALIZAR SUS DATOS 
 
 const viewUserData = async (req, res) => {
     const { username } = req.params;
@@ -237,31 +224,34 @@ const viewUserData = async (req, res) => {
 
 //--------------------------------------------visualizacion de saldo actual---------------------------------------------------------
 
-/* Ver el balance actual del usuario */
+// * NO FUNCIONAL
+// ? FUNCION PARA QUE EL USUARIO PUEDA VISUALIZAR SU BALANCE ACTUAL 
 
 const viewBalance = async (req, res) => {
     try {
-      // Obtener el ID del usuario autenticado desde la información proporcionada por el cliente
-      const userId = req.userId;
-  
-      // Buscar el usuario en la base de datos por su ID
-      const user = await User.findById(userId);
-  
-      // Verificar si el usuario existe
-      if (!user) {
-        return res.status(404).json({ msg: 'Usuario no encontrado' });
+        // const {balance} = req.params;
+        const id = req.params.id;
+        const user = await User.findById(id);
+        if (!user) {
+          throw new Error('Usuario no encontrado');
+        }
+        res.status(404).json({
+            msg: "El balance es:",
+            return:  user.balance
+        })
+        
+
+      } catch (error) {
+        console.error('Error al obtener el balance del usuario:', error.message);
+        // Manejar el error según tus necesidades
       }
-  
-      // Devolver el balance del usuario
-      res.json({ balance: user.balance });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ msg: 'Error al obtener el balance del usuario' });
-    }
   };
 
 
 //------------------------------------------------------Historial de Transacciones------------------------------------------------
+
+// * FUNCIONAL
+// ? FUNCION PARA QUE EL USUARIO PUEDA VISUALIZAR EL HISTORIAL DE SUS TRANSACCIONES 
 
 const historyTransaction = async (req, res) => {
     try{
