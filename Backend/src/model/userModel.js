@@ -65,9 +65,9 @@ const mongoose = require('mongoose');
 //  ]
     });
 
-    userSchema.methods.historyTransaction = async function(){
-        await this.populate('transactions')
-        return this.transactions
-};
+//     userSchema.methods.historyTransaction = async function(){
+//         await this.populate('transactions')
+//         return this.transactions
+// };
 
 module.exports = mongoose.model('User', userSchema);
