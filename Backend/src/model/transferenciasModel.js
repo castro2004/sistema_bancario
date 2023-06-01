@@ -8,18 +8,18 @@ const transferenciasSchema = new mongoose.Schema({
     cuentaOrigen: {
         type: Schema.Types.String,
         ref: 'User',
-        require: true,
-         default: function(){
-             return this.populated('cuentaOrigen')? this.cuentaOrigen.acountNumber : null
-         }
+         require: true,
+          default: function(){
+              return this.populated('cuentaOrigen')? this.cuentaOrigen.acountNumber : null
+          }
     },
     saldo: {
         type: Schema.Types.Number,
         ref: 'User',
         require: true,
-         default: function(){
-             return this.populated('cuentaOrigen')? this.cuentaOrigen.balance : 0;
-         }
+          default: function(){
+              return this.populated('cuentaOrigen')? this.cuentaOrigen.balance : 0;
+          }
     },
     cuentaDestino: {
         type: Schema.Types.String,

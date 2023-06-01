@@ -57,12 +57,12 @@ const mongoose = require('mongoose');
         type: Number,
         default: 0 
         },
- transactions: [
-     {
-         type: mongoose.Schema.Types.ObjectId,
-         ref: 'Transfers'
-     }
- ]
+//  transactions: [
+//      {
+//          type: mongoose.Schema.Types.ObjectId,
+//          ref: 'Transfers'
+//      }
+//  ]
     });
 
     userSchema.methods.historyTransaction = async function(){
