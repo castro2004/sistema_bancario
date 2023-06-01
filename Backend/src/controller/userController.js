@@ -195,36 +195,33 @@ const loginUser = async (req, res) => {
 
 //-----------------------------------------------------visualizar datos del usuario--------------------------------------------------------------
 
-// * NO FUNCIONAL
+// * FUNCIONAL
 // ? FUNCION PARA QUE EL USUARIO PUEDA VISUALIZAR SUS DATOS 
 
 const viewUserData = async (req, res) => {
-    const { username } = req.params;
+    // const { userId } = req.params;
+    const id = req.params.id;
 
     try {
-        const user = await User.findOne({ username });
-
+        const user = await User.findById(id);
         if (!user) {
-            return res.status(404).send({
-                msg: "Usuario no encontrado",
-            });
+          throw new Error('Usuario no encontrado');
         }
 
-        res.status(200).send({
-            msg: "Datos del usuario obtenidos exitosamente",
-            userData: user,
-        });
-    } catch (err) {
-        console.log(err);
-        res.status(500).send({
-            msg: "Error al obtener los datos del usuario",
-        });
-    }
+        res.status(404).json({
+            msg: "Sus datos son:",
+            return: user
+        })
+        
+      } catch (error) {
+        console.error('Error al obtener los datos del usuario:', error.message);
+        // Manejar el error según tus necesidades
+      }
 };
 
 //--------------------------------------------visualizacion de saldo actual---------------------------------------------------------
 
-// * NO FUNCIONAL
+// * FUNCIONAL
 // ? FUNCION PARA QUE EL USUARIO PUEDA VISUALIZAR SU BALANCE ACTUAL 
 
 const viewBalance = async (req, res) => {
