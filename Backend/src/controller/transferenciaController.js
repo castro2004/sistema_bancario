@@ -15,17 +15,35 @@ const createTransferencias = async(req, res) => {
         let transfenciasOrigen = await Transferencia.findOne({cuentaOrigen})
         let transfenciasDestino = await Transferencia.findOne({cuentaDestino})
 
-        if(!transfenciasOrigen){
+        const user = User.findOne({acountNumber: cuentaOrigen})
+        const balance = user.balance;
+
+        const userOrigen = await User.findOne({ acountNumber: cuentaOrigen });
+        const userDestino = await User.findOne({ acountNumber: cuentaDestino });
+        
+        if (!userOrigen) {
             return res.status(404).send({
-                msg: "El numero de cuenta de origen no existe, verificar los datos",
+                msg: "La cuenta de origen no existe, verificar los datos",
+            });
+        }
+        
+        if (!userDestino) {
+            return res.status(404).send({
+                msg: "La cuenta de destino no existe, verificar los datos",
             });
         }
 
-        if(!transfenciasDestino){
-            return res.status(404).send({
-                msg: "El numero de cuenta de Destino no existe, verificar los datos",
-            })
-        }
+         if(!transfenciasOrigen){
+             return res.status(404).send({
+                 msg: "El numero de cuenta de origen no existe, verificar los datos",
+             });
+         }
+
+         if(!transfenciasDestino){
+             return res.status(404).send({
+                 msg: "El numero de cuenta de Destino no existe, verificar los datos",
+             })
+         }
 
         if(monto > 10000){
             return res.status(400).send({
@@ -85,11 +103,3 @@ const createTransferencias = async(req, res) => {
 module.exports = {
     createTransferencias
 }
-
-
-
-
-
-
-
-

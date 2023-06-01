@@ -1,6 +1,7 @@
 'use strict'
 
 const User = require('../model/userModel')
+const Transfers = require('../model/transferenciasModel');
 const bcrypt = require('bcrypt')
 
 //-----------------------------------------------------create User------------------------------------------------
@@ -226,28 +227,24 @@ const viewBalance = async (req, res) => {
 //------------------------------------------------------Historial de Transacciones------------------------------------------------
 
 const historyTransaction = async(req, res) => {
-
     try{
+        const userId = req.params.id;
+        const user = await User.findById(userId).populate('transactions')
 
-        const id = req.params.id;
-        const user = await User.findById(id)
-        const transactionHistory = await user.historyTransaction();
-        
         if(!user){
-            console.log('Usuario no encontrado');
-        }else{
-            msg: "El historia de sus transacciones son:"
-            return(transactionHistory);
+            return res.status(404).json({
+                msg: "Usuario no encontrado"
+            });
+        } else {
+            res.status(200).json({
+                msg: 'Su historia de transacciones es:',
+                transactionHistoty: user.transactions,
+            })
         }
-        
-        return(transactionHistory);
-
-
     }catch(err){
         console.log(err)
     }
 }
-
 
 //----------------------------------------------------exportaciones------------------------------------------------
 
