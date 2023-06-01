@@ -63,6 +63,9 @@ const createTransferencias = async(req, res) => {
         });
     
         const newTransferencia = await transferencia.save();
+
+        usuarioOrigen.transactions.push(newTransferencia);
+        await usuarioOrigen.save();
     
         res.status(210).send({
           msg: "Transferencia creada",

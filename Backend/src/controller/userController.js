@@ -7,13 +7,23 @@ const bcrypt = require('bcrypt')
 //-----------------------------------------------------create User------------------------------------------------
 
 const createUser = async(req, res) => {
-    const {name, email, password} = req.body
+    const {name, email, password, dpi, acountNumber, cellPhone, incomeMonth} = req.body
     try{
 
         let user = await User.findOne({email});
         let userAcount = await User.findOne({acountNumber})
         let userDPI = await User.findOne({dpi})
         let userCell = await User.findOne({cellPhone})
+        let userIncomeMonth = await User.findOne({incomeMonth})
+
+        if(userIncomeMonth > 100){
+            return res.status(400).send({
+                msg: "No se logro crear el usuario por el motivo que:",
+                msg: "El ingreso el usuario debe ser mas de 100 quetzales por mes",
+                ok: false,
+                user: user
+            })
+        }
 
         if(user){
             return res.status(400).send({
@@ -253,25 +263,25 @@ const viewBalance = async (req, res) => {
 
 //------------------------------------------------------Historial de Transacciones------------------------------------------------
 
-const historyTransaction = async(req, res) => {
+const historyTransaction = async (req, res) => {
     try{
-        const userId = req.params.id;
-        const user = await User.findById(userId).populate('transactions')
 
-        if(!user){
-            return res.status(404).json({
-                msg: "Usuario no encontrado"
-            });
-        } else {
-            res.status(200).json({
-                msg: 'Su historia de transacciones es:',
-                transactionHistoty: user.transactions,
-            })
-        }
+        const id = req.params.id;
+    const user = await User.findById(id);
+    
+    if (!user) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+    
+    const transactionHistory = await user.historyTransaction();
+    
+    return res.json(transactionHistory);
+    
     }catch(err){
         console.log(err)
     }
-}
+  };
+
 
 //----------------------------------------------------exportaciones------------------------------------------------
 
