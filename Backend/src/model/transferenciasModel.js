@@ -34,10 +34,10 @@ const transferenciasSchema = new mongoose.Schema({
         type: String,
         require: false
     },
-    // date: {
-    //     type: Date,
-    //     default: Date.now
-    // }
+    date: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 module.exports = mongoose.model('Transfers', transferenciasSchema);
