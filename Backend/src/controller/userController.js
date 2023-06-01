@@ -11,6 +11,9 @@ const createUser = async(req, res) => {
     try{
 
         let user = await User.findOne({email});
+        let userAcount = await User.findOne({acountNumber})
+        let userDPI = await User.findOne({dpi})
+        let userCell = await User.findOne({cellPhone})
 
         if(user){
             return res.status(400).send({
@@ -18,6 +21,30 @@ const createUser = async(req, res) => {
                 ok: false,
                 user: user
             });
+        }
+
+        if(userAcount){
+            return res.status(400).send({
+                msg: "Este numero de cuenta ya se le asigno a un usuario",
+                ok: false,
+                user: userAcount
+            })
+        }
+
+        if(userDPI){
+            return res.status(400).send({
+                msg: "Un usuario ya se a registrado con este dpi",
+                ok: false,
+                userDPI: userDPI
+            })
+        }
+
+        if(userCell){
+            return res.status(400).send({
+                msg: "Un usuario ya se registro con este numero de telefono",
+                ok: false,
+                userDPI: userDPI
+            })
         }
 
         user = new User(req.body);
