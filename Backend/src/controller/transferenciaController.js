@@ -1,6 +1,6 @@
 'use strict'
 
-const User = require('../model/userModel');
+const Users = require('../model/userModel');
 const Transferencia = require('../model/transferenciasModel');
 
 
@@ -11,8 +11,8 @@ const createTransferencias = async(req, res) => {
     const {cuentaOrigen, cuentaDestino, saldo, monto, descripcion} = req.body;
 
     try {
-        let usuarioOrigen = await User.findOne({ cuentaOrigen });
-        let usuariosDestino = await User.findOne({ cuentaDestino });
+        let usuarioOrigen = await Users.findOne({ cuentaOrigen });
+        let usuariosDestino = await Users.findOne({ cuentaDestino });
     
         if (!usuarioOrigen) {
           return res.status(404).send({
@@ -45,11 +45,11 @@ const createTransferencias = async(req, res) => {
         await usuarioOrigen.save();
         await usuariosDestino.save();
     
-        await User.updateOne(
+        await Users.updateOne(
           { acountNumber: cuentaOrigen },
           { $inc: { balance: -monto } }
         );
-        await User.updateOne(
+        await Users.updateOne(
           { acountNumber: cuentaDestino },
           { $inc: { balance: monto } }
         );
