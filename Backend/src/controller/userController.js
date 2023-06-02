@@ -2,7 +2,8 @@
 
 const User = require('../model/userModel')
 const Transfers = require('../model/transferenciasModel');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 //-----------------------------------------------------create User------------------------------------------------
 
@@ -167,31 +168,34 @@ const deleteUser = async(req, res) =>{
 
 const loginUser = async (req, res) => {
     const { username, password } = req.body;
-    
-        try {
-        // Buscar al usuario en la base de datos
-            const user = await User.findOne({ username });
-        
-            // Verificar si el usuario existe
-            if (!user) {
-                return res.status(401).json({ message: "Usuario no encontrado" });
-            }
-        
-            // Verificar la contraseña
-            const passwordValido = await bcrypt.compare(password, user.password);
-        
-            if (!passwordValido) {
-                return res.status(401).json({ message: "Contraseña incorrecta" });
-            }
-        
-            // Envío de mensaje de éxito
-            res.json({ message: "Has ingresado de forma correcta" });
-        } catch (error) {
-        console.log(error);
-
-        res.status(500).json({ message: "Error en el servidor" });
-        }
-    };
+  
+    try {
+      // Buscar al usuario por el nombre de usuario
+      const user = await User.findOne({ username });
+  
+      // Verificar si el usuario existe
+      if (!user) {
+        return res.status(401).json({ error: 'Credenciales inválidas' });
+      }
+  
+      // Verificar la contraseña
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+  
+      if (!isPasswordValid) {
+        return res.status(401).json({ error: 'Credenciales inválidas' });
+      }
+  
+      // Generar el token de autenticación
+      const token = jwt.sign({ userId: user._id }, 'tu_secreto', {
+        expiresIn: '10h',
+      });
+  
+      res.json({ token });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: 'Error al realizar el login' });
+    }
+  };
 
 //-----------------------------------------------------visualizar datos del usuario--------------------------------------------------------------
 
@@ -199,45 +203,68 @@ const loginUser = async (req, res) => {
 // ? FUNCION PARA QUE EL USUARIO PUEDA VISUALIZAR SUS DATOS 
 
 const viewUserData = async (req, res) => {
-    // const { userId } = req.params;
-    const id = req.params.id;
-
+    const token = req.headers['token'];
+  
     try {
-        const user = await User.findById(id);
-        if (!user) {
-          throw new Error('Usuario no encontrado');
-        }
-
-        res.status(404).json({
-            msg: "Sus datos son:",
-            return: user
-        })
-        
-      } catch (error) {
-        console.error('Error al obtener los datos del usuario:', error.message);
-        // Manejar el error según tus necesidades
+      if (!token) {
+        return res.status(401).json({ msg: 'Acceso no autorizado' });
       }
-};
+  
+      const decodedToken = jwt.decode(token);
+  
+      if (!decodedToken) {
+        return res.status(401).json({ msg: 'Token inválido' });
+      }
+  
+      const userId = decodedToken.userId;
+  
+      const user = await User.findById(userId);
+  
+      if (!user) {
+        return res.status(404).json({ msg: 'Usuario no encontrado' });
+      }
+  
+      res.status(200).json({ 
+        msg: 'Sus datos son:',
+        user 
+    });
 
+
+    } catch (error) {
+      console.error('Error al obtener los datos del usuario:', error.message);
+      res.status(500).json({ msg: 'Error en el servidor' });
+    }
+  };
+  
 //--------------------------------------------visualizacion de saldo actual---------------------------------------------------------
 
 // * FUNCIONAL
 // ? FUNCION PARA QUE EL USUARIO PUEDA VISUALIZAR SU BALANCE ACTUAL 
 
 const viewBalance = async (req, res) => {
-    try {
-        // const {balance} = req.params;
-        const id = req.params.id;
-        const user = await User.findById(id);
-        if (!user) {
-          throw new Error('Usuario no encontrado');
-        }
-        res.status(404).json({
-            msg: "El balance es:",
-            return:  user.balance
-        })
-        
 
+    const token = req.headers['token'];
+
+    try {
+        if (!token) {
+          return res.status(401).json({ msg: 'Acceso no autorizado' });
+        }
+    
+        const decodedToken = jwt.decode(token);
+    
+        if (!decodedToken) {
+          return res.status(401).json({ msg: 'Token inválido' });
+        }
+    
+        const userId = decodedToken.userId;
+    
+        const user = await User.findById(userId);
+    
+        if (!user) {
+          return res.status(404).json({ msg: 'Usuario no encontrado' });
+        }
+    
+        res.status(200).json({ msg: 'Su balance es:', balance: user.balance });
       } catch (error) {
         console.error('Error al obtener el balance del usuario:', error.message);
         // Manejar el error según tus necesidades
