@@ -1,6 +1,7 @@
 'use strict'
 
 const Admin = require('../model/adminModel')
+const User = require('../model/userModel')
 const bcrypt = require('bcrypt')
 
 
@@ -177,14 +178,65 @@ const loginAdmin = async (req, res) => {
     }
   };
 
-//-------------------------------------------------------exportaciones---------------------------------------------------------------------------
+//-------------------------------------------movimientos ascendentes => descendientes---------------------------------------------------------------
+
+/* Funcional */
+
+const getAccountsByTransactionCount = async (req, res) => {
+  const { order } = req.query;
+
+  try {
+    let sortOption = {};
+
+    if (order === "asc") {
+      sortOption = { $sort: { transactionCount: 1 } };
+    } else if (order === "desc") {
+      sortOption = { $sort: { transactionCount: -1 } };
+    } else {
+      return res.status(400).send({
+        msg: "Orden no válido. Debe ser 'asc' o 'desc'",
+      });
+    }
+
+    const accounts = await User.aggregate([
+      {
+        $lookup: {
+          from: "transfers",
+          localField: "transactions",
+          foreignField: "_id",
+          as: "transactions",
+        },
+      },
+      {
+        $addFields: {
+          transactionCount: { $size: "$transactions" },
+        },
+      },
+      sortOption,
+    ]);
+
+    res.status(200).send({
+      msg: "Cuentas ordenadas por cantidad de movimientos",
+      accounts,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      msg: "Error al obtener las cuentas",
+      error: err.message,
+    });
+  }
+};
+
+  //-------------------------------------------------------exportaciones---------------------------------------------------------------------------
 
 module.exports = {
     createAdmin,
     searchAdmin,
     updateAdmin,
     deleteAdmin,
-    loginAdmin
+    loginAdmin,
+    getAccountsByTransactionCount
 }
 
 
