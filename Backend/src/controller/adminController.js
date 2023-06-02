@@ -9,8 +9,6 @@ const bcrypt = require('bcrypt')
 
 const createAdmin = async(req, res) =>{
 
-   if(req.user.rol === 'ADMIN'){
-
     const {user, password} = req.body;
 
     try{
@@ -47,12 +45,6 @@ const createAdmin = async(req, res) =>{
         });
     }
 
-   }else{
-    res.status(200).send({
-        msg: 'No tienes permisos para realizar esta acción ;D'
-    })
-   }
-
 }   
 
 
@@ -79,7 +71,6 @@ const createAdmin = async(req, res) =>{
 //----------------------------------------------------------delete admin--------------------------------------------------------------
 
 const deleteAdmin = async(req, res) => {
-
     try {
         const idAdministrador = req.params.id;
         const admin = await Admin.findById(idAdministrador);
