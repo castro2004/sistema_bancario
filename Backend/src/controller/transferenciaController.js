@@ -39,8 +39,8 @@ const createTransferencias = async(req, res) => {
           });
         }
     
-        usuarioOrigen.balance -= monto;
-        usuariosDestino.balance += monto;
+        usuarioOrigen.balance - monto;
+        usuariosDestino.balance + monto;
     
         await usuarioOrigen.save();
         await usuariosDestino.save();
@@ -81,13 +81,12 @@ const createTransferencias = async(req, res) => {
 
 }
 
+
 //------------------------------------------------------------exportaciones------------------------------------------------------------------------------------------
 
 module.exports = {
     createTransferencias
 }
-
-
 
 
 
