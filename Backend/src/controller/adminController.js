@@ -74,22 +74,20 @@ const createAdmin = async(req, res) =>{
 const deleteAdmin = async(req, res) => {
 
     try {
-        const idAdministrador = req.params.id;
-        const admin = await Admin.findById(idAdministrador);
-    
-        if (!admin) {
-          return res.status(404).json({ mensaje: 'Administrador no encontrado' });
-        }
-    
-        const userAdminAutenticado = req.headers.authorization; // Obtener el usuario del administrador autenticado desde el encabezado de autorización
-    
-        if (admin.user !== userAdminAutenticado) {
-          return res.status(403).json({ mensaje: 'No tienes permiso para eliminar esta cuenta' });
-        }
-    
-        // Si el usuario del administrador coincide con el usuario del administrador autenticado, se procede a eliminar la cuenta
-        await Admin.findByIdAndDelete(idAdministrador);
-        res.json({ mensaje: 'Cuenta eliminada correctamente' });
+        const admin = req.params;
+        const id = req.params.id;
+        const result = await Admin.findByIdAndDelete(id);
+
+        if(!admin){
+          res.status(410).send({
+            msg: "El administrador no existe, verificar si los datos son correctos"
+        });
+        }else{
+          res.status(201).send({
+              msg: "Se a eliminado el administador",
+              admin: result
+          });
+      }
       } catch (error) {
         console.error('Error al eliminar la cuenta del administrador:', error);
         res.status(500).json({ mensaje: 'Error al eliminar la cuenta del administrador' });
@@ -101,23 +99,27 @@ const deleteAdmin = async(req, res) => {
 const updateAdmin = async(req, res) => {
 
     try {
-        const idAdministrador = req.params.id;
-        const administrador = await Admin.findById(idAdministrador);
-    
-        if (!administrador) {
-          return res.status(404).json({ mensaje: 'Administrador no encontrado' });
-        }
-    
-        const idAdminAutenticado = req.headers.authorization; // Obtener el ID del administrador autenticado desde el encabezado de autorización
-    
-        if (idAdministrador !== idAdminAutenticado) {
-          return res.status(403).json({ mensaje: 'No tienes permiso para editar esta cuenta' });
-        }
-    
-        // Si el ID del administrador coincide con el ID del administrador autenticado, se procede a realizar la edición
-        // Aquí puedes agregar el código para realizar la edición de la cuenta del administrador
-    
-        res.json({ mensaje: 'Cuenta editada correctamente' });
+       
+      const id = req.params.id;
+        const adminEdit = {...req.body};
+
+        adminEdit.password = adminEdit.password
+        ? bcrypt.hashSync(adminEdit.password, bcrypt.genSaltSync())
+        : adminEdit.password;
+
+        const adminComplete = await Admin.findByIdAndUpdate(id, adminEdit, {new: true});
+
+        if(!adminComplete){
+          res.status(401).send({
+              msg: "El administrador que desea actualizar, no existe"
+          });
+      }else{
+          // res.status(410).send({
+              return res.status(200).send({
+                  message: 'Perfil actualizado correctamente', adminComplete,
+              });
+      }
+
       } catch (error) {
         console.error('Error al editar la cuenta del administrador:', error);
         res.status(500).json({ mensaje: 'Error al editar la cuenta del administrador' });
@@ -125,7 +127,7 @@ const updateAdmin = async(req, res) => {
 
 }
 
-//----------------------------------------------------search admin------------------------------------------------------------------------
+//----------------------------------------------------viewDataAdmin admin------------------------------------------------------------------------
 
 const viewDataAdmin = async(req, res) =>{
   const token = req.headers['token'];
@@ -172,7 +174,7 @@ const loginAdmin = async (req, res) => {
   
       // Verificar si el administrador existe
       if (!admin) {
-        return res.status(401).json({ message: "Usuario no encontrado" });
+        return res.status(401).json({ message: "Credenciales invalidas" });
       }
   
       // Verificar la contraseña
@@ -182,8 +184,15 @@ const loginAdmin = async (req, res) => {
         return res.status(401).json({ message: "Contraseña incorrecta" });
       }
   
+      const token = jwt.sign({adminId: admin._id}, 'mi_secreto', {
+        expiresIn: '10h',
+      })
+
       // Envío de mensaje de éxito
-      res.json({ message: "Administrador autenticado correctamente" });
+      res.json({
+        message: "Administrador autenticado correctamente",
+        token 
+      });
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Error en el servidor" });
