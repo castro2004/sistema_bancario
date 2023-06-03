@@ -186,7 +186,7 @@ const loginUser = async (req, res) => {
       }
   
       // Generar el token de autenticación
-      const token = jwt.sign({ userId: user._id }, 'tu_secreto', {
+      const token = jwt.sign({ userId: user._id }, 'mi_secreto', {
         expiresIn: '10h',
       });
   
