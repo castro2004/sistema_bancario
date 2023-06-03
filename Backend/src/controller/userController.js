@@ -278,19 +278,33 @@ const viewBalance = async (req, res) => {
 // ? FUNCION PARA QUE EL USUARIO PUEDA VISUALIZAR EL HISTORIAL DE SUS TRANSACCIONES 
 
 const historyTransaction = async (req, res) => {
+    
+  const token = req.headers['token']
+  
     try{
 
-        const id = req.params.id;
-    const user = await User.findById(id);
+      if (!token) {
+        return res.status(401).json({ msg: 'Acceso no autorizado' });
+      }
     
-    if (!user) {
-      return res.status(404).json({ error: 'Usuario no encontrado' });
-    }
+      const decodedToken = jwt.decode(token);
     
-    const transactionHistory = await user.historyTransaction();
+        if (!decodedToken) {
+          return res.status(401).json({ msg: 'Token inválido' });
+        }
+
+        const userId = decodedToken.userId;
     
-    return res.json(transactionHistory);
+        const user = await User.findById(userId);
     
+        if (!user) {
+          return res.status(404).json({ msg: 'Usuario no encontrado' });
+        }
+
+        const transactionHistory = await user.historyTransaction();
+
+        return res.json(transactionHistory);
+
     }catch(err){
         console.log(err)
     }

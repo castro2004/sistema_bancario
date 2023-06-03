@@ -11,7 +11,7 @@ api.delete('/delete-user/:id', deleteUser);
 api.put('/update-user/:id', updateUser);
 api.post('/login-user', loginUser);
 api.get('/viewBalance-user', viewBalance )
-api.get('/historyTransaction-user/:id', historyTransaction)
+api.get('/historyTransaction-user', historyTransaction)
 api.post('/create-favorite', createFavorite)
 api.get('/read-favorite', readFavorite);
 api.put('/update-favorite', updateFavorite);
