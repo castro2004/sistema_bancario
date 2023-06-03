@@ -71,6 +71,7 @@ const createAdmin = async(req, res) =>{
 //----------------------------------------------------------delete admin--------------------------------------------------------------
 
 const deleteAdmin = async(req, res) => {
+
     try {
         const idAdministrador = req.params.id;
         const admin = await Admin.findById(idAdministrador);
