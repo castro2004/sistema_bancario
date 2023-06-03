@@ -15,13 +15,13 @@ const createFavorite = async(req, res) => {
         const existingFavorite = await Favorite.findOne({ alias });
         const existingAcount = await Favorite.findOne({acountNumber});
 
-        if(!favorite){
-            return res.status(401).json({
-                msg: "No se han agregado cuentas como favoritos",
-                ok: false,
-                favorite: favorite
-            });
-        }
+        // if(!favorite){
+        //     return res.status(401).json({
+        //         msg: "No se han agregado cuentas como favoritos",
+        //         ok: false,
+        //         favorite: favorite
+        //     });
+        // }
 
         if (existingFavorite) {
             return res.status(401).json({
