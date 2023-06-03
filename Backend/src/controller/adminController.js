@@ -3,6 +3,7 @@
 const Admin = require('../model/adminModel')
 const User = require('../model/userModel')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 
 //------------------------------------create admin--------------------------------------
@@ -126,15 +127,34 @@ const updateAdmin = async(req, res) => {
 
 //----------------------------------------------------search admin------------------------------------------------------------------------
 
-const searchAdmin = async(req, res) =>{
+const viewDataAdmin = async(req, res) =>{
+  const token = req.headers['token'];
+
     try {
-        const user = req.params.user;
-        const admin = await Admin.findOne({ user: user });
-    
-        if (!admin) {
-          return res.status(404).json({ mensaje: 'Administrador no encontrado' });
-        }
-        res.json(admin);
+        
+      if (!token) {
+        return res.status(401).json({ msg: 'Acceso no autorizado' });
+      }
+  
+      const decodedToken = jwt.decode(token);
+  
+      if (!decodedToken) {
+        return res.status(401).json({ msg: 'Token inválido' });
+      }
+
+      const adminId = decodedToken.adminId;
+
+      const admin = await Admin.findById(adminId);
+
+      
+      if (!admin) {
+        return res.status(404).json({ msg: 'Administrador no encontrado' });
+      }
+
+        res.status(201).json({
+          msg: "Sis datos son:",
+          admin
+          });
       } catch (error) {
         console.error('Error al buscar el administrador:', error);
         res.status(500).json({ mensaje: 'Error al buscar el administrador' });
@@ -224,7 +244,7 @@ const getAccountsByTransactionCount = async (req, res) => {
 
 module.exports = {
     createAdmin,
-    searchAdmin,
+    viewDataAdmin,
     updateAdmin,
     deleteAdmin,
     loginAdmin,
