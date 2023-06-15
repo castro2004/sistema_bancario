@@ -310,6 +310,10 @@ const historyTransaction = async (req, res) => {
     }
   };
 
+  const menuUser = (req, res) => {
+    res.json({ message: 'Este es su menú' });
+  };
+
 
 //----------------------------------------------------exportaciones------------------------------------------------
 
@@ -322,7 +326,8 @@ module.exports = {
     loginUser,
     viewUserData,
     viewBalance,
-    historyTransaction
+    historyTransaction,
+    menuUser
 }
 
 
