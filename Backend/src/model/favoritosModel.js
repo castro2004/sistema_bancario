@@ -13,10 +13,10 @@ const favoriteSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-     acountType: {
-         type: String,
-         default: null
-     }
+    //  acountType: {
+    //      type: String,
+    //      default: null
+    //  }
 });
 
  favoriteSchema.pre('save', async function (next) {
