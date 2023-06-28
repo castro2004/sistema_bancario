@@ -1,5 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import viewdata_img from '../Components-user/img-user/view_data.png';
+import viewSaldo_img from '../Components-user/img-user/view_saldo.png';
+import historia_img from '../Components-user/img-user/historial_transacciones.png';
+import favoritos_img from '../Components-user/img-user/favoritos.png';
+import bank_img from '../Components-user/img-user/banco.png';
+import transaccion_img from '../Components-user/img-user/transaccion-monetaria.png';
+import '../Components-user/menuUser.css';
+
 
 const MenuUser = () => {
   const buttonStyle = {
@@ -16,60 +24,31 @@ const MenuUser = () => {
   };
 
   return (
-    <div>
-      <h1>Menu User</h1>
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div>
-            <Link to="/viewUserData-user">
-              <button style={buttonStyle}>Ver datos de usuario</button>
-            </Link>
-          </div>
-          <div>
-            <Link to="/update-user">
-              <button style={buttonStyle}>Actualizar usuario</button>
-            </Link>
-          </div>
-          <div>
-            <Link to="/viewBalance-user">
-              <button style={buttonStyle}>Ver saldo</button>
-            </Link>
-          </div>
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div>
-            <Link to="/historyTransaction-user">
-              <button style={buttonStyle}>Historial de transacciones</button>
-            </Link>
-          </div>
-          <div>
-            <Link to="/create-favorite">
-              <button style={buttonStyle}>Crear favorito</button>
-            </Link>
-          </div>
-          <div>
-            <Link to="/read-favorite">
-              <button style={buttonStyle}>Leer favorito</button>
-            </Link>
-          </div>
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div>
-            <Link to="/update-favorite">
-              <button style={buttonStyle}>Actualizar favorito</button>
-            </Link>
-          </div>
-          <div>
-            <Link to="/delete-favorite">
-              <button style={buttonStyle}>Eliminar favorito</button>
-            </Link>
-          </div>
-          <div>
-            <Link to="/create-transfencias">
-              <button style={buttonStyle}>Crear transferencia</button>
-            </Link>
-          </div>
-        </div>
+    <div id="div1">
+      <div id="rock1"></div>
+      <div id="rock2"></div>
+      <div id="rock3"></div>
+      <div id="rock4"></div>
+      <div id="rock5"></div>
+      <div id="rock6"></div>
+      <div id="rock7"></div>
+      <div id="rock8"></div>
+      <div id="diva1">
+        <Link to="/viewUserData-user">
+        <img className="menu-img" src={viewdata_img} />
+        </Link>
+        <Link to="/viewBalance-user">
+        <img className="menu-img" src={viewSaldo_img} />
+        </Link>
+        <Link to="/historyTransaction-user">
+        <img className="menu-img" src={historia_img} />
+        </Link>
+        <Link to="/read-favorite">
+        <img className="menu-img" src={favoritos_img} />
+        </Link>
+        <Link to="/create-transfencias">
+        <img className="menu-img" src={transaccion_img} />
+        </Link>
       </div>
     </div>
   );
