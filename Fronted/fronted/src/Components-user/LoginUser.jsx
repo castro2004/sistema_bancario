@@ -13,7 +13,7 @@ const LoginUser = () => {
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        'http://localhost:3007/api/login-user',
+        'http://localhost:3008/api/login-user',
         { username, password },
         {
           headers: {

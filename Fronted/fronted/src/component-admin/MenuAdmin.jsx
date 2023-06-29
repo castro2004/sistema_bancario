@@ -23,6 +23,11 @@ const MenuAdmin = () => {
     cursor: 'pointer',
   };
 
+    const cerrarSeccion=()=>{
+      localStorage.removeItem("token");
+      window.location.href ="/login-admin";
+    }
+
   return (
     <div>
       <div id="div1">
@@ -58,6 +63,9 @@ const MenuAdmin = () => {
       <div style={{ marginTop: '150px' }}>
         <Home2 className="home-content4" />
         <h2 style={{ textAlign: 'center' }}>MENU DEL ADMINISTRADOR</h2>
+        <div className="d-grid gap-2 col-6 mx-auto">
+            <button className="btn btn-outline-info" onClick={() =>cerrarSeccion()} >Cerrar sesion</button>
+        </div>
       </div>
     </div>
     

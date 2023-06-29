@@ -15,6 +15,7 @@ import Login from './Components-user/Login';
 import bank_img from '../src/Components-user/img-user/banco.png'
 import '../src/App.css'
 import '../src/Components-user/menuUser.css'
+import CreateAdmin from './component-admin/CreateAdmin';
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
                   <Route path="/login-admin" element={<LoginAdmin />} />
                   <Route path="/menu-admin" element={<MenuAdmin />} />
                   <Route path="/create-user" element={<CreateUser />} />
+                  <Route path="/create-admin" element={<CreateAdmin />} />
 
                   {/* Route for the main login */}
                   <Route path="/" element={<Login />} />
