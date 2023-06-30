@@ -1,11 +1,24 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useState, useEffect } from 'react'
+import { listAdmin } from './api/Admin';
 
 export const CreateAdmin = () => {
+  const [userAdmin, setUserAdmin] = useState( );
     const regresarMenu=() =>{
         window.location.href ="/menu-admin";
     }
+const reaload = async () => {   
+    const result = await listAdmin();
+    setUserAdmin(result);
+}
+
+useEffect(() =>{
+  reaload();
+  console.log(userAdmin);
+},[]);
 
   return (
+    <>
     <div className="position-relative">
       <div className="row">
         <div className="col-sm-12 col-md-4 col-lg-4 col-xl-4 py-4 bg-white">
@@ -42,12 +55,15 @@ export const CreateAdmin = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>Name</td>
-                <td>name@gmail.com</td>
-                <td>12345678</td>
-              </tr>
+              { userAdmin &&  userAdmin.map(adminActual=>{
+                return(
+                  <tr key={adminActual._id}>
+                    <td>{adminActual.user}</td>
+                    <td>{adminActual.email}</td>
+                    <td>{adminActual.telefono}</td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
             <div className="d-grid gap-2 d-md-flex justify-content-md">
@@ -57,6 +73,7 @@ export const CreateAdmin = () => {
         </div>
       </div>
     </div>
+    </>
   )
 }
 
