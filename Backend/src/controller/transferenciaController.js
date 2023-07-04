@@ -88,8 +88,3 @@ const createTransferencias = async(req, res) => {
 module.exports = {
     createTransferencias
 }
-
-
-
-
-

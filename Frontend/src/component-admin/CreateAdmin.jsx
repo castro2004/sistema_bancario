@@ -1,66 +1,65 @@
-import axios from 'axios';
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from "react-router-dom";
 import { listAdmin } from './api/Admin';
+import { Admins } from './models/ModelAdmis';
 
 export const CreateAdmin = () => {
-  const [userAdmin, setUserAdmin] = useState( );
-    const regresarMenu=() =>{
+  const [userAdmin, setUserAdmin] = useState([ ]);
+  const [admins, setAdmis] = useState(Admins);
+  const navigate = useNavigate();
+  const [showModel, setShowModal] = useState(false);
+
+  const regresarMenu=() =>{
         window.location.href ="/menu-admin";
     }
-const reaload = async () => {   
+
+// Para traer el listar los datos 
+const reload = async () => {   
     const result = await listAdmin();
     setUserAdmin(result);
 }
 
+const hadleOpen = (u)=>{
+  setShowModal(true);
+  setAdmis(u);
+}
+
+const closeModal = ()=>{
+  setShowModal(false);
+}
+
 useEffect(() =>{
-  reaload();
-  console.log(userAdmin);
-},[]);
+  reload();
+},[showModel]);
 
   return (
     <>
-    <div className="position-relative">
-      <div className="row">
-        <div className="col-sm-12 col-md-4 col-lg-4 col-xl-4 py-4 bg-white">
-        <button onClick={() => regresarMenu()} className="btn btn-outline-secondary">Regresar</button>
-          <h2>Crear Admin</h2>
-          <form>
-            <div className="mb-3">
-              <label htmlFor="user" className="form-label">Usuario</label>
-              <input type="text" className="form-control" id="user" placeholder="User" autoFocus />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="email" className="form-label">E-mail</label>
-              <input type="text" className="form-control" id="email" placeholder="e-mail" autoFocus />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="telefono" className="form-label">Teléfono</label>
-              <input type="text" className="form-control" id="telefono" placeholder="Teléfono" autoFocus />
-            </div>
-            <div className="d-grid gap-2">
-              <button className="btn btn-success">Guardar</button>
-              <button className="btn btn-secondary">Limpiar</button>
-            </div>
-          </form>
-        </div>
+    
         <div className="col-sm-12 col-md-8 col-lg-8 col-xl-8 py-4 bg-white">
           <h2>Listado de Admins</h2>
           <table className="table table-dark table-striped">
             <thead>
               <tr>
-                <th> </th>
+                <th>Rol</th>
+                <th>Indentificador</th>
                 <th>User</th>
-                <th>Gmail</th>
+                <th>Password</th>
+                <th>DPI</th>
                 <th>Teléfono</th>
+                <th>Correo Electrónico</th>
               </tr>
             </thead>
             <tbody>
-              { userAdmin &&  userAdmin.map(adminActual=>{
+              {userAdmin.map((u) =>{
                 return(
-                  <tr key={adminActual._id}>
-                    <td>{adminActual.user}</td>
-                    <td>{adminActual.email}</td>
-                    <td>{adminActual.telefono}</td>
+                  <tr key={u._id}>
+                    <td>{u._id}</td>
+                    <td>{u._rol}</td>
+                    <td>{u._user}</td>
+                    <td>{u._password}</td>
+                    <td>{u._dpi}</td>
+                    <td>{u._cellPhone}</td>
+                    <td>{u._email}</td>
                   </tr>
                 )
               })}
@@ -71,8 +70,6 @@ useEffect(() =>{
                 <button className="btn btn-primary" type="button">Editar</button>
             </div>
         </div>
-      </div>
-    </div>
     </>
   )
 }
