@@ -18,7 +18,7 @@ const CreateUser = () => {
   const handleCreateUser = async () => {
     try {
       const response = await axios.post(
-        'http://localhost:3007/api/create-user',
+        'http://localhost:3008/api/create-user',
         {
           name,
           username,
@@ -53,116 +53,137 @@ const CreateUser = () => {
     }
   };
 
+// Para regresar al menu 
+  const regresarMenu=()=>{
+    window.location.href="/menu-admin";
+  }
+
+
   return (
-    <div className="container" style={{ backgroundColor: '#366276', minHeight: '100vh' }}>
-      <h1>Create User</h1>
-      {errorMsg && <p>{errorMsg}</p>}
-      <form>
-        <div className="form-group">
-          <label htmlFor="name">Name:</label>
-          <input
-            type="text"
-            id="name"
-            className="form-control"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            className="form-control"
-            value={username}
-            onChange={(e) => setUserName(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            className="form-control"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            className="form-control"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="dpi">DPI:</label>
-          <input
-            type="text"
-            id="dpi"
-            className="form-control"
-            value={dpi}
-            onChange={(e) => setDpi(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="address">Address:</label>
-          <input
-            type="text"
-            id="address"
-            className="form-control"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="cellPhone">Cell Phone:</label>
-          <input
-            type="text"
-            id="cellPhone"
-            className="form-control"
-            value={cellPhone}
-            onChange={(e) => setCellPhone(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="nameWork">Name of Work:</label>
-          <input
-            type="text"
-            id="nameWork"
-            className="form-control"
-            value={nameWork}
-            onChange={(e) => setNameWork(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="incomeMonth">Income per Month:</label>
-          <input
-            type="number"
-            id="incomeMonth"
-            className="form-control"
-            value={incomeMonth}
-            onChange={(e) => setIncomeMonth(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="balance">Balance:</label>
-          <input
-            type="number"
-            id="balance"
-            className="form-control"
-            value={Balance}
-            onChange={(e) => setBalance(e.target.value)}
-          />
-        </div>
-        <button className="btn btn-primary" type="button" onClick={handleCreateUser}>
+
+        <div className="row">
+          <div className="bg-white">
+            <h2>Create Users</h2>
+            <button onClick={() => regresarMenu()} className="btn btn-outline-secondary">Regresar</button>
+              <div className="row align-items-start">
+                <div className="col">
+                  <label htmlFor="name">Name:</label>
+                    <input
+                      type="text"
+                      id="name"
+                      className="form-control"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                </div>
+
+                  <div className="col">
+                    <label htmlFor="username">Username:</label>
+                      <input
+                        type="text"
+                        id="username"
+                        className="form-control"
+                        value={username}
+                        onChange={(e) => setUserName(e.target.value)}
+                      />
+                  </div>
+              </div>
+
+              <div className="row align-items-start">
+                  <div className="col">
+                    <label htmlFor="email">Email:</label>
+                      <input
+                        type="email"
+                        id="email"
+                        className="form-control"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                  </div>
+                  <div className="col">
+                    <label  htmlFor="password">Password:</label>
+                      <input
+                        type="password"
+                        id="password"
+                        className="form-control"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                  </div> 
+            </div>
+
+            <div className="row align-items-start">
+              <div className="col">
+                <label htmlFor="dpi">DPI:</label>
+                  <input
+                    type="text"
+                    id="dpi"
+                    className="form-control"
+                    value={dpi}
+                    onChange={(e) => setDpi(e.target.value)}
+                  />
+              </div>
+              <div className="col">
+                <label  htmlFor="address">Address:</label>
+                  <input
+                    type="text"
+                    id="address"
+                    className="form-control"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                  />
+              </div>
+            </div>
+            <div className="row align-items-start">
+                <div className="col">
+                  <label htmlFor="cellPhone">Cell Phone:</label>
+                  <input
+                    type="text"
+                    id="cellPhone"
+                    className="form-control"
+                    value={cellPhone}
+                    onChange={(e) => setCellPhone(e.target.value)}
+                  />
+                </div>
+                <div className="col">
+                  <label htmlFor="nameWork">Name of Work:</label>
+                  <input
+                    type="text"
+                    id="nameWork"
+                    className="form-control"
+                    value={nameWork}
+                    onChange={(e) => setNameWork(e.target.value)}
+                  />
+                </div>
+            </div>
+
+            <div className="row align-items-start">
+              <div className="col">
+                <label  htmlFor="incomeMonth">Income per Month:</label>
+                <input
+                  type="number"
+                  id="incomeMonth"
+                  className="form-control"
+                  value={incomeMonth}
+                  onChange={(e) => setIncomeMonth(e.target.value)}
+                />
+              </div>
+              <div className="col">
+                <label htmlFor="balance">Balance:</label>
+                  <input
+                    type="number"
+                    id="balance"
+                    className="form-control"
+                    value={Balance}
+                    onChange={(e) => setBalance(e.target.value)}
+                  />  
+              </div>
+            </div>
+             <button className="btn btn-outline-primary my-4 d-grid gap-2 col-4 mx-auto" type="button" onClick={handleCreateUser}>
           Create User
         </button>
-      </form>
-    </div>
+          </div>
+        </div>
   );
 };
 

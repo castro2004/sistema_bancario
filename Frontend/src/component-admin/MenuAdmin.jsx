@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import agregarA from '../component-admin/img-admin/agregarAdmin.png';
-import viewdata_img from '../Components-user/img-user/view_data.png';
-import deleteA from '../component-admin/img-admin/eliminarUsuario.png';
-import actualizarA from '../component-admin/img-admin/actualizarUsuario.png';
-import viewC from '../component-admin/img-admin/verCuentas.png';
-import agregarU from '../component-admin/img-admin/agregar-usuario.png';
+import CreateAdmin from '../component-admin/img-admin/agregarAdmin.png';
+import EliminarAdmin from '../component-admin/img-admin/eliminarUsuario.png';
+import UpadateAdmin  from '../component-admin/img-admin/actualizarUsuario.png';
+import OrdenAcount  from '../component-admin/img-admin/verCuentas.png';
+import ViewData from '../component-admin/img-admin/view_data.png';
+import CreateUser from '../component-admin/img-admin/agregar-usuario.png';
 import '../Components-user/MenuUser.css';
 import { Home2 } from '../App';
+
 
 const MenuAdmin = () => {
   const buttonStyle = {
@@ -23,6 +24,11 @@ const MenuAdmin = () => {
     cursor: 'pointer',
   };
 
+    const cerrarSeccion=()=>{
+      localStorage.removeItem("token");
+      window.location.href ="/login-admin";
+    }
+
   return (
     <div>
       <div id="div1">
@@ -36,28 +42,31 @@ const MenuAdmin = () => {
         <div id="rock8"></div>
         <div id="diva1">
           <Link to="/create-admin">
-            <img className='menu-img' src={agregarA} alt="Button" />
-          </Link>
-          <Link to="/viewData-admin">
-            <img className='menu-img' src={viewdata_img} alt="Button" />
+            <img className="menu-img" src={ CreateAdmin} alt="Button" />
           </Link>
           <Link to="/delete-admin">
-            <img className="menu-img" src={deleteA} alt="Button" />
+            <img className="menu-img" src={ EliminarAdmin } alt="Button" />
           </Link>
-          <Link to='/update-admin'>
-            <img className="menu-img" src={actualizarA} alt="Button" />
+          <Link to="/update-admin">
+            <img className="menu-img" src={ UpadateAdmin } alt="Button" />
           </Link>
-          <Link to="/admin/accounts">
-            <img className="menu-img" src={viewC} alt="Button" />
+          <Link to="/accounts-admin">
+            <img className="menu-img" src={ OrdenAcount } alt="Button" />
+          </Link>
+          <Link to="/view-data">
+            <img className="menu-img" src={ ViewData } alt="Button" />
           </Link>
           <Link to="/create-user">
-            <img className="menu-img" src={agregarU} alt="Button" />
+            <img className="menu-img" src={ CreateUser } alt="Button" />
           </Link>
         </div>
       </div>
       <div style={{ marginTop: '150px' }}>
         <Home2 className="home-content4" />
         <h2 style={{ textAlign: 'center' }}>MENU DEL ADMINISTRADOR</h2>
+        <div className="d-grid gap-2 col-6 mx-auto">
+            <button className="btn btn-outline-info" onClick={() =>cerrarSeccion()} >Cerrar sesion</button>
+        </div>
       </div>
     </div>
     
