@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import { listAdmin } from './api/Admin';
 import { Admins } from './models/ModelAdmis';
+import  EditIcon  from "@mui/icons-material/Edit";
+import  DeleteIcon  from "@mui/icons-material/DeleteOutlined";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+
 
 export const CreateAdmin = () => {
   const [data, setUserAdmin] = useState([ ]);
@@ -34,10 +38,9 @@ useEffect(() =>{
 
   return (
     <>
-    
-        <div className="col-sm-12 col-md-8 col-lg-8 col-xl-8 py-4 bg-white">
+        <div className="col text-center bg-white">
           <h2>Listado de Admins</h2>
-          <table className="table table-dark table-striped">
+          <table className="table table-hover table-bordered table-dark">
             <thead>
               <tr>
                 <th>Indentificador</th>
@@ -46,9 +49,10 @@ useEffect(() =>{
                 <th>DPI</th>
                 <th>Teléfono</th>
                 <th>Correo Electrónico</th>
+                <th>Opciones</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="table-group-divider">
               {data.map((u) =>{
                 return(
                   <tr key={u._id}>
@@ -58,15 +62,38 @@ useEffect(() =>{
                     <td>{u.dpi}</td>
                     <td>{u.cellPhone}</td>
                     <td>{u.email}</td>
+                      {/* boton de editar  */}
+                    <td>
+                    <button
+                      className="btn btn-warning"
+                      onClick={() => handleOpenModal(u)}
+                    >
+                      <EditIcon></EditIcon>
+                    </button>
+                    {/* boton de eliminar  */}
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => {
+                        eliminar(u._id);
+                      }}
+                    >
+                      <DeleteIcon />
+                    </button>
+                    {/* boton de ver el perfil  */}
+                    <button
+                      className="btn btn-success"
+                      onClick={() => {
+                        profile(u);
+                      }}
+                    >
+                      <VisibilityIcon></VisibilityIcon>
+                    </button>
+                    </td>
                   </tr>
                 )
               })}
             </tbody>
           </table>
-            <div className="d-grid gap-2 d-md-flex justify-content-md">
-                <button type="button" className="btn btn-danger">Eliminar</button>
-                <button className="btn btn-primary" type="button">Editar</button>
-            </div>
         </div>
     </>
   )
