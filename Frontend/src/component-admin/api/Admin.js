@@ -5,14 +5,20 @@ import Swal from "sweetalert2";
 
 // Listar
 export const listAdmin = async()=>{
-    try{
-        const{data:{userAdmin}} =await axios.get(`${URL}list-admin`)
-        console.log(userAdmin);
-        return userAdmin;
-    }catch({response :{data}}){
-        return data.messge;
-    }
-}
+    try {
+        const { data } = await axios.get(`${URL}list-admin`);
+        if (data.admin) {
+          console.log(data.admin);
+          return data.admin;
+        } else {
+          console.log("No se encontraron datos de administradores");
+          return [];
+        }
+      } catch (error) {
+        console.log("Error al obtener los datos de administradores:", error);
+        return [];
+      }
+    };
 
 // Crear admin 
 export const CreateAdmin = async (rol, user, password, dpi, cellPhone, email) =>{

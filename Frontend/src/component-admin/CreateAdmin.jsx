@@ -4,7 +4,7 @@ import { listAdmin } from './api/Admin';
 import { Admins } from './models/ModelAdmis';
 
 export const CreateAdmin = () => {
-  const [userAdmin, setUserAdmin] = useState([ ]);
+  const [data, setUserAdmin] = useState([ ]);
   const [admins, setAdmis] = useState(Admins);
   const navigate = useNavigate();
   const [showModel, setShowModal] = useState(false);
@@ -40,26 +40,24 @@ useEffect(() =>{
           <table className="table table-dark table-striped">
             <thead>
               <tr>
-                <th>Rol</th>
                 <th>Indentificador</th>
+                <th>Rol</th>
                 <th>User</th>
-                <th>Password</th>
                 <th>DPI</th>
                 <th>Teléfono</th>
                 <th>Correo Electrónico</th>
               </tr>
             </thead>
             <tbody>
-              {userAdmin.map((u) =>{
+              {data.map((u) =>{
                 return(
                   <tr key={u._id}>
                     <td>{u._id}</td>
-                    <td>{u._rol}</td>
-                    <td>{u._user}</td>
-                    <td>{u._password}</td>
-                    <td>{u._dpi}</td>
-                    <td>{u._cellPhone}</td>
-                    <td>{u._email}</td>
+                    <td>{u.rol}</td>
+                    <td>{u.user}</td>
+                    <td>{u.dpi}</td>
+                    <td>{u.cellPhone}</td>
+                    <td>{u.email}</td>
                   </tr>
                 )
               })}
