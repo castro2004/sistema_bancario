@@ -129,39 +129,25 @@ const updateAdmin = async (req, res) => {
 
 //----------------------------------------------------viewDataAdmin admin------------------------------------------------------------------------
 
-const viewDataAdmin = async(req, res) =>{
-  const token = req.headers['token'];
-
-    try {
-        
-      if (!token) {
-        return res.status(401).json({ msg: 'Acceso no autorizado' });
-      }
+const viewDataAdmin = async (token) => {
+  try {
+    const decoded = jwt.verify(token, 'mi_secreto');
+    const adminId = decoded.adminId;
   
-      const decodedToken = jwt.decode(token);
+    // Buscar al administrador en la base de datos utilizando el adminId
+    const admin = await Admin.findById(adminId);
   
-      if (!decodedToken) {
-        return res.status(401).json({ msg: 'Token inválido' });
-      }
-
-      const adminId = decodedToken.adminId;
-
-      const admin = await Admin.findById(adminId);
-
-      
-      if (!admin) {
-        return res.status(404).json({ msg: 'Administrador no encontrado' });
-      }
-
-        res.status(201).json({
-          msg: "Sis datos son:",
-          admin
-          });
-      } catch (error) {
-        console.error('Error al buscar el administrador:', error);
-        res.status(500).json({ mensaje: 'Error al buscar el administrador' });
-      }
-}
+    if (!admin) {
+      throw new Error('Administrador no encontrado');
+    }
+  
+    // Devolver los datos del administrador
+    return admin;
+  } catch (error) {
+    console.log(error);
+    throw new Error('Error al obtener los datos del administrador');
+  }
+};
 
 //----------------------------------------------login administrador-------------------------------------------------------------------
 
