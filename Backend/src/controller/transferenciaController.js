@@ -57,6 +57,7 @@ const createTransferencias = async(req, res) => {
         const transferencia = new Transferencia({
           cuentaOrigen: cuentaOrigen,
           saldo: saldo,
+          date: date,
           cuentaDestino: cuentaDestino,
           monto: monto,
           descripcion: descripcion,
@@ -87,8 +88,3 @@ const createTransferencias = async(req, res) => {
 module.exports = {
     createTransferencias
 }
-
-
-
-
-
