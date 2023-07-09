@@ -1,3 +1,4 @@
+// const {Sequelize, DataTypes, Model} = require('Sequelize')
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
@@ -57,6 +58,9 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  token:{
+    type: String
+  },
   transactions: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -84,4 +88,4 @@ userSchema.methods.historyTransaction = async function () {
   return this.transactions;
 };
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Users', userSchema);

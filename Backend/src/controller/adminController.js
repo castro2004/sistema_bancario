@@ -71,83 +71,97 @@ const createAdmin = async(req, res) =>{
 
 //----------------------------------------------------------delete admin--------------------------------------------------------------
 
-const deleteAdmin = async (req, res) => {
-  try {
-    const token = req.header('token');
-    const decoded = jwt(token);
-    const adminD = req.body;
+const deleteAdmin = async(req, res) => {
 
-    const adminDelete = await Admin.findOneAndDelete(adminD);
+    try {
+        const admin = req.params;
+        const id = req.params.id;
+        const result = await Admin.findByIdAndDelete(id);
 
-    if(!decoded){
-      res.status(404).send({
-        msg: 'Lo siento, el token que ingresaste es invalido'
-      });
-    } 
-
-    res.status(200).send({
-      msg: "La ayuda social se elimino de forma exitosa",
-      eleminate: adminDelete
-    });
-
-  } catch (error) {
-    console.error('Error al eliminar la cuenta del administrador:', error);
-    res.status(500).json({ mensaje: 'Error al eliminar la cuenta del administrador' });
-  }
-};
-
-
+        if(!admin){
+          res.status(410).send({
+            msg: "El administrador no existe, verificar si los datos son correctos"
+        });
+        }else{
+          res.status(201).send({
+              msg: "Se a eliminado el administador",
+              admin: result
+          });
+      }
+      } catch (error) {
+        console.error('Error al eliminar la cuenta del administrador:', error);
+        res.status(500).json({ mensaje: 'Error al eliminar la cuenta del administrador' });
+      }
+}
 
 //---------------------------------------------------------update admin---------------------------------------------------------------------------------------------
 
-const updateAdmin = async (req, res) => {
-  try {
-    
-    const token = req.header('token');
-    const decoded = jwt(token);
-    const adminU = req.body
+const updateAdmin = async(req, res) => {
 
-    const updateA = await Admin.findOneAndUpdate(adminU);
-    
-    if(!decoded){
-      res.status(404).json({
-        nsg: "El token que ingresaste no es valido"
-      });
-    }
+    try {
+       
+      const id = req.params.id;
+        const adminEdit = {...req.body};
 
-    res.status(200).send({
-      msg: "Sus datos se han actualizado de forma exitos",
-      AdminUpdate: updateA
-    });
+        adminEdit.password = adminEdit.password
+        ? bcrypt.hashSync(adminEdit.password, bcrypt.genSaltSync())
+        : adminEdit.password;
 
-  } catch (error) {
-    console.error('Error al editar la cuenta del administrador:', error);
-    res.status(500).json({ mensaje: 'Error al editar la cuenta del administrador' });
-  }
-};
+        const adminComplete = await Admin.findByIdAndUpdate(id, adminEdit, {new: true});
 
+        if(!adminComplete){
+          res.status(401).send({
+              msg: "El administrador que desea actualizar, no existe"
+          });
+      }else{
+          // res.status(410).send({
+              return res.status(200).send({
+                  message: 'Perfil actualizado correctamente', adminComplete,
+              });
+      }
+
+      } catch (error) {
+        console.error('Error al editar la cuenta del administrador:', error);
+        res.status(500).json({ mensaje: 'Error al editar la cuenta del administrador' });
+      }
+
+}
 
 //----------------------------------------------------viewDataAdmin admin------------------------------------------------------------------------
 
-const viewDataAdmin = async (token) => {
-  try {
-    const decoded = jwt.verify(token, 'mi_secreto');
-    const adminId = decoded.adminId;
+const viewDataAdmin = async(req, res) =>{
+  const token = req.headers['token'];
+
+    try {
+        
+      if (!token) {
+        return res.status(401).json({ msg: 'Acceso no autorizado' });
+      }
   
-    // Buscar al administrador en la base de datos utilizando el adminId
-    const admin = await Admin.findById(adminId);
+      const decodedToken = jwt.decode(token);
   
-    if (!admin) {
-      throw new Error('Administrador no encontrado');
-    }
-  
-    // Devolver los datos del administrador
-    return admin;
-  } catch (error) {
-    console.log(error);
-    throw new Error('Error al obtener los datos del administrador');
-  }
-};
+      if (!decodedToken) {
+        return res.status(401).json({ msg: 'Token inválido' });
+      }
+
+      const adminId = decodedToken.adminId;
+
+      const admin = await Admin.findById(adminId);
+
+      
+      if (!admin) {
+        return res.status(404).json({ msg: 'Administrador no encontrado' });
+      }
+
+        res.status(201).json({
+          msg: "Sis datos son:",
+          admin
+          });
+      } catch (error) {
+        console.error('Error al buscar el administrador:', error);
+        res.status(500).json({ mensaje: 'Error al buscar el administrador' });
+      }
+}
 
 //----------------------------------------------login administrador-------------------------------------------------------------------
 

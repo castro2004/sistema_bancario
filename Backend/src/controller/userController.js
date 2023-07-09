@@ -1,6 +1,7 @@
 'use strict'
 
 const User = require('../model/userModel')
+const Transfers = require('../model/transferenciasModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 

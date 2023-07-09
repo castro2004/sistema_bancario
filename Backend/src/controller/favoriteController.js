@@ -2,7 +2,6 @@
 
 const Favorite = require('../model/favoritosModel');
 const Users = require('../model/userModel');
-const {generateJWT} = require('../helpers/create-jwt')
 
 //--------------------------------------create favorite----------------------------------------------
 
@@ -60,52 +59,48 @@ const createFavorite = async(req, res) => {
 
 const readFavorite = async(req, res) => {
 
-    try{
-    
-        const favorites = await Favorite.find();
-    
-            if(!favorites){
-                res.status(400).send({
-                    msg: 'No hay cuentas favoritas agregadas'
-                });
-            }else{
-                res.status(200).send({
-                    msg: "Tus favoritos son:",
-                    favoritos: favorites
-                    })
-            }
-    
-        }catch(err){
-            console.log(err)
-            throw new Error(err)
+try{
+
+    const favorites = await Favorite.findById();
+
+        if(!favorites){
+            res.status(400).send({
+                msg: 'No hay cuentas favoritas agregadas'
+            });
+        }else{
+            res.status(200).send({
+                msg: "Tus favoritos son:",
+                favoritos: favorites
+                })
         }
-    
+
+    }catch(err){
+        console.log(err)
+        throw new Error(err)
     }
+
+}
 
 //------------------------------------------Update Favorite--------------------------------------------------
 
 const updateFavorite = async(req, res) => {
     try{
-        const token = req.header('token')
-        const decoded = generateJWT(token)
-        const favoriteU = req.body
-
-        const updateF = await Favorite.findOneAndUpdate(favoriteU)
-    
-        if(!decoded){
-            res.status(404).send({
-                msg: "El token es no es valido"
-        });
+        let editFavorite = req.body;
+        const id = req.params.id;
+        const favoriteModify = Favorite.findById(id);
+        if(!favoriteModify){
+            res.status(202).send({
+                msg: "Este id no existe, verificar los datos"
+            });
+        }else{
+            const favoriteComplete = await Favorite.findByIdAndUpdate(id, favorite_update, {new: true});
+            res.status(200).send({
+                msg: "El usuario favorito se actualizo exitosamente:",
+                favoriteComplete
+            });
         }
-        
-        return res.status(200).json({
-            msg: "Se actualizo de forma existo",
-            favoriteUpdate: updateF,
-            update: console.log(updateF)
-        })
     }catch(err){
         (`Error al actualizar el curso` + err);
-        console.log(err)
     }
 }
 
@@ -113,35 +108,22 @@ const updateFavorite = async(req, res) => {
 
 const deleteFavorite = async(req, res) => {
     try{
-        const token = req.header('token')
-        const decoded = generateJWT(token)
-        const favoriteD = req.body;
-        const {acountNumber} = req.body;
-        const existingAcount = await Favorite.findOne({acountNumber});
-       
+        const id = req.params.id;
+        const result = await Favorite.findByIdAndDelete(id);
 
-        const favoriteDelete = await Favorite.findOneAndDelete(favoriteD)
-
-        if(!decoded){
-            res.status(404).json({
-                msg: "Lo siento, el token que ingresaste no es valido"
+        if(!id){
+            res.status(201).send({
+                msg: "El id que ingresaste parece ser que no es existe",
+                msg: "Verifique sus datos"
             })
         }
 
-        if(!existingAcount){
-            res.status(404).json({
-                msg: "Lo siento, el numero de cuenta que ingresaste no es valido"
-            })
-        }
-
-        return res.status(200).send({
-            msg: "Se elimino la usuario en el apartado de favoritos",
-            favoriteDelete: favoriteDelete
+        res.status(200).send({
+            msg: "El curso se elimino de forma exitosa",
+            result: result
         })
-
     }catch(err){
         res.status(500).send({message: 'error en la peticion para eliminar el usuario favorito'});
-        console.log(err)
         throw new Error('ocurrio un error al eliminar'); 
     }
 }

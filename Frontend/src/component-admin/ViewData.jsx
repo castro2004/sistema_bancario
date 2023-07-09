@@ -13,7 +13,7 @@ const AdminForm = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.get('http://localhost:3008/api/viewData-admin', {
+      const response = await axios.get('http://localhost:3007/api/viewData-admin', {
         headers: {
           'Content-Type': 'application/json',
           token: token
@@ -45,10 +45,11 @@ const AdminForm = () => {
       {adminData && (
         <div>
           <h2>Datos del administrador:</h2>
-          <p>User: {adminData.user}</p>
           <p>Rol: {adminData.rol}</p>
+          <p>Nombre: {adminData.name}</p>
           <p>Password: {adminData.password}</p>
-          <p>DPI: {adminData.dpi}</p>
+          <p>Dpi: {adminData.dpi}</p>
+          <p>CellPhone: {adminData.cellPhone}</p>
           <p>Email: {adminData.email}</p>
           <p>Token: {adminData.token}</p>
         </div>
@@ -58,6 +59,8 @@ const AdminForm = () => {
 };
 
 export default AdminForm;
+
+
 
 // import React, { useEffect, useState } from 'react';
 // import axios from 'axios';
@@ -70,7 +73,7 @@ export default AdminForm;
 //     const fetchAdminData = async () => {
 //       try {
 //         const response = await axios.get(
-//           'http://localhost:3008/api/viewData-admin',
+//           'http://localhost:3007/api/viewData-admin',
 //           { token },
 //           {
 //             headers: {

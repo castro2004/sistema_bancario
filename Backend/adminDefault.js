@@ -15,6 +15,7 @@ const defaultAdmin = async() => {
         admin.dpi = '48646848464';
         admin.cellPhone = '16785425';
         admin.email = 'admin@admin.com';
+        admin.token = ''
         const adminEncontrado = await Admin.findOne({admin: admin.user});
         if(adminEncontrado) return console.log('El administrador se ha instalado de fomra correcta')
         //Encripcion de contraseña

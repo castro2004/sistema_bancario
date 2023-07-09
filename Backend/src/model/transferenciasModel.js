@@ -13,16 +13,16 @@ const transferenciasSchema = new mongoose.Schema({
               return this.populated('cuentaOrigen')? this.cuentaOrigen.acountNumber : null
           }
     },
-    saldo: {
-        type: Schema.Types.Number,
-        ref: 'User',
-        require: true,
-          default: function(){
-              return this.populated('cuentaOrigen')? this.cuentaOrigen.balance : 0;
-          }
-    },
+    // saldo: {
+    //     type: Schema.Types.Number,
+    //     ref: 'User',
+    //     require: true,
+    //       default: function(){
+    //           return this.populated('cuentaOrigen')? this.cuentaOrigen.balance : 0;
+    //       }
+    // },
     cuentaDestino: {
-        type: Schema.Types.String,
+        type: String,
         ref: 'User',
         require: true,
     },
