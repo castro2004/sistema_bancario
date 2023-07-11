@@ -1,193 +1,140 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const CreateUser = () => {
-  const [name, setName] = useState('');
-  const [username, setUserName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [dpi, setDpi] = useState('');
-  const [address, setAddress] = useState('');
-  const [cellPhone, setCellPhone] = useState('');
-  const [nameWork, setNameWork] = useState('');
-  const [incomeMonth, setIncomeMonth] = useState('');
-  const [Balance, setBalance] = useState(0);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    username: '',
+    rol: 'USER',
+    accountNumber: '',
+    typeAccount: 'Monetaria',
+    dpi: '',
+    address: '',
+    cellPhone: '',
+    email: '',
+    password: '',
+    nameWork: '',
+    incomeMonth: '',
+    balance: 0
+  });
 
-  const handleCreateUser = async () => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const generateAccountNumber = () => {
+    const randomNumber = Math.floor(1000000000 + Math.random() * 9000000000).toString();
+    setFormData({ ...formData, accountNumber: randomNumber });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     try {
-      const response = await axios.post(
-        'http://localhost:3008/api/create-user',
-        {
-          name,
-          username,
-          email,
-          password,
-          dpi,
-          address,
-          cellPhone,
-          nameWork,
-          incomeMonth,
-          Balance
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+      const response = await axios.post('http://localhost:3007/api/create-user', formData, {
+        headers: {
+          'Content-Type': 'application/json',
         }
-      );
+      });
 
-      if (response.status === 210) {
-        // El usuario se creó con éxito
-        console.log(data);
-        // Aquí puedes realizar cualquier acción adicional, como redireccionar o mostrar un mensaje al usuario
+      if (response.data.ok) {
+        console.log(response.data.msg);
       } else {
-        // Error al crear el usuario
-        setErrorMsg(response.data.msg);
+        console.error('Error al crear el usuario:', response.data.msg);
       }
+
+      // Hacer algo con la respuesta, como redireccionar a otra página o mostrar un mensaje de éxito.
     } catch (error) {
-      console.error('Error de red:', error);
-      // setErrorMsg('Error al crear el usuario', error);
-      // console.log('El error es', error)
+      console.error(error);
+      // Manejar el error, mostrar un mensaje de error, etc.
     }
   };
 
-// Para regresar al menu 
-  const regresarMenu=()=>{
-    window.location.href="/menu-admin";
-  }
+  // Estilos CSS inline
+  const labelStyle = {
+    display: 'block',
+    marginBottom: '8px',
+    // Añade otros estilos según tus preferencias
+  };
 
+  const inputStyle = {
+    marginBottom: '16px',
+    // Añade otros estilos según tus preferencias
+  };
+
+  const buttonStyle = {
+    marginLeft: '8px',
+    // Añade otros estilos según tus preferencias
+  };
 
   return (
-
-        <div className="row">
-          <div className="bg-white">
-            <h2>Create Users</h2>
-            <button onClick={() => regresarMenu()} className="btn btn-outline-secondary">Regresar</button>
-              <div className="row align-items-start">
-                <div className="col">
-                  <label htmlFor="name">Name:</label>
-                    <input
-                      type="text"
-                      id="name"
-                      className="form-control"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                </div>
-
-                  <div className="col">
-                    <label htmlFor="username">Username:</label>
-                      <input
-                        type="text"
-                        id="username"
-                        className="form-control"
-                        value={username}
-                        onChange={(e) => setUserName(e.target.value)}
-                      />
-                  </div>
-              </div>
-
-              <div className="row align-items-start">
-                  <div className="col">
-                    <label htmlFor="email">Email:</label>
-                      <input
-                        type="email"
-                        id="email"
-                        className="form-control"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                      />
-                  </div>
-                  <div className="col">
-                    <label  htmlFor="password">Password:</label>
-                      <input
-                        type="password"
-                        id="password"
-                        className="form-control"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                      />
-                  </div> 
-            </div>
-
-            <div className="row align-items-start">
-              <div className="col">
-                <label htmlFor="dpi">DPI:</label>
-                  <input
-                    type="text"
-                    id="dpi"
-                    className="form-control"
-                    value={dpi}
-                    onChange={(e) => setDpi(e.target.value)}
-                  />
-              </div>
-              <div className="col">
-                <label  htmlFor="address">Address:</label>
-                  <input
-                    type="text"
-                    id="address"
-                    className="form-control"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                  />
-              </div>
-            </div>
-            <div className="row align-items-start">
-                <div className="col">
-                  <label htmlFor="cellPhone">Cell Phone:</label>
-                  <input
-                    type="text"
-                    id="cellPhone"
-                    className="form-control"
-                    value={cellPhone}
-                    onChange={(e) => setCellPhone(e.target.value)}
-                  />
-                </div>
-                <div className="col">
-                  <label htmlFor="nameWork">Name of Work:</label>
-                  <input
-                    type="text"
-                    id="nameWork"
-                    className="form-control"
-                    value={nameWork}
-                    onChange={(e) => setNameWork(e.target.value)}
-                  />
-                </div>
-            </div>
-
-            <div className="row align-items-start">
-              <div className="col">
-                <label  htmlFor="incomeMonth">Income per Month:</label>
-                <input
-                  type="number"
-                  id="incomeMonth"
-                  className="form-control"
-                  value={incomeMonth}
-                  onChange={(e) => setIncomeMonth(e.target.value)}
-                />
-              </div>
-              <div className="col">
-                <label htmlFor="balance">Balance:</label>
-                  <input
-                    type="number"
-                    id="balance"
-                    className="form-control"
-                    value={Balance}
-                    onChange={(e) => setBalance(e.target.value)}
-                  />  
-              </div>
-            </div>
-             <button className="btn btn-outline-primary my-4 d-grid gap-2 col-4 mx-auto" type="button" onClick={handleCreateUser}>
-          Create User
-        </button>
-          </div>
-        </div>
+    <form onSubmit={handleSubmit}>
+      <label style={labelStyle}>
+        Name:
+        <input type="text" name="name" value={formData.name} onChange={handleChange} style={inputStyle} required />
+      </label>
+      <label style={labelStyle}>
+        Username:
+        <input type="text" name="username" value={formData.username} onChange={handleChange} style={inputStyle} required />
+      </label>
+      <label style={labelStyle}>
+        Account Number:
+        <input type="text" name="accountNumber" value={formData.accountNumber} onChange={handleChange} style={inputStyle} required />
+        <button type="button" onClick={generateAccountNumber} style={buttonStyle}>Generate</button>
+      </label>
+      <label style={labelStyle}>
+        Account Type:
+        <select name="typeAccount" value={formData.typeAccount} onChange={handleChange} style={inputStyle} required>
+          <option value="Monetaria">Monetaria</option>
+          <option value="Corriente">Corriente</option>
+          <option value="Ahorros">Ahorros</option>
+          <option value="Cheques">Cheques</option>
+        </select>
+      </label>
+      <label style={labelStyle}>
+        DPI:
+        <input type="text" name="dpi" value={formData.dpi} onChange={handleChange} style={inputStyle} required />
+      </label>
+      <label style={labelStyle}>
+        Address:
+        <input type="text" name="address" value={formData.address} onChange={handleChange} style={inputStyle} required />
+      </label>
+      <label style={labelStyle}>
+        Cell Phone:
+        <input type="text" name="cellPhone" value={formData.cellPhone} onChange={handleChange} style={inputStyle} required />
+      </label>
+      <label style={labelStyle}>
+        Email:
+        <input type="email" name="email" value={formData.email} onChange={handleChange} style={inputStyle} required />
+      </label>
+      <label style={labelStyle}>
+        Password:
+        <input type="password" name="password" value={formData.password} onChange={handleChange} style={inputStyle} required />
+      </label>
+      <label style={labelStyle}>
+        Work Name:
+        <input type="text" name="nameWork" value={formData.nameWork} onChange={handleChange} style={inputStyle} required />
+      </label>
+      <label style={labelStyle}>
+        Monthly Income:
+        <input type="number" name="incomeMonth" value={formData.incomeMonth} onChange={handleChange} style={inputStyle} required />
+      </label>
+      <label style={labelStyle}>
+        Balance:
+        <input type="number" name="balance" value={formData.balance} onChange={handleChange} style={inputStyle} required />
+      </label>
+      <button type="submit">Create User</button>
+    </form>
   );
 };
 
 export default CreateUser;
+
+
+
+
+
+
 
 
 

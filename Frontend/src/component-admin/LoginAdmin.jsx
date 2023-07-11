@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import iconUser from '../Components-user/img-user/login.jpg';
-import '../Components-user/cssLogin.css'
+import '../Components-user/css-User/cssLogin.css'
 
 
 
@@ -10,11 +10,12 @@ const LoginAdmin = () => {
   const navigate = useNavigate();
   const [user, setName] = useState('');
   const [password, setPassword] = useState('');
-
+  const [token, setToken] = useState(null);
+  
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        'http://localhost:3008/api/login-admin',
+        'http://localhost:3007/api/login-admin',
         { user, password },
         {
           headers: {
@@ -91,4 +92,4 @@ const LoginAdmin = () => {
   );
 };
 
-export default LoginAdmin;
+export default LoginAdmin;

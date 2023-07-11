@@ -1,78 +1,131 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import CreateAdmin from '../component-admin/img-admin/agregarAdmin.png';
-import EliminarAdmin from '../component-admin/img-admin/eliminarUsuario.png';
-import UpadateAdmin  from '../component-admin/img-admin/actualizarUsuario.png';
-import OrdenAcount  from '../component-admin/img-admin/verCuentas.png';
-import ViewData from '../component-admin/img-admin/view_data.png';
-import CreateUser from '../component-admin/img-admin/agregar-usuario.png';
-import '../Components-user/MenuUser.css';
-import { Home2 } from '../App';
+import agregarA from '../component-admin/img-admin/agregarAdmin.png';
+import viewdata_img from '../Components-user/img-user/view_data.png';
+import deleteA from '../component-admin/img-admin/eliminarUsuario.png';
+import actualizarA from '../component-admin/img-admin/actualizarUsuario.png';
+import viewC from '../component-admin/img-admin/verCuentas.png';
+import agregarU from '../component-admin/img-admin/agregar-usuario.png';
+import banco from '../Components-user/img-user/banco.png';
+import img1 from '../Components-user/img-user/RL.jpg';
+import img2 from '../Components-user/img-user/AT.jpg';
+import img3 from '../Components-user/img-user/EP.jpg';
+import img4 from '../Components-user/img-user/20944139.jpg';
+import '../Components-user/css-User/MenuUser.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 
 const MenuAdmin = () => {
-  const buttonStyle = {
-    padding: '10px 20px',
-    marginTop: '60px',
-    fontSize: '16px',
-    fontWeight: 'bold',
-    borderRadius: '5px',
-    backgroundColor: '#e0e0e0',
-    color: '#000',
-    textDecoration: 'none',
-    border: 'none',
-    cursor: 'pointer',
-  };
+  const [menuOpen, setMenuOpen] = useState(false);
 
-    const cerrarSeccion=()=>{
-      localStorage.removeItem("token");
-      window.location.href ="/login-admin";
-    }
+  const handleToggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
   return (
     <div>
-      <div id="div1">
-        <div id="rock1"></div>
-        <div id="rock2"></div>
-        <div id="rock3"></div>
-        <div id="rock4"></div>
-        <div id="rock5"></div>
-        <div id="rock6"></div>
-        <div id="rock7"></div>
-        <div id="rock8"></div>
-        <div id="diva1">
-          <Link to="/create-admin">
-            <img className="menu-img" src={ CreateAdmin} alt="Button" />
-          </Link>
-          <Link to="/delete-admin">
-            <img className="menu-img" src={ EliminarAdmin } alt="Button" />
-          </Link>
-          <Link to="/update-admin">
-            <img className="menu-img" src={ UpadateAdmin } alt="Button" />
-          </Link>
-          <Link to="/accounts-admin">
-            <img className="menu-img" src={ OrdenAcount } alt="Button" />
-          </Link>
-          <Link to="/view-data">
-            <img className="menu-img" src={ ViewData } alt="Button" />
-          </Link>
-          <Link to="/create-user">
-            <img className="menu-img" src={ CreateUser } alt="Button" />
-          </Link>
-        </div>
-      </div>
-      <div style={{ marginTop: '150px' }}>
-        <Home2 className="home-content4" />
-        <h2 style={{ textAlign: 'center' }}>MENU DEL ADMINISTRADOR</h2>
-        <div className="d-grid gap-2 col-6 mx-auto">
-            <button className="btn btn-outline-info" onClick={() =>cerrarSeccion()} >Cerrar sesion</button>
-        </div>
-      </div>
+    <div className='navbar-container'>
+      <nav className="horizontal-navbar">
+      <img src={banco} alt="Banco" width={200} className="navbar-item" style={{marginLeft:"30px"}}/>
+      <h1 style={{color: " #040404  "}}>SISTEMA BANCARIO</h1>
+      <ul className="navbar-items">
+          <li className="navbar-item">
+          </li>
+          <li className="navbar-item navbar-item-right">
+            <Link to="/createAdmin" className="navbar-link">
+              <div className="menu-item">
+                <img className='menu-img' src={agregarA} alt="Button" />
+                <h1 className='smaller-text'>Agregar administrador</h1>
+              </div>
+            </Link>
+          </li>
+          <li className="navbar-item navbar-item-right">
+            <Link to="/viewData-admin" className="navbar-link">
+              <div className="menu-item">
+                <img className='menu-img' src={viewdata_img} alt="Button" />
+                <h1 className='smaller-text'>Ver mis Datos</h1>
+              </div>
+            </Link>
+          </li>
+          <li className="navbar-item navbar-item-right">
+            <Link to='/update-admin' className="navbar-link">
+              <div className="menu-item">
+                <img className="menu-img" src={actualizarA} alt="Button" />
+                <h1 className='smaller-text'>Actualizar mis Datos</h1>
+              </div>
+            </Link>
+          </li>
+          <li className="navbar-item navbar-item-right">
+            <Link to="/admin/accounts" className="navbar-link">
+              <div className="menu-item">
+                <img className="menu-img" src={viewC} alt="Button" />
+                <h1 className='smaller-text'>Ver cuentas</h1>
+              </div>
+            </Link>
+          </li>
+          <li className="navbar-item navbar-item-right">
+            <Link to="/create-user" className="navbar-link">
+              <div className="menu-item">
+                <img className="menu-img" src={agregarU} alt="Button" />
+                <h1 className='smaller-text'>Crear Usuario</h1>
+              </div>
+            </Link>
+          </li>
+          <li className="navbar-item navbar-item-right">
+            <Link to="/delete-admin" className="navbar-link">
+              <div className="menu-item">
+                <img className="menu-img" src={deleteA} alt="Button" />
+                <h1 className='smaller-text'>Eliminar Administrador</h1>
+              </div>
+            </Link>
+          </li>
+        </ul>
+      </nav>
     </div>
-    
+    <center>
+        <div>
+          <ul />
+          <img src={banco} width={450} alt="" />
+          <p className="welcome-text">Bienvenidos este es nuestro proyecto para un sistema Bancario</p>
+        </div>
+        <div className="d-flex justify-content-center">
+          <div className='card'>
+            <div className='polaroid'>
+              <img src={img1} width={430} />
+              <ul />
+              <p>Programa citas en linea</p>
+            </div>
+          </div>
+          <div className='card'>
+            <div className='polaroid'>
+              <img src={img2} width={407} />
+              <ul />
+              <p>Atencion al cliente</p>
+            </div>
+          </div>
+          <div className='card'>
+            <div className='polaroid'>
+              <img src={img3} width={320} />
+              <ul />
+              <p>Atencion al cliente</p>
+            </div>
+          </div>
+        </div>
+      </center>
+    </div> 
   );
 };
 
+
 export default MenuAdmin;
+
+
+
+
+
+
+
+
+
 
 

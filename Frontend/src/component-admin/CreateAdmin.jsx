@@ -1,77 +1,88 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate } from "react-router-dom";
-import { listAdmin } from './api/Admin';
-import { Admins } from './models/ModelAdmis';
+import React, { useState } from 'react';
+import axios from 'axios';
 
-export const CreateAdmin = () => {
-  const [userAdmin, setUserAdmin] = useState([ ]);
-  const [admins, setAdmis] = useState(Admins);
-  const navigate = useNavigate();
-  const [showModel, setShowModal] = useState(false);
+const CreateAdmin = () => {
+  const [user, setUser] = useState('');
+  const [password, setPassword] = useState('');
+  const [dpi, setDpi] = useState('');
+  const [cellPhone, setCellPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const regresarMenu=() =>{
-        window.location.href ="/menu-admin";
+  const handleUserChange = (e) => {
+    setUser(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleDpiChange = (e) => {
+    setDpi(e.target.value);
+  };
+
+  const handleCellPhoneChange = (e) => {
+    setCellPhone(e.target.value);
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('http://localhost:3007/api/create-admin', {
+        user,
+        password,
+        dpi,
+        cellPhone,
+        email,
+      });
+
+      const { msg, ok, admin } = response.data;
+
+      if (ok) {
+        // La creación del administrador fue exitosa
+        console.log(msg);
+        console.log(admin);
+        // Realizar las acciones necesarias después de crear el administrador exitosamente
+      } else {
+        // La creación del administrador falló
+        setErrorMsg(msg);
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMsg('No se pudo crear el administrador');
     }
-
-// Para traer el listar los datos 
-const reload = async () => {   
-    const result = await listAdmin();
-    setUserAdmin(result);
-}
-
-const hadleOpen = (u)=>{
-  setShowModal(true);
-  setAdmis(u);
-}
-
-const closeModal = ()=>{
-  setShowModal(false);
-}
-
-useEffect(() =>{
-  reload();
-},[showModel]);
+  };
 
   return (
-    <>
-    
-        <div className="col-sm-12 col-md-8 col-lg-8 col-xl-8 py-4 bg-white">
-          <h2>Listado de Admins</h2>
-          <table className="table table-dark table-striped">
-            <thead>
-              <tr>
-                <th>Rol</th>
-                <th>Indentificador</th>
-                <th>User</th>
-                <th>Password</th>
-                <th>DPI</th>
-                <th>Teléfono</th>
-                <th>Correo Electrónico</th>
-              </tr>
-            </thead>
-            <tbody>
-              {userAdmin.map((u) =>{
-                return(
-                  <tr key={u._id}>
-                    <td>{u._id}</td>
-                    <td>{u._rol}</td>
-                    <td>{u._user}</td>
-                    <td>{u._password}</td>
-                    <td>{u._dpi}</td>
-                    <td>{u._cellPhone}</td>
-                    <td>{u._email}</td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
-            <div className="d-grid gap-2 d-md-flex justify-content-md">
-                <button type="button" className="btn btn-danger">Eliminar</button>
-                <button className="btn btn-primary" type="button">Editar</button>
-            </div>
-        </div>
-    </>
-  )
-}
+    <div>
+      <h2>Crear Administrador</h2>
+      {errorMsg && <p>{errorMsg}</p>}
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="user">Usuario:</label>
+        <input type="text" id="user" value={user} onChange={handleUserChange} required />
 
-export default CreateAdmin
+        <label htmlFor="password">Contraseña:</label>
+        <input type="password" id="password" value={password} onChange={handlePasswordChange} required />
+
+        <label htmlFor="dpi">DPI:</label>
+        <input type="text" id="dpi" value={dpi} onChange={handleDpiChange} required />
+
+        <label htmlFor="cellPhone">Número de teléfono:</label>
+        <input type="text" id="cellPhone" value={cellPhone} onChange={handleCellPhoneChange} required />
+
+        <label htmlFor="email">Email:</label>
+        <input type="email" id="email" value={email} onChange={handleEmailChange} required />
+
+        <button type="submit">Crear Administrador</button>
+      </form>
+    </div>
+  );
+};
+
+export default CreateAdmin;
+
