@@ -22,7 +22,7 @@ import '../src/Components-user/css-User/menuUser.css'
 const App = () => {
   return (
     <Router>
-      <div style={{ backgroundColor: ' #2a395c ' }}>
+      <div style={{ backgroundColor: '#1c5484' }}>
         <div className="row justify-content-center align-items-center vh-100">
           <div className="col-md-6">
             {/* <div className="card shadow bg-white"> */}
