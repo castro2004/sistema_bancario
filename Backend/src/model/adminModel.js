@@ -13,7 +13,7 @@ const mongoose = require('mongoose');
         rol: {
             type: String,
             enum: ['USER', 'ADMIN'],
-            default: 'USER',
+            default: 'ADMIN',
         },
         dpi: {
             type: String,
@@ -28,6 +28,9 @@ const mongoose = require('mongoose');
             required: true,
             unique: true 
         },
+        token: {
+            type: String
+        }
     })
 
 module.exports = mongoose.model('Admin', adminSchema)

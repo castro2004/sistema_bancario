@@ -16,7 +16,7 @@ api.post('/create-favorite', createFavorite)
 api.get('/read-favorite', readFavorite);
 api.put('/update-favorite', updateFavorite);
 api.delete('/delete-favorite', deleteFavorite);
-api.post('/create-transfencias', createTransferencias);
+api.post('/transfers', createTransferencias);
 // api.post('/login');
 api.get('/menu-user', menuUser)
 api.delete('/delete-user/:id', deleteUser);

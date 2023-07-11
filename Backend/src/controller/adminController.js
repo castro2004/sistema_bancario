@@ -51,88 +51,81 @@ const createAdmin = async(req, res) =>{
 
 //------------------------------------------------------read admin--------------------------------------------------------------
 
-const readAdmin = async(req, res) => {
+// const readAdmin = async(req, res) => {
 
-    try{
+//     try{
 
-        const admin = await Admin.find();
-        if(!admin){
-            res.status(410).send({
-                msg: 'No hay administra'
-            })
-        }else{
-          res.status(200).send({
-                      msg: 'Administradores encontrados',
-                      admin: admin
-                    });
-        }
+//         const admin = await Admin.find();
+//         if(!admin){
+//             res.status(410).send({
+//                 msg: 'No hay administra'
+//             })
+//         }
 
-    }catch(err){
-      res.status(404).send({
-        msg: 'No se pudo listar los admins',
-        err,
-      })
-    }
-}
+//     }catch(err){
+
+//     }
+
+// }
 
 
 //----------------------------------------------------------delete admin--------------------------------------------------------------
 
-const deleteAdmin = async (req, res) => {
-  try {
-    const token = req.header('token');
-    const decoded = jwt(token);
-    const adminD = req.body;
+const deleteAdmin = async(req, res) => {
 
-    const adminDelete = await Admin.findOneAndDelete(adminD);
+    try {
+        const admin = req.params;
+        const id = req.params.id;
+        const result = await Admin.findByIdAndDelete(id);
 
-    if(!decoded){
-      res.status(404).send({
-        msg: 'Lo siento, el token que ingresaste es invalido'
-      });
-    } 
-
-    res.status(200).send({
-      msg: "La ayuda social se elimino de forma exitosa",
-      eleminate: adminDelete
-    });
-
-  } catch (error) {
-    console.error('Error al eliminar la cuenta del administrador:', error);
-    res.status(500).json({ mensaje: 'Error al eliminar la cuenta del administrador' });
-  }
-};
-
-
+        if(!admin){
+          res.status(410).send({
+            msg: "El administrador no existe, verificar si los datos son correctos"
+        });
+        }else{
+          res.status(201).send({
+              msg: "Se a eliminado el administador",
+              admin: result
+          });
+      }
+      } catch (error) {
+        console.error('Error al eliminar la cuenta del administrador:', error);
+        res.status(500).json({ mensaje: 'Error al eliminar la cuenta del administrador' });
+      }
+}
 
 //---------------------------------------------------------update admin---------------------------------------------------------------------------------------------
 
-const updateAdmin = async (req, res) => {
-  try {
-    
-    const token = req.header('token');
-    const decoded = jwt(token);
-    const adminU = req.body
+const updateAdmin = async(req, res) => {
 
-    const updateA = await Admin.findOneAndUpdate(adminU);
-    
-    if(!decoded){
-      res.status(404).json({
-        nsg: "El token que ingresaste no es valido"
-      });
-    }
+    try {
+       
+      const id = req.params.id;
+        const adminEdit = {...req.body};
 
-    res.status(200).send({
-      msg: "Sus datos se han actualizado de forma exitos",
-      AdminUpdate: updateA
-    });
+        adminEdit.password = adminEdit.password
+        ? bcrypt.hashSync(adminEdit.password, bcrypt.genSaltSync())
+        : adminEdit.password;
 
-  } catch (error) {
-    console.error('Error al editar la cuenta del administrador:', error);
-    res.status(500).json({ mensaje: 'Error al editar la cuenta del administrador' });
-  }
-};
+        const adminComplete = await Admin.findByIdAndUpdate(id, adminEdit, {new: true});
 
+        if(!adminComplete){
+          res.status(401).send({
+              msg: "El administrador que desea actualizar, no existe"
+          });
+      }else{
+          // res.status(410).send({
+              return res.status(200).send({
+                  message: 'Perfil actualizado correctamente', adminComplete,
+              });
+      }
+
+      } catch (error) {
+        console.error('Error al editar la cuenta del administrador:', error);
+        res.status(500).json({ mensaje: 'Error al editar la cuenta del administrador' });
+      }
+
+}
 
 //----------------------------------------------------viewDataAdmin admin------------------------------------------------------------------------
 
@@ -264,8 +257,7 @@ module.exports = {
     updateAdmin,
     deleteAdmin,
     loginAdmin,
-    getAccountsByTransactionCount,
-    readAdmin
+    getAccountsByTransactionCount
 }
 
 
