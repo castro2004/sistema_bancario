@@ -1,88 +1,101 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from "react-router-dom";
+import { listAdmin } from './api/Admin';
+import { Admins } from './models/ModelAdmis';
+import  EditIcon  from "@mui/icons-material/Edit";
+import  DeleteIcon  from "@mui/icons-material/DeleteOutlined";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
-const CreateAdmin = () => {
-  const [user, setUser] = useState('');
-  const [password, setPassword] = useState('');
-  const [dpi, setDpi] = useState('');
-  const [cellPhone, setCellPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleUserChange = (e) => {
-    setUser(e.target.value);
-  };
+export const CreateAdmin = () => {
+  const [data, setUserAdmin] = useState([ ]);
+  const [admins, setAdmis] = useState(Admins);
+  const navigate = useNavigate();
+  const [showModel, setShowModal] = useState(false);
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleDpiChange = (e) => {
-    setDpi(e.target.value);
-  };
-
-  const handleCellPhoneChange = (e) => {
-    setCellPhone(e.target.value);
-  };
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await axios.post('http://localhost:3007/api/create-admin', {
-        user,
-        password,
-        dpi,
-        cellPhone,
-        email,
-      });
-
-      const { msg, ok, admin } = response.data;
-
-      if (ok) {
-        // La creación del administrador fue exitosa
-        console.log(msg);
-        console.log(admin);
-        // Realizar las acciones necesarias después de crear el administrador exitosamente
-      } else {
-        // La creación del administrador falló
-        setErrorMsg(msg);
-      }
-    } catch (error) {
-      console.error(error);
-      setErrorMsg('No se pudo crear el administrador');
+  const regresarMenu=() =>{
+        window.location.href ="/menu-admin";
     }
-  };
+
+// Para traer el listar los datos 
+const reload = async () => {   
+    const result = await listAdmin();
+    setUserAdmin(result);
+}
+
+const hadleOpen = (u)=>{
+  setShowModal(true);
+  setAdmis(u);
+}
+
+const closeModal = ()=>{
+  setShowModal(false);
+}
+
+useEffect(() =>{
+  reload();
+},[showModel]);
 
   return (
-    <div>
-      <h2>Crear Administrador</h2>
-      {errorMsg && <p>{errorMsg}</p>}
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="user">Usuario:</label>
-        <input type="text" id="user" value={user} onChange={handleUserChange} required />
-
-        <label htmlFor="password">Contraseña:</label>
-        <input type="password" id="password" value={password} onChange={handlePasswordChange} required />
-
-        <label htmlFor="dpi">DPI:</label>
-        <input type="text" id="dpi" value={dpi} onChange={handleDpiChange} required />
-
-        <label htmlFor="cellPhone">Número de teléfono:</label>
-        <input type="text" id="cellPhone" value={cellPhone} onChange={handleCellPhoneChange} required />
-
-        <label htmlFor="email">Email:</label>
-        <input type="email" id="email" value={email} onChange={handleEmailChange} required />
-
-        <button type="submit">Crear Administrador</button>
-      </form>
-    </div>
-  );
-};
-
-export default CreateAdmin;
+    <>
+        <div className="col text-center bg-white">
+          <h2>Listado de Admins</h2>
+          <table className="table table-hover table-bordered table-dark">
+            <thead>
+              <tr>
+                <th>Indentificador</th>
+                <th>Rol</th>
+                <th>User</th>
+                <th>DPI</th>
+                <th>Teléfono</th>
+                <th>Correo Electrónico</th>
+                <th>Opciones</th>
+              </tr>
+            </thead>
+            <tbody className="table-group-divider">
+              {data.map((u) =>{
+                return(
+                  <tr key={u._id}>
+                    <td>{u._id}</td>
+                    <td>{u.rol}</td>
+                    <td>{u.user}</td>
+                    <td>{u.dpi}</td>
+                    <td>{u.cellPhone}</td>
+                    <td>{u.email}</td>
+                      {/* boton de editar  */}
+                    <td>
+                    <button
+                      className="btn btn-warning"
+                      onClick={() => handleOpenModal(u)}
+                    >
+                      <EditIcon></EditIcon>
+                    </button>
+                    {/* boton de eliminar  */}
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => {
+                        eliminar(u._id);
+                      }}
+                    >
+                      <DeleteIcon />
+                    </button>
+                    {/* boton de ver el perfil  */}
+                    <button
+                      className="btn btn-success"
+                      onClick={() => {
+                        profile(u);
+                      }}
+                    >
+                      <VisibilityIcon></VisibilityIcon>
+                    </button>
+                    </td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+    </>
+  )
+}
 
