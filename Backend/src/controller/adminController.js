@@ -51,22 +51,29 @@ const createAdmin = async(req, res) =>{
 
 //------------------------------------------------------read admin--------------------------------------------------------------
 
-// const readAdmin = async(req, res) => {
+const readAdmin = async(req, res) => {
 
-//     try{
+  try{
 
-//         const admin = await Admin.find();
-//         if(!admin){
-//             res.status(410).send({
-//                 msg: 'No hay administra'
-//             })
-//         }
+      const admin = await Admin.find();
+      if(!admin){
+          res.status(410).send({
+              msg: 'No hay administra'
+          })
+      }else{
+        res.status(200).send({
+                    msg: 'Administradores encontrados',
+                    admin: admin
+                  });
+      }
 
-//     }catch(err){
-
-//     }
-
-// }
+  }catch(err){
+    res.status(404).send({
+      msg: 'No se pudo listar los admins',
+      err,
+    })
+  }
+}
 
 
 //----------------------------------------------------------delete admin--------------------------------------------------------------
@@ -257,7 +264,8 @@ module.exports = {
     updateAdmin,
     deleteAdmin,
     loginAdmin,
-    getAccountsByTransactionCount
+    getAccountsByTransactionCount,
+    readAdmin
 }
 
 

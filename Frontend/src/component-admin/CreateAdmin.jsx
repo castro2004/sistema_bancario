@@ -99,3 +99,4 @@ useEffect(() =>{
   )
 }
 
+export default CreateAdmin;
