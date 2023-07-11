@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-// import '../component-admin/css/createAdmin.css';
 import agregarA from '../component-admin/img-admin/agregarAdmin.png';
 import viewdata_img from '../Components-user/img-user/view_data.png';
 import deleteA from '../component-admin/img-admin/eliminarUsuario.png';
@@ -9,9 +8,6 @@ import actualizarA from '../component-admin/img-admin/actualizarUsuario.png';
 import viewC from '../component-admin/img-admin/verCuentas.png';
 import agregarU from '../component-admin/img-admin/agregar-usuario.png';
 import banco from '../Components-user/img-user/banco.png';
-import img1 from '../Components-user/img-user/RL.jpg';
-import img2 from '../Components-user/img-user/AT.jpg';
-import img3 from '../Components-user/img-user/EP.jpg';
 import CU from '../component-admin/img-admin/agregar-usuario.png';
 
 const CreateAdmin = () => {
@@ -133,13 +129,14 @@ const CreateAdmin = () => {
       </nav>
     </div>
       </div>
+      <ul/>
     <div style={{ backgroundColor: '#3f6cb6', padding: '10px', borderRadius: '7px', color: '#ffffff' }}>
       <div style={{ backgroundColor: '#2c3c5c', padding: '10px', borderRadius: '7px', marginBottom: '20px' }}>
         <h2 style={{ margin: 0, color: '#ffffff' }}>Sistema de Administración</h2>
       </div>
       <center>
         <h2 style={{ marginBottom: '10px', color: '#c0a57d' }}>
-          <img src={CU} width={120} alt="Agregar Usuario" /> Crear Administrador
+          <img src={CU} width={120} alt="Agregar Usuario" /> CREAR ADMINISTRADOR
         </h2>
         {errorMsg && <p>{errorMsg}</p>}
         <div
