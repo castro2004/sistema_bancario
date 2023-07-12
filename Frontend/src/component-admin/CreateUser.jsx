@@ -4,10 +4,17 @@ import { Link } from 'react-router-dom';
 import agregarA from '../component-admin/img-admin/agregarAdmin.png';
 import viewdata_img from '../Components-user/img-user/view_data.png';
 import deleteA from '../component-admin/img-admin/eliminarUsuario.png';
-import actualizarA from '../component-admin/img-admin/actualizarUsuario.png';
+import CS from '../Components-user/img-user/cerrar-sesion.png';
+import menu from '../component-admin/img-admin/menu.png';
 import viewC from '../component-admin/img-admin/verCuentas.png';
 import agregarU from '../component-admin/img-admin/agregar-usuario.png';
 import banco from '../Components-user/img-user/banco.png';
+import img1 from '../Components-user/img-user/RL.jpg';
+import img2 from '../Components-user/img-user/AT.jpg';
+import img3 from '../Components-user/img-user/EP.jpg';
+import img4 from '../Components-user/img-user/20944139.jpg';
+import '../Components-user/css-User/MenuUser.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import AA from '../component-admin/img-admin/agregarAdmin.png';
 
 const CreateUser = () => {
@@ -79,64 +86,85 @@ const CreateUser = () => {
   return (
     <div>
       <div>
-      <div className='navbar-container'>
-      <nav className="horizontal-navbar">
-      <img src={banco} alt="Banco" width={200} className="navbar-item" style={{marginLeft:"30px"}}/>
-      <h1 style={{color: " #040404  "}}>SISTEMA BANCARIO</h1>
-      <ul className="navbar-items">
-          <li className="navbar-item">
-          </li>
-          <li className="navbar-item navbar-item-right">
-            <Link to="/createAdmin" className="navbar-link">
-              <div className="menu-item">
-                <img className='menu-img' src={agregarA} alt="Button" />
-                <h1 className='smaller-text'>Agregar administrador</h1>
-              </div>
-            </Link>
-          </li>
-          <li className="navbar-item navbar-item-right">
-            <Link to="/viewData-admin" className="navbar-link">
-              <div className="menu-item">
-                <img className='menu-img' src={viewdata_img} alt="Button" />
-                <h1 className='smaller-text'>Ver mis Datos</h1>
-              </div>
-            </Link>
-          </li>
-          <li className="navbar-item navbar-item-right">
-            <Link to='/update-admin' className="navbar-link">
-              <div className="menu-item">
-                <img className="menu-img" src={actualizarA} alt="Button" />
-                <h1 className='smaller-text'>Actualizar mis Datos</h1>
-              </div>
-            </Link>
-          </li>
-          <li className="navbar-item navbar-item-right">
-            <Link to="/admin/accounts" className="navbar-link">
-              <div className="menu-item">
-                <img className="menu-img" src={viewC} alt="Button" />
-                <h1 className='smaller-text'>Ver cuentas</h1>
-              </div>
-            </Link>
-          </li>
-          <li className="navbar-item navbar-item-right">
-            <Link to="/create-user" className="navbar-link">
-              <div className="menu-item">
-                <img className="menu-img" src={agregarU} alt="Button" />
-                <h1 className='smaller-text'>Crear Usuario</h1>
-              </div>
-            </Link>
-          </li>
-          <li className="navbar-item navbar-item-right">
-            <Link to="/delete-admin" className="navbar-link">
-              <div className="menu-item">
-                <img className="menu-img" src={deleteA} alt="Button" />
-                <h1 className='smaller-text'>Eliminar Administrador</h1>
-              </div>
-            </Link>
-          </li>
-        </ul>
-      </nav>
-    </div>
+        <div className="sidebar">
+          <div className="logo-details">
+            <i className='bx bxs-pyramid'></i>
+          </div>
+          <img src={banco} width={250} />
+          <ul className='nav-links'>
+            <li>
+              <a>
+                <i className='bx bx-grid-alt'></i>
+                <span className="link_name">ADMINSTRADOR</span>
+              </a>
+              <ul className='sub-menu blank'>
+                <li><a className="link_name" href="/createAdmin">Category</a></li>
+              </ul>
+            </li>
+            <ul/>
+            <li>
+              <ul/>
+              <ul/>
+              <li>
+                <div className="icon-link">
+                  <a href="/viewData-admin">
+                    <i className='bx bx-book-alt'></i>
+                    <span className="link_name">Ver mis datos</span>
+                  </a>
+                  <i className='bx bxs-chevron-down arrow'></i>
+                </div>
+                <Link to="/viewData-admin">
+                  <img src={viewdata_img} width={70} />
+                </Link>
+              </li>
+              <li>
+                <a href="/admin/accounts">
+                  <i className='bx bx-pie-chart-alt-2'></i>
+                  <span className="link_name">Ver lista de usuarios</span>
+                </a>
+                <Link to="/admin/accounts">
+                  <img src={viewC} width={70} />
+                </Link>
+              </li>
+              <li>
+                <a href="/create-user">
+                  <i className='bx bx-pie-chart-alt-2'></i>
+                  <span className="link_name">Agregar Usuario</span>
+                </a>
+                <Link to="/create-user">
+                  <img src={agregarU} width={70} />
+                </Link>
+              </li>
+              <li>
+                <a href="/createAdmin">
+                  <i className='bx bx-pie-chart-alt-2'></i>
+                  <span className="link_name">Agregar Administrador</span>
+                </a>
+                <Link to="/createAdmin">
+                  <img src={agregarA} width={70}/>
+                </Link>
+              </li>
+              <li>
+                <a href="/menu-admin">
+                  <i className='bx bx-pie-chart-alt-2'></i>
+                  <span className="link_name">Regresar al menu</span>
+                </a>
+                <Link to="/menu-admin">
+                  <img src={menu} width={70}/>
+                </Link>
+              </li>
+              <li>
+                <a href="/login-admin">
+                  <i className='bx bx-pie-chart-alt-2'></i>
+                  <span className="link_name">Cerrar Sesion</span>
+                </a>
+                <Link to="/login-admin">
+                  <img src={CS} width={70}/>
+                </Link>
+              </li>
+            </li>
+          </ul>
+        </div>
       </div>
       <div style={{backgroundColor: '#3f6cb6', padding: '10px', borderRadius: '7px', color: '#fffff'}}>
         <div style={{ backgroundColor: '#2c3c5c', padding: '10px', borderRadius: '7px', marginBottom: '20px' }}>

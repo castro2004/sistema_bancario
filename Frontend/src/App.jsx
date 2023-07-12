@@ -11,13 +11,13 @@ import CreateTransfencias from './Components-user/CreateTransfencias';
 import LoginAdmin from './component-admin/LoginAdmin';
 import MenuAdmin from './component-admin/MenuAdmin';
 import CreateUser from './component-admin/CreateUser';
-import Login from './Components-user/Login';
 import ViewUserData from './component-admin/ViewData';
 import ViewDataAdmin from './component-admin/ViewData';
-import bank_img from '../src/Components-user/img-user/banco.png'
+import bank_img from '../src/Components-user/img-user/banco.png';
 import C from './component-admin/CreateAdmin';
-import CreateAdmin from './component-admin/CreateAdmin';'../src/App.css'
-import '../src/Components-user/css-User/menuUser.css'
+import CreateAdmin from './component-admin/CreateAdmin';
+import '../src/Components-user/css-User/menuUser.css';
+import OrderAcount from './component-admin/OrdenAcount';
 
 const App = () => {
   return (
@@ -25,25 +25,22 @@ const App = () => {
       <div style={{ backgroundColor: '#1c5484' }}>
         <div className="row justify-content-center align-items-center vh-100">
           <div className="col-md-6">
-            {/* <div className="card shadow bg-white"> */}
-              {/* <div className="card-body"> */}
-                <Routes>
-                  {/* Routes for user */}
-                  <Route style={{backgroundColor: 'white'}} path="/login-user" element={<LoginUser/>} />
-                  <Route path="/menu-user" element={<UserRoutes />} />
+            <Routes>
+              {/* Routes for user */}
+              <Route path="/login-user" element={<LoginUser />} />
+              <Route path="/menu-user" element={<UserRoutes />} />
 
-                  {/* Routes for admin */}
-                  <Route path="/login-admin" element={<LoginAdmin />} />
-                  <Route path="/menu-admin" element={<MenuAdmin />} />
-                  <Route path="/create-user" element={<CreateUser />} />
-                  <Route path='/viewData-admin' element={<ViewDataAdmin/>}/>
-                  <Route path='/createAdmin' element={<CreateAdmin/>}/>
-                  {/* Route for the main login */}
-                  <Route path="/" element={<Login />} />
-                  {/* <Route path="/" element={<Home />} /> */}
-                </Routes>
-              {/* </div> */}
-            {/* </div> */}
+              {/* Routes for admin */}
+              <Route path="/login-admin" element={<LoginAdmin />} />
+              <Route path="/menu-admin" element={<MenuAdmin />} />
+              <Route path="/create-user" element={<CreateUser />} />
+              <Route path="/viewData-admin" element={<ViewDataAdmin />} />
+              <Route path="/createAdmin" element={<CreateAdmin />} />
+              <Route path="/admin/accounts" element={<OrderAcount />} />
+
+              {/* Route for the main login */}
+              {/* <Route path="/" element={<Login />} /> */}
+            </Routes>
           </div>
         </div>
       </div>
@@ -51,12 +48,11 @@ const App = () => {
   );
 };
 
-export const UserRoutes = () => {
+const UserRoutes = () => {
   return (
     <div>
       <MenuUser />
       <Routes>
-      
         <Route path="/" element={<Home />} />
         <Route path="/historyTransaction-user" element={<HistoryTransactionUser />} />
         <Route path="/create-favorite" element={<CreateFavorite />} />
@@ -69,40 +65,25 @@ export const UserRoutes = () => {
   );
 };
 
-export const Home = () => {
+const Home = () => {
   return (
     <>
-      <ul/>
+      <ul />
       <div>
-        <ul/>
-          <center><ul/><img className='home-content' src={bank_img} width={150} height={150} />
-          </center>
+        <ul />
+        <center>
+          <ul />
+          <img className='home-content' src={bank_img} width={150} height={150} />
+        </center>
       </div>
       <h2 className='-menu-title' style={{ textAlign: 'center' }}>MENU BANCARIO DEL USUARIO</h2>
     </>
   );
 };
 
-export const Home2 = () => {
-  return (
-    <div>
-      <ul/>
-          <center><ul/><img className='home-content4' src={bank_img} width={200} height={150} />
-          </center>
-    </div>
-  )
-}
-
-const HomeA = () => {
-  return (
-    <div>
-      <h2 className='-menu-title' style={{ textAlign: 'center' }}>MENU BANCARIO</h2>
-      
-    </div>
-  );
-};
-
 export default App;
+
+
 
 
 
