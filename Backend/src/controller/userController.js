@@ -11,11 +11,11 @@ const jwt = require('jsonwebtoken');
 // ? FUNCION PARA CREAR EL USUARIO 
 
 const createUser = async(req, res) => {
-    const {name, email, password, dpi, acountNumber, cellPhone, incomeMonth} = req.body
+    const {name, email, password, dpi, accountNumber, cellPhone, incomeMonth} = req.body
     try{
 
         let user = await User.findOne({email});
-        let userAcount = await User.findOne({acountNumber})
+        let userAcount = await User.findOne({accountNumber})
         let userDPI = await User.findOne({dpi})
         let userCell = await User.findOne({cellPhone})
         let userIncomeMonth = await User.findOne({incomeMonth})

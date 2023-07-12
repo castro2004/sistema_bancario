@@ -1,0 +1,55 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\axelm\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js
+
+PATH: 
+  C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Users\axelm\.console-ninja\.bin;C:\Users\axelm\AppData\Local\Microsoft\WindowsApps;C:\Users\axelm\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\axelm\AppData\Roaming\npm;C:\Users\axelm\AppData\Local\GitHubDesktop\bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.13.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, unlink 'C:\sistema_bancario\Backend\node_modules\bcrypt\lib\binding\napi-v3\bcrypt_lib.node'
+
+npm manifest: 
+  {
+    "name": "backend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "nodemon index.js"
+    },
+    "author": "Castro2004",
+    "license": "ISC",
+    "dependencies": {
+      "bcrypt": "^5.1.0",
+      "bcryptjs": "^2.3.3",
+      "body-parser": "^1.20.1",
+      "connect-multiparty": "^2.2.0",
+      "cors": "^2.8.5",
+      "dotenv": "^16.0.3",
+      "express": "^4.18.2",
+      "express-validator": "^6.14.2",
+      "jsonwebtoken": "^9.0.0",
+      "jwt-simple": "^0.5.6",
+      "moment": "^2.29.4",
+      "mongoose": "^6.8.3",
+      "nodemailer": "^6.9.1",
+      "nodemon": "^2.0.22",
+      "populate": "^5.0.1",
+      "req": "^0.1.4"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

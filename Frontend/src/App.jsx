@@ -18,6 +18,7 @@ import bank_img from '../src/Components-user/img-user/banco.png'
 import C from './component-admin/CreateAdmin';
 import CreateAdmin from './component-admin/CreateAdmin';'../src/App.css'
 import '../src/Components-user/css-User/menuUser.css'
+import ViewUserDataUser from './Components-user/ViewUserDataUser';
 
 const App = () => {
   return (
@@ -38,6 +39,8 @@ const App = () => {
                   <Route path="/create-user" element={<CreateUser />} />
                   <Route path='/viewData-admin' element={<ViewDataAdmin/>}/>
                   <Route path='/createAdmin' element={<CreateAdmin/>}/>
+                  <Route path="/viewUserData-user" element={<ViewUserDataUser />} />
+
                   {/* Route for the main login */}
                   <Route path="/" element={<Login />} />
                   {/* <Route path="/" element={<Home />} /> */}
@@ -64,6 +67,7 @@ export const UserRoutes = () => {
         <Route path="/update-favorite" element={<UpdateFavorite />} />
         <Route path="/delete-favorite" element={<DeleteFavorite />} />
         <Route path="/create-transfencias" element={<CreateTransfencias />} />
+
       </Routes>
     </div>
   );
