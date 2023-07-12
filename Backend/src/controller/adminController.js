@@ -53,8 +53,7 @@ const createAdmin = async(req, res) =>{
 
 const readAdmin = async(req, res) => {
 
-  try{
-
+try{
       const admin = await Admin.find();
       if(!admin){
           res.status(410).send({
@@ -66,7 +65,6 @@ const readAdmin = async(req, res) => {
                     admin: admin
                   });
       }
-
   }catch(err){
     res.status(404).send({
       msg: 'No se pudo listar los admins',
@@ -74,6 +72,7 @@ const readAdmin = async(req, res) => {
     })
   }
 }
+
 
 
 //----------------------------------------------------------delete admin--------------------------------------------------------------

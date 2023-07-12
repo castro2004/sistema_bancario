@@ -5,7 +5,7 @@ import viewdata_img from '../Components-user/img-user/view_data.png';
 import deleteA from '../component-admin/img-admin/eliminarUsuario.png';
 import actualizarA from '../component-admin/img-admin/actualizarUsuario.png';
 import viewC from '../component-admin/img-admin/verCuentas.png';
-import agregarU from '../component-admin/img-admin/agregar-usuario.png';
+import agregarU from '../component-admin/img-admin/agregarAdmin.png';
 import banco from '../Components-user/img-user/banco.png';
 import img1 from '../Components-user/img-user/RL.jpg';
 import img2 from '../Components-user/img-user/AT.jpg';

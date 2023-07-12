@@ -15,8 +15,8 @@ import Login from './Components-user/Login';
 import ViewUserData from './component-admin/ViewData';
 import ViewDataAdmin from './component-admin/ViewData';
 import bank_img from '../src/Components-user/img-user/banco.png'
-import CreateAdmin from './component-admin/CreateAdmin';
-'../src/App.css'
+import C from './component-admin/CreateAdmin';
+import CreateAdmin from './component-admin/CreateAdmin';'../src/App.css'
 import '../src/Components-user/css-User/menuUser.css'
 
 const App = () => {

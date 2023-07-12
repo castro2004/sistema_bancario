@@ -1,7 +1,7 @@
 import axios from "axios";
 const URL = "http://localhost:3007/api/";
 const token = localStorage.getItem("token");
-import Swal from "sweetalert2";
+
 
 // Listar
 export const listAdmin = async()=>{

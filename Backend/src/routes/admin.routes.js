@@ -12,7 +12,7 @@ api.put('/update-admin', updateAdmin);
 api.post('/login-admin', loginAdmin);
 api.get('/admin/accounts', getAccountsByTransactionCount)
 api.post('/create-user', createUser);
-api.get('/list-admin',readAdmin);
+api.get('/list-admin', readAdmin);
 
 
 
