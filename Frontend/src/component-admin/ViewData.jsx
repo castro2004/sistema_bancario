@@ -18,10 +18,6 @@ import '../component-admin/css/createAdmin.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import AA from '../component-admin/img-admin/agregarAdmin.png'
 
-
-// Resto del código del componente ViewDataAdmin
-
-
 const ViewDataAdmin = () => {
   const [adminData, setAdminData] = useState(null);
   const [error, setError] = useState(null);
@@ -163,7 +159,7 @@ const ViewDataAdmin = () => {
           </div>
         </div>
       </center>
-    <div  style={{marginLeft: 'auto', marginRight: '200px', width: '750px'}} className='card'>
+    <div  style={{marginLeft: 'auto', marginRight: '200px', marginTop: '100px', width: '750px'}} className='card'>
       <center>
         <img src={datos} width={90}/>
         <ul/>
@@ -180,6 +176,7 @@ const ViewDataAdmin = () => {
 };
 
 export default ViewDataAdmin;
+
 
 
 

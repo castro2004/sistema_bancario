@@ -47,7 +47,7 @@ const App = () => {
               <Route path="/viewBalance-user" element={<ViewBalance />} />
               <Route path="/view-favorite" element={<ReadFavorite />} />
               {/* Route for the main login */}
-              <Route path="/login" element={<Login />} /> 
+              <Route path="/" element={<Login />} /> 
             </Routes>
           </div>
         </div>

@@ -142,6 +142,21 @@ const ViewBalance = () => {
           </ul>
         </div>
       </div>
+      <center>
+        <div className="container">
+          <div className="decorative-title" style={{ marginTop: '-300px' }}>
+            <div className="decorative-bar left vertical thick" ></div>
+            <div className="decorative-bar left horizontal thick" style={{ marginTop: '-300px' }}></div>
+            <div className="decorative-bar left horizontal thin"></div>
+
+            <span> <img src={viewdata_img} width={60} />MÍ BALANCE</span>
+
+            <div className="decorative-bar right vertical thick" style={{ marginTop: '-300px' }}></div>
+            <div className="decorative-bar right horizontal thick"></div>
+            <div className="decorative-bar right horizontal thin"></div>
+          </div>
+        </div>
+      </center>
     <div className='card' style={{ textAlign: 'center' }}>
       <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '10px' }}>Balance</h2>
       <p style={{ fontSize: '18px' }}>Su balance es: {balance}</p>

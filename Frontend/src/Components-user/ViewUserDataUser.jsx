@@ -11,6 +11,7 @@ import img2 from '../Components-user/img-user/AT.jpg';
 import img3 from '../Components-user/img-user/EP.jpg';
 import banco from './img-user/banco.png';
 import CS from '../Components-user/img-user/cerrar-sesion.png';
+import datos from '../Components-user/img-user/informe.png';
 import menu from '../component-admin/img-admin/menu.png';
 import img4 from '../Components-user/img-user/20944139.jpg';
 
@@ -123,7 +124,7 @@ const ViewUserDataUser = () => {
                   <i className='bx bx-pie-chart-alt-2'></i>
                   <span className="link_name">Crear transfencia</span>
                 </a>
-                <Link to="/login-admin">
+                <Link to="/create-transfencias">
                   <img src={transaccion_img} width={70}/>
                 </Link>
               </li>
@@ -148,21 +149,37 @@ const ViewUserDataUser = () => {
             </li>
           </ul>
         </div>
-      <div  className='card'>
+        <center>
+        <div className="container">
+          <div className="decorative-title" style={{ marginTop: '-300px' }}>
+            <div className="decorative-bar left vertical thick" ></div>
+            <div className="decorative-bar left horizontal thick" style={{ marginTop: '-300px' }}></div>
+            <div className="decorative-bar left horizontal thin"></div>
+
+            <span> <img src={viewdata_img} width={60} />MIS DATOS</span>
+
+            <div className="decorative-bar right vertical thick" style={{ marginTop: '-300px' }}></div>
+            <div className="decorative-bar right horizontal thick"></div>
+            <div className="decorative-bar right horizontal thin"></div>
+          </div>
+        </div>
+      </center>
+        <div  style={{marginLeft: 'auto', marginRight: '200px', width: '750px', marginTop: '200px'}} className='card'>
       <center>
-      <h2>Datos del usuario:</h2>
-      <p><strong>Nombre: </strong> {userData.name}</p>
-      <p><strong>Nombre de usuario: </strong> {userData.username}</p>
-      <p><strong>Rol: </strong> {userData.rol}</p>
-      <p><strong>Número de cuenta: </strong> {userData.accountNumber}</p>
-      <p><strong>Tipo de cuenta: </strong> {userData.typeAccount}</p>
-      <p><strong>DPI: </strong> {userData.dpi}</p>
-      <p><strong>Dirección: </strong> {userData.address}</p>
-      <p><strong>Teléfono celular: </strong> {userData.cellPhone}</p>
-      <p><strong>Email: </strong> {userData.email}</p>
-      <p><strong>Nombre del trabajo: </strong> {userData.nameWork}</p>
-      <p><strong>Ingreso mensual: </strong> {userData.incomeMonth}</p>
-      <p><strong>Saldo: </strong> {userData.balance}</p>
+      <img src={datos} width={90}/>
+        <ul/>
+      <p style={{fontSize: '18px'}}><strong>Nombre: </strong> {userData.name}</p>
+      <p style={{fontSize: '18px'}}><strong>Nombre de usuario: </strong> {userData.username}</p>
+      <p style={{fontSize: '18px'}}><strong>Rol: </strong> {userData.rol}</p>
+      <p style={{fontSize: '18px'}}><strong>Número de cuenta: </strong> {userData.accountNumber}</p>
+      <p style={{fontSize: '18px'}}><strong>Tipo de cuenta: </strong> {userData.typeAccount}</p>
+      <p style={{fontSize: '18px'}}><strong>DPI: </strong> {userData.dpi}</p>
+      <p style={{fontSize: '18px'}}><strong>Dirección: </strong> {userData.address}</p>
+      <p style={{fontSize: '18px'}}><strong>Teléfono celular: </strong> {userData.cellPhone}</p>
+      <p style={{fontSize: '18px'}}><strong>Email: </strong> {userData.email}</p>
+      <p style={{fontSize: '18px'}}><strong>Nombre del trabajo: </strong> {userData.nameWork}</p>
+      <p style={{fontSize: '18px'}}><strong>Ingreso mensual: </strong> {userData.incomeMonth}</p>
+      <p style={{fontSize: '18px'}}><strong>Saldo: </strong> {userData.balance}</p>
       </center>
     </div>
     </div>

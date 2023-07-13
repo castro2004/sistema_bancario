@@ -50,7 +50,7 @@ const TransactionHistory = () => {
   };
 
   return (
-    <div>
+    <div style={{ backgroundColor: '#1c5484', marginTop: '50px' }}>
     <div>
         <div className="sidebar">
           <div className="logo-details">
@@ -141,11 +141,25 @@ const TransactionHistory = () => {
           </ul>
         </div>
       </div>
-    <div >
-      <h2>Historial de transacciones</h2>
-      <ul className="transaction-list">
+      <center>
+        <div className="container" style={{ backgroundColor: '#1c5484', marginTop: '50px' }}>
+          <div className="decorative-title" style={{ marginTop: '-300px' }}>
+            <div className="decorative-bar left vertical thick" ></div>
+            <div className="decorative-bar left horizontal thick" style={{ marginTop: '-300px' }}></div>
+            <div className="decorative-bar left horizontal thin"></div>
+
+            <span> <img src={viewdata_img} width={60} />HISTORIAL DE TRANSACCIONES</span>
+
+            <div className="decorative-bar right vertical thick" style={{ marginTop: '-300px' }}></div>
+            <div className="decorative-bar right horizontal thick"></div>
+            <div className="decorative-bar right horizontal thin"></div>
+          </div>
+        </div>
+      </center>
+    <div style={{ backgroundColor: '#1c5484', marginTop: '390px' }}>
+      <ul className="transaction-list" style={{ backgroundColor: '#1c5484', marginTop: '50px' }}>
         {transactionHistory.map((transaction, index) => (
-          <li className='card' key={index}>
+          <li className='card' style={{width: '300px'}} key={index}>
             <p><strong className="font-weight-bold">Cuenta Origen: </strong>{transaction.cuentaOrigen}</p>
             <p><strong className="font-weight-bold">Cuenta Destino: </strong>{transaction.cuentaDestino}</p>
             <p><strong className="font-weight-bold">Monto: </strong>{transaction.monto}</p>
