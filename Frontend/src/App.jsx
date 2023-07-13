@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginUser from './Components-user/LoginUser';
 import MenuUser from './Components-user/MenuUser';
-import HistoryTransactionUser from './Components-user/HistoryTransactionUser';
 import CreateFavorite from './Components-user/CreateFavorite';
 import ReadFavorite from './Components-user/ReadFavorite';
 import UpdateFavorite from './Components-user/UpdateFavorite';
@@ -19,7 +18,7 @@ import C from './component-admin/CreateAdmin';
 import CreateAdmin from './component-admin/CreateAdmin';'../src/App.css'
 import '../src/Components-user/css-User/menuUser.css'
 import ViewUserDataUser from './Components-user/ViewUserDataUser';
-
+import HistoryTransactionUser from './Components-user/HistoryTransactionUser';
 const App = () => {
   return (
     <Router>
@@ -40,6 +39,9 @@ const App = () => {
                   <Route path='/viewData-admin' element={<ViewDataAdmin/>}/>
                   <Route path='/createAdmin' element={<CreateAdmin/>}/>
                   <Route path="/viewUserData-user" element={<ViewUserDataUser />} />
+                  <Route path="/historyTransaction-user" element={<HistoryTransactionUser />} />
+
+
 
                   {/* Route for the main login */}
                   <Route path="/" element={<Login />} />
@@ -61,12 +63,11 @@ export const UserRoutes = () => {
       <Routes>
       
         <Route path="/" element={<Home />} />
-        <Route path="/historyTransaction-user" element={<HistoryTransactionUser />} />
         <Route path="/create-favorite" element={<CreateFavorite />} />
         <Route path="/read-favorite" element={<ReadFavorite />} />
         <Route path="/update-favorite" element={<UpdateFavorite />} />
         <Route path="/delete-favorite" element={<DeleteFavorite />} />
-        <Route path="/create-transfencias" element={<CreateTransfencias />} />
+
 
       </Routes>
     </div>

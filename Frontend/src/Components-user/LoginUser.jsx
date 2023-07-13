@@ -24,6 +24,9 @@ const LoginUser = () => {
 
       // Verificar si el inicio de sesión fue exitoso
       if (response) {
+        // Almacenar el token en el localStorage
+        localStorage.setItem('token', response.data.token);
+
         // Redirigir a la ruta /menu-user
         navigate('/menu-user');
         console.log(response.data);
@@ -91,6 +94,3 @@ const LoginUser = () => {
 };
 
 export default LoginUser;
-
-
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiO…EyM30.8UAG4EMA8FNNPLsqzQ8hzq3TnnSU3LLC0lg-k-gfaoA

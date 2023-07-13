@@ -166,7 +166,7 @@ const deleteUser = async(req, res) =>{
 // * FUNCIONAL
 // ? FUNCION PARA QUE EL USUARIO PUEDA LOGUEARSE 
 
-const loginUser = async (req, res) => {
+  const loginUser = async (req, res) => {
     const { username, password } = req.body;
   
     try {
@@ -189,52 +189,47 @@ const loginUser = async (req, res) => {
       const token = jwt.sign({ userId: user._id }, 'mi_secreto', {
         expiresIn: '10h',
       });
+
+      user.token = token;
+      await user.save();
   
-      res.json({ token });
+      res.json({
+        message: "Usuario autenticado correctamente",
+        token,
+      });
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: 'Error al realizar el login' });
     }
   };
-
 //-----------------------------------------------------visualizar datos del usuario--------------------------------------------------------------
 
 // * FUNCIONAL
 // ? FUNCION PARA QUE EL USUARIO PUEDA VISUALIZAR SUS DATOS 
-
 const viewUserData = async (req, res) => {
-    const token = req.headers['token'];
-  
-    try {
-      if (!token) {
-        return res.status(401).json({ msg: 'Acceso no autorizado' });
-      }
-  
-      const decodedToken = jwt.decode(token);
-  
-      if (!decodedToken) {
-        return res.status(401).json({ msg: 'Token inválido' });
-      }
-  
-      const userId = decodedToken.userId;
-  
-      const user = await User.findById(userId);
-  
-      if (!user) {
-        return res.status(404).json({ msg: 'Usuario no encontrado' });
-      }
-  
-      res.status(200).json({ 
-        msg: 'Sus datos son:',
-        user 
-    });
+  const token = req.headers['token'];
 
-
-    } catch (error) {
-      console.error('Error al obtener los datos del usuario:', error.message);
-      res.status(500).json({ msg: 'Error en el servidor' });
+  try {
+    if (!token) {
+      return res.status(401).json({ msg: 'Acceso no autorizado' });
     }
-  };
+
+    const user = await User.findOne({token});
+
+    if(!user){
+      return res.status(404).json({msg: 'Usuario no encontrado'});
+    }else{
+      res.status(200).json({
+        msg: 'Sus datos son:',
+        user
+      })
+    }
+
+  } catch (error) {
+    console.error('Error al obtener los datos del usuario:', error.message);
+    res.status(500).json({ msg: 'Error en el servidor' });
+  }
+};
   
 //--------------------------------------------visualizacion de saldo actual---------------------------------------------------------
 

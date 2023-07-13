@@ -1,93 +1,138 @@
-import '../Components-user/css-User/viewUserDataUser.css';
+import React, { useEffect, useState } from 'react';
 
-const ViewUserDataUser = () => {
+const ViewUserData = () => {
+  const [userData, setUserData] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+          throw new Error('Acceso no autorizado');
+        }
+
+        const response = await fetch('http://localhost:3007/api/viewUserData-user', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'token': token
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Usuario no encontrado');
+        }
+
+        const data = await response.json();
+        setUserData(data.user);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
+
   return (
-<>
-    <div className="fom">
-    <form action="#">
-    <div className="form-title">Visualización de Datos</div>
-
-      <div className="main-user-info">
-        <div className="user-input-box">
-          <label htmlFor="fullName"> Nombre</label>
-          <input
-            type="text"
-            id="fullName"
-            name="fullName"
-            placeholder="Ver el Nombre"
-          />
-        </div>
-        <div className="user-input-box">
-          <label htmlFor="username">Correo Electrónico</label>
-          <input
-            type="text"
-            id="Correo"
-            name="Correo"
-            placeholder="correo electrónico
-            "
-          />
-        </div>
-        <div className="user-input-box">
-          <label htmlFor="Contraseña">Contraseña.</label>
-          <input
-            type="Contraseña"
-            id="Contraseña"
-            name="Contraseña"
-            placeholder="Enter Contraseña"
-          />
-        </div>
-        <div className="user-input-box">
-          <label htmlFor="DPI">DPI</label>
-          <input
-            type="text"
-            id="DPI"
-            name="DPI"
-            placeholder="Enter DPI"
-          />
-        </div>
-        <div className="user-input-box">
-          <label htmlFor="Número de Cuenta">Número de Cuenta</label>
-          <input
-            type="password"
-            id="Número de Cuenta"
-            name="Número de Cuenta"
-            placeholder="Enter Número de Cuenta"
-          />
-        </div>
-        <div className="user-input-box">
-          <label htmlFor="Teléfono móvil">Teléfono móvil
-          </label>
-          <input
-            type="Teléfono móvil"
-            id="Teléfono móvil"
-            name="Teléfono móvil
-            "
-            placeholder="Confirm Teléfono móvil "
-          />
-        </div>
-
-        <div className="user-input-box">
-          <label htmlFor="Teléfono móvil">Ingreso al Mes</label>
-          <input
-            type="ingreso"
-            id=" ingreso"
-            name="ingreso"
-            placeholder="Confirmar el ingreso al mes "
-          />
-        </div>
-        
-      </div>
-      <div class="d-grid gap-2 col-6 mx-auto">
-        <button class="btn btn-primary" type="button">Regresar</button>
-      </div>
-    </form>
+    <>
+  <table className="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Datos</th>
+      <th scope="col">Información</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody className="table-group-divider">
+    <tr>
+      <th scope="row">1</th>
+      <td> Nombre </td>
+      <td>{userData.name}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Nombre de usuario:</td>
+      <td>{userData.username}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Rol</td>
+      <td>{userData.rol}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td>Número de cuenta:</td>
+      <td>{userData.accountNumber}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row">5</th>
+      <td>Tipo de cuenta:</td>
+      <td>{userData.typeAccount}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row">6</th>
+      <td>DPI:</td>
+      <td>{userData.dpi}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row">7</th>
+      <td>Dirección:</td>
+      <td>{userData.address}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row">8</th>
+      <td>Teléfono celular:</td>
+      <td>{userData.cellPhone}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row">9</th>
+      <td>Email:</td>
+      <td>{userData.email}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row">10</th>
+      <td>Nombre del trabajo:</td>
+      <td>{userData.nameWork}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row">11</th>
+      <td>Ingreso mensual:</td>
+      <td>{userData.incomeMonth}</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row">12</th>
+      <td>Saldo:</td>
+      <td>{userData.balance}</td>
+      <td></td>
+    </tr>
     
-  </div>
- 
-</>
+  </tbody>
+</table>
+  </>
+  
+  );
+};
 
-  )
-}
-
-
-export default ViewUserDataUser;
+export default ViewUserData;
