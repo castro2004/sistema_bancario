@@ -8,6 +8,7 @@ import menu from '../component-admin/img-admin/menu.png';
 import viewC from '../component-admin/img-admin/verCuentas.png';
 import agregarU from '../component-admin/img-admin/agregar-usuario.png';
 import banco from '../Components-user/img-user/banco.png';
+import user from '../Components-user/img-user/user.png';
 import img1 from '../Components-user/img-user/RL.jpg';
 import img2 from '../Components-user/img-user/AT.jpg';
 import img3 from '../Components-user/img-user/EP.jpg';
@@ -131,39 +132,53 @@ const OrderAcount = () => {
           </ul>
         </div>
       </div>
-      <div className="btn-group" role="group">
-        <center>
-          <button type="submit"
-            style={{
-              backgroundColor: '#c0a57d',
-              color: '#ffffff',
-              padding: '10px',
-              border: 'none',
-              borderRadius: '5px',
-              width: '175px',
-              marginRight: '10px'
-            }} onClick={() => fetchAccounts('asc')}>
-            Orden Ascendente
-          </button>
-        </center>
-        <button type="submit"
-          style={{
-            backgroundColor: '#c0a57d',
-            color: '#ffffff',
-            padding: '10px',
-            border: 'none',
-            borderRadius: '5px',
-            width: '200px'
-          }} onClick={() => fetchAccounts('desc')}>
-          Orden Descendente
-        </button>
-      </div>
+      <center>
+  <div style={{ display: 'flex', justifyContent: 'flex-end', marginRight: '400px' }}>
+    <div className="btn-group" role="group">
+      <button
+        type="submit"
+        style={{
+          backgroundColor: '#c0a57d',
+          color: '#ffffff',
+          padding: '10px',
+          border: 'none',
+          borderRadius: '5px',
+          width: '175px',
+          marginRight: '10px'
+        }}
+        onClick={() => fetchAccounts('asc')}
+      >
+        Orden Ascendente
+      </button>
+
+      <button
+        type="submit"
+        style={{
+          backgroundColor: '#c0a57d',
+          color: '#ffffff',
+          padding: '10px',
+          border: 'none',
+          borderRadius: '5px',
+          width: '200px',
+        }}
+        onClick={() => fetchAccounts('desc')}
+      >
+        Orden Descendente
+      </button>
+    </div>
+  </div>
+</center>
+
       <div>
         <div className="row mt-4">
           {accounts.map((account) => (
             <div className="col-md-4 mb-4" key={account._id}>
               <div className="card">
                 <div className="card-body">
+                <center>
+                <img src={user} width={100} />
+                <ul/>
+                </center>
                   <h5 className="card-title">
                     <strong>Name:</strong> {account.name}
                   </h5>

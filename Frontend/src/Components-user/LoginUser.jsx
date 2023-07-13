@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -77,6 +78,9 @@ const LoginUser = () => {
             </div>
             {/* <p>FORGET PASSWORD?</p> */}
             <button type='button' onClick={handleLogin}>INGRESAR</button>
+            <Link to="/login">
+            <button type='button' style={{marginRight: '110px'}} >REGRESAR</button>
+            </Link>
           </div>
           <div className="signup hide">
             <h2>SIGN UP</h2>

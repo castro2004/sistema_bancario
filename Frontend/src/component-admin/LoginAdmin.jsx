@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import iconUser from '../Components-user/img-user/login.jpg';
 import '../Components-user/css-User/cssLogin.css';
@@ -72,6 +73,9 @@ const LoginAdmin = () => {
               <input type="password" name="password" placeholder="CONTRASEÑA" value={password} onChange={handlePasswordChange}/>
             </div>
             <button type='button' onClick={handleLogin}>INGRESAR</button>
+            <Link to="/login">
+            <button type='button' style={{marginRight: '110px'}} >REGRESAR</button>
+            </Link>
           </div>
           <div className="signup hide">
             <h2>SIGN UP</h2>

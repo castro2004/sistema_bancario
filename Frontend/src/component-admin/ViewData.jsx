@@ -9,6 +9,7 @@ import menu from '../component-admin/img-admin/menu.png';
 import agregarU from '../component-admin/img-admin/agregar-usuario.png';
 import CU from '../component-admin/img-admin/agregar-usuario.png';
 import banco from '../Components-user/img-user/banco.png';
+import datos from '../Components-user/img-user/informe.png';
 import img1 from '../Components-user/img-user/RL.jpg';
 import img2 from '../Components-user/img-user/AT.jpg';
 import img3 from '../Components-user/img-user/EP.jpg';
@@ -147,15 +148,32 @@ const ViewDataAdmin = () => {
           </ul>
         </div>
       </div>
-    <div className='card'>
-      <h2>Datos del administrador:</h2>
-      <p><strong className="font-weight-bold">Rol:</strong> {adminData.rol}</p>
-      <p><strong className="font-weight-bold">Nombre:</strong> {adminData.name}</p>
+      <center>
+        <div className="container">
+          <div className="decorative-title" style={{ marginTop: '-300px' }}>
+            <div className="decorative-bar left vertical thick" ></div>
+            <div className="decorative-bar left horizontal thick" style={{ marginTop: '-300px' }}></div>
+            <div className="decorative-bar left horizontal thin"></div>
+
+            <span> <img src={viewdata_img} width={60} />MIS DATOS</span>
+
+            <div className="decorative-bar right vertical thick" style={{ marginTop: '-300px' }}></div>
+            <div className="decorative-bar right horizontal thick"></div>
+            <div className="decorative-bar right horizontal thin"></div>
+          </div>
+        </div>
+      </center>
+    <div  style={{marginLeft: 'auto', marginRight: '200px', width: '750px'}} className='card'>
+      <center>
+        <img src={datos} width={90}/>
+        <ul/>
+      <p><strong className="font-weight-bold">Nombre:</strong> {adminData.user}</p>
       <p><strong className="font-weight-bold">Password:</strong> {adminData.password}</p>
       <p><strong className="font-weight-bold">Dpi:</strong> {adminData.dpi}</p>
+      <p><strong className="font-weight-bold">Rol:</strong> {adminData.rol}</p>
       <p><strong className="font-weight-bold">CellPhone:</strong> {adminData.cellPhone}</p>
       <p><strong className="font-weight-bold">Email:</strong> {adminData.email}</p>
-      <p><strong className="font-weight-bold">Token:</strong> {adminData.token}</p>
+      </center>
     </div>
     </div>
   );
