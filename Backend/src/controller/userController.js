@@ -189,8 +189,14 @@ const loginUser = async (req, res) => {
       const token = jwt.sign({ userId: user._id }, 'mi_secreto', {
         expiresIn: '10h',
       });
+
+      user.token = token;
+      await user.save();
   
-      res.json({ token });
+      res.json({
+        message: "Usuario autenticado correctamente",
+        token,
+      });
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: 'Error al realizar el login' });
@@ -210,25 +216,16 @@ const viewUserData = async (req, res) => {
         return res.status(401).json({ msg: 'Acceso no autorizado' });
       }
   
-      const decodedToken = jwt.decode(token);
-  
-      if (!decodedToken) {
-        return res.status(401).json({ msg: 'Token inválido' });
-      }
-  
-      const userId = decodedToken.userId;
-  
-      const user = await User.findById(userId);
-  
-      if (!user) {
-        return res.status(404).json({ msg: 'Usuario no encontrado' });
-      }
-  
-      res.status(200).json({ 
-        msg: 'Sus datos son:',
-        user 
-    });
+      const user = await User.findOne({token});
 
+      if(!user){
+        return res.status(404).json({msg: 'Usuario no encontrado'});
+      }else{
+        res.status(200).json({
+          msg: 'Sus datos son:',
+          user
+        })
+      }
 
     } catch (error) {
       console.error('Error al obtener los datos del usuario:', error.message);
@@ -315,6 +312,73 @@ const historyTransaction = async (req, res) => {
   };
 
 
+  const createFavorite = async (req, res) => {
+
+    const { alias, accountNumber } = req.body;
+  
+    try {
+      const token = req.headers['token'];
+  
+      if (!token) {
+        return res.status(401).json({ msg: 'Acceso no autorizado' });
+      }
+  
+      const user = await User.findOne({ token });
+  
+      if (!user) {
+        return res.status(404).json({ msg: 'Usuario no encontrado' });
+      }
+  
+      const existingFavorite = user.favorites.find((favorite) => favorite.alias === alias || favorite.accountNumber === accountNumber);
+  
+      if (existingFavorite) {
+        return res.status(401).json({ msg: 'Ya existe un favorito con este alias o número de cuenta' });
+      }
+  
+      const favorite = {
+        alias,
+        accountNumber
+      };
+  
+      user.favorites.push(favorite);
+      await user.save();
+  
+      res.status(200).json({ msg: 'Favorito creado exitosamente', favorite });
+    } catch (error) {
+      console.error('Error al crear el favorito:', error);
+      res.status(500).json({ msg: 'Error al crear el favorito' });
+    }
+  };
+  
+
+const viewFavorite = async(req, res) =>{
+  const token = req.headers['token'];
+
+  try{
+
+    if(!token){
+      return res.status(401).json({ msg: 'Acceso no autorizado' });
+    }
+
+    const user = await User.findOne({token});
+    const favorites = user.favorites;
+
+    if (!user) {
+      throw new Error('Token inválido');
+    }else{
+      res.status(200).json({
+        msg: 'Datos del administrador:',
+        favorites
+    })
+  }
+
+}catch(err){
+  console.error('Error al obtener los favoritos:', err);
+  res.status(500).json({ message: 'Error al obtener los favoritos' });
+  }
+}
+
+
 //----------------------------------------------------exportaciones------------------------------------------------
 
 
@@ -327,7 +391,9 @@ module.exports = {
     viewUserData,
     viewBalance,
     historyTransaction,
-    menuUser
+    menuUser,
+    createFavorite,
+    viewFavorite
 }
 
 

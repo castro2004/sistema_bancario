@@ -1,85 +1,91 @@
 'use strict'
 
 const Favorite = require('../model/favoritosModel');
-const Users = require('../model/userModel');
+const User = require('../model/userModel');
 
 //--------------------------------------create favorite----------------------------------------------
 
-const createFavorite = async(req, res) => {
-    const {alias, acountNumber, acountType} = req.body;
- 
-    try{
+// const createFavorite = async (req, res) => {
+//     const { token, alias, accountNumber, accountType } = req.body;
+  
+//     try {
+//       const user = await User.findOne({ token });
+  
+//       if (!user) {
+//         return res.status(404).json({ msg: 'Usuario no encontrado' });
+//       }
+  
+//       const existingFavorite = await Favorite.findOne({ alias, user: user._id });
+//       const existingAccount = await Favorite.findOne({ accountNumber, user: user._id });
+  
+//       if (existingFavorite) {
+//         return res.status(401).json({
+//           msg: 'Ya existe un usuario favorito con este alias',
+//           ok: false,
+//           favorite: existingFavorite
+//         });
+//       }
+  
+//       if (existingAccount) {
+//         return res.status(401).json({
+//           msg: 'Ya existe un usuario favorito con este número de cuenta',
+//           ok: false,
+//           favorite: existingAccount
+//         });
+//       }
+  
+//       const favorite = new Favorite({
+//         alias,
+//         accountNumber,
+//         accountType,
+//         user: user._id
+//       });
+  
+//       await favorite.save();
+  
+//       return res.status(200).json({
+//         message: 'El usuario se agregó como favorito',
+//         ok: true,
+//         favorite
+//       });
+//     } catch (err) {
+//       console.log(err);
+//       throw new Error(err);
+//     }
+//   };
 
-        let favorite = await Users.findOne({acountNumber});
-
-        const existingFavorite = await Favorite.findOne({ alias });
-        const existingAcount = await Favorite.findOne({acountNumber});
-
-        // if(!favorite){
-        //     return res.status(401).json({
-        //         msg: "No se han agregado cuentas como favoritos",
-        //         ok: false,
-        //         favorite: favorite
-        //     });
-        // }
-
-        if (existingFavorite) {
-            return res.status(401).json({
-                msg: "Ya existe un usuario favorito con este alias",
-                ok: false,
-                favorite: existingFavorite
-            });
-        }
-
-        if (existingAcount) {
-            return res.status(401).json({
-                msg: "Ya existe un usuario favorito con este numero de cuenta",
-                ok: false,
-                favorite: existingAcount
-            });
-        }
-
-        favorite = new Favorite(req.body);
-        favorite = await favorite.save();
-
-        return res.status(200).send({
-             message: `El usuario se agrego como favorito`,
-            ok: true,
-            favorite: favorite,
-        })
-
-    }catch(err){
-        console.log(err)
-        throw new Error(err)
-    }
-
-}
+  
 
 //-----------------------------------------list favorite------------------------------------------------
 
-const readFavorite = async(req, res) => {
-
-try{
-
-    const favorites = await Favorite.findById();
-
-        if(!favorites){
-            res.status(400).send({
-                msg: 'No hay cuentas favoritas agregadas'
-            });
-        }else{
-            res.status(200).send({
-                msg: "Tus favoritos son:",
-                favoritos: favorites
-                })
-        }
-
-    }catch(err){
-        console.log(err)
-        throw new Error(err)
+const readFavorite = async (req, res) => {
+    const { token } = req.body;
+  
+    try {
+      if (!token) {
+        return res.status(401).json({ msg: 'Acceso no autorizado' });
+      }
+  
+      const user = await Users.findOne({ token });
+  
+      if (!user) {
+        return res.status(404).json({ msg: 'Usuario no encontrado' });
+      }
+  
+      const favorites = await Favorite.find({ user: user._id });
+  
+      if (!favorites || favorites.length === 0) {
+        return res.status(400).json({ msg: 'No hay cuentas favoritas agregadas' });
+      }
+  
+      res.status(200).json({ msg: 'Tus favoritos son:', favoritos: favorites });
+    } catch (error) {
+      console.error('Error al obtener los favoritos:', error);
+      res.status(500).json({ message: 'Error al obtener los favoritos' });
     }
-
-}
+  };
+  
+  
 
 //------------------------------------------Update Favorite--------------------------------------------------
 
@@ -129,12 +135,12 @@ const deleteFavorite = async(req, res) => {
 }
 
 
-module.exports = {
-    createFavorite,
-    readFavorite,
-    updateFavorite,
-    deleteFavorite
-}
+// module.exports = {
+//     createFavorite,
+//     readFavorite,
+//     updateFavorite,
+//     deleteFavorite
+// }
 
 
 

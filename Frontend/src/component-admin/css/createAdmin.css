@@ -1,16 +1,69 @@
-/* * {
-  margin: 0;
- 	padding: 0;
+.container {
+  box-sizing: border-box;
+  width: 50%;
+  padding: 2rem;
 }
-body {
-  background:#333 url("http://www.jmcamarket.com/materialize/img/marketylogo.png");
-  background-size: cover;
-	font-family: "Roboto","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif,aclonica;
-    font-size:14px;
-	color:white;
+.decorative-title {
+  position: relative;
+  width: 50%;
+  margin: 0 auto;
 }
-.h3 {
-  font-family: "aclonica";
-  font-size: 120px;
-  color: orange;
-} */
+.decorative-title span {
+  display: block;
+  padding: 2rem 0.5rem 1rem;
+  background-color: #3a4040;
+  color: #f2f2f2;
+  text-align: center;
+  font: 2rem sans-serif;
+  letter-spacing: 0.3rem;
+}
+@media (min-width: 576px) {
+  .decorative-title {
+    width: 100%;
+  }
+  .decorative-title span {
+    font-size: 3rem;
+  }
+}
+.decorative-bar {
+  position: absolute;
+  background-color: #3a4040;
+}
+.left.thick {
+  left: -30px;
+}
+.left.thin {
+  right: 0;
+}
+.left.vertical,
+.left.horizontal.thick {
+  top: -20px;
+}
+.left.horizontal.thin {
+  top: -16px;
+}
+.right.thick {
+  right: -50px;
+}
+.right.thin {
+  left: 0;
+}
+.right.vertical,
+.right.horizontal.thick {
+  bottom: 400px;
+}
+.right.horizontal.thin {
+  bottom: 100px;
+}
+.vertical {
+  width: 8px;
+  height: 80px;
+}
+.horizontal.thick {
+  width: 30%;
+  height: 8px;
+}
+.horizontal.thin {
+  width: 80%;
+  height: 2px;
+}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Login } from './Components-user/Login';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginUser from './Components-user/LoginUser';
 import MenuUser from './Components-user/MenuUser';
@@ -18,6 +19,9 @@ import C from './component-admin/CreateAdmin';
 import CreateAdmin from './component-admin/CreateAdmin';
 import '../src/Components-user/css-User/menuUser.css';
 import OrderAcount from './component-admin/OrdenAcount';
+import ViewUserDataUser from './Components-user/ViewUserDataUser';
+import TransactionHistory from './Components-user/HistoryTransactionUser';
+import ViewBalance from './Components-user/ViewBalanceUser';
 
 const App = () => {
   return (
@@ -28,7 +32,7 @@ const App = () => {
             <Routes>
               {/* Routes for user */}
               <Route path="/login-user" element={<LoginUser />} />
-              <Route path="/menu-user" element={<UserRoutes />} />
+              <Route path="/menu-user/*" element={<UserRoutes />} />
 
               {/* Routes for admin */}
               <Route path="/login-admin" element={<LoginAdmin />} />
@@ -37,9 +41,13 @@ const App = () => {
               <Route path="/viewData-admin" element={<ViewDataAdmin />} />
               <Route path="/createAdmin" element={<CreateAdmin />} />
               <Route path="/admin/accounts" element={<OrderAcount />} />
-
+              <Route path='/viewUserData-user' element={<ViewUserDataUser/>}/>
+              <Route path="/create-transfencias" element={<CreateTransfencias />} />
+              <Route path="/historyTransaction-user" element={<TransactionHistory />} />
+              <Route path="/viewBalance-user" element={<ViewBalance />} />
+              <Route path="/view-favorite" element={<ReadFavorite />} />
               {/* Route for the main login */}
-              {/* <Route path="/" element={<Login />} /> */}
+              <Route path="/login" element={<Login />} /> 
             </Routes>
           </div>
         </div>
@@ -54,12 +62,13 @@ const UserRoutes = () => {
       <MenuUser />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/historyTransaction-user" element={<HistoryTransactionUser />} />
+        
         <Route path="/create-favorite" element={<CreateFavorite />} />
-        <Route path="/read-favorite" element={<ReadFavorite />} />
+        
         <Route path="/update-favorite" element={<UpdateFavorite />} />
         <Route path="/delete-favorite" element={<DeleteFavorite />} />
-        <Route path="/create-transfencias" element={<CreateTransfencias />} />
+        
+        
       </Routes>
     </div>
   );
@@ -80,6 +89,16 @@ const Home = () => {
     </>
   );
 };
+
+export const Home2 = () => {
+  return (
+    <div>
+      <ul/>
+          <center><ul/><img className='home-content4' src={bank_img} width={200} height={150} />
+          </center>
+    </div>
+  )
+}
 
 export default App;
 

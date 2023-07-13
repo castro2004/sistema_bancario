@@ -1,85 +1,85 @@
 'use strict'
 
-const Users = require('../model/userModel');
+const User = require('../model/userModel');
 const Transferencia = require('../model/transferenciasModel');
 
 
 //-------------------------------------------create transferencias----------------------------------------------------
 
-const createTransferencias = async(req, res) => {
+const createTransferencias = async (req, res) => {
+  const { cuentaOrigen, cuentaDestino, saldo, monto, descripcion } = req.body;
 
-    const {cuentaOrigen, cuentaDestino, saldo, monto, descripcion} = req.body;
+  try {
+    let usuarioOrigen = await User.findOne({ cuentaOrigen });
+    let usuarioDestino = await User.findOne({ cuentaDestino });
 
-    try {
-        let usuarioOrigen = await Users.findOne({ cuentaOrigen });
-        let usuariosDestino = await Users.findOne({ cuentaDestino });
-    
-        if (!usuarioOrigen) {
-          return res.status(404).send({
-            msg: "El número de cuenta de origen no existe, verificar los datos",
-          });
-        }
-    
-        if (!usuariosDestino) {
-          return res.status(404).send({
-            msg: "El número de cuenta de destino no existe, verificar los datos",
-          });
-        }
-    
-        if (monto > 10000) {
-          return res.status(400).send({
-            msg:
-              "No se puede realizar la transferencia. El monto excede los 10000 quetzales",
-          });
-        }
-    
-        if (monto > usuarioOrigen.balance) {
-          return res.status(404).send({
-            msg: "El monto es mayor a la cantidad de su saldo actual en su cuenta bancaria",
-          });
-        }
-    
-        usuarioOrigen.balance - monto;
-        usuariosDestino.balance + monto;
-    
-        await usuarioOrigen.save();
-        await usuariosDestino.save();
-    
-        await Users.updateOne(
-          { acountNumber: cuentaOrigen },
-          { $inc: { balance: -monto } }
-        );
-        await Users.updateOne(
-          { acountNumber: cuentaDestino },
-          { $inc: { balance: monto } }
-        );
-    
-        const transferencia = new Transferencia({
-          cuentaOrigen: cuentaOrigen,
-          saldo: saldo,
-          cuentaDestino: cuentaDestino,
-          monto: monto,
-          descripcion: descripcion,
-        });
-    
-        const newTransferencia = await transferencia.save();
-
-        usuarioOrigen.transactions.push(newTransferencia);
-        await usuarioOrigen.save();
-    
-        res.status(210).send({
-          msg: "Transferencia creada",
-          ok: true,
-          transferencia: newTransferencia,
-        });
-      } catch(err){
-
-        console.log(err)
-        console.log("Error al crear la transfencia")
-
+    if (!usuarioOrigen) {
+      return res.status(404).send({
+        msg: "El número de cuenta de origen no existe, verificar los datos",
+      });
     }
 
-}
+    if (!usuarioDestino) {
+      return res.status(404).send({
+        msg: "El número de cuenta de destino no existe, verificar los datos",
+      });
+    }
+
+    if (monto > 10000) {
+      return res.status(400).send({
+        msg:
+          "No se puede realizar la transferencia. El monto excede los 10000 quetzales",
+      });
+    }
+
+    if (monto > usuarioOrigen.balance) {
+      return res.status(404).send({
+        msg:
+          "El monto es mayor a la cantidad de su saldo actual en su cuenta bancaria",
+      });
+    }
+
+    usuarioOrigen.balance - monto;
+    usuarioDestino.balance + monto;
+
+    await usuarioOrigen.save();
+    await usuarioDestino.save();
+
+    await User.updateOne(
+      { acountNumber: cuentaOrigen },
+      { $inc: { balance: -monto } }
+    );
+    await User.updateOne(
+      { accountNumber: cuentaDestino },
+      { $inc: { balance: monto } }
+    );
+
+    const transferencia = new Transferencia({
+      cuentaOrigen: cuentaOrigen,
+      saldo: saldo,
+      cuentaDestino: cuentaDestino,
+      monto: monto,
+      descripcion: descripcion,
+    });
+
+    console.log(usuarioOrigen);
+    console.log(usuarioDestino);
+
+    const newTransferencia = await transferencia.save();
+
+    usuarioOrigen.transactions.push(newTransferencia);
+    await usuarioOrigen.save();
+
+    res.status(210).send({
+      msg: "Transferencia creada",
+      ok: true,
+      transferencia: newTransferencia,
+    });
+  } catch (err) {
+    console.log(err);
+    console.log("Error al crear la transferencia");
+  }
+};
 
 
 //------------------------------------------------------------exportaciones------------------------------------------------------------------------------------------

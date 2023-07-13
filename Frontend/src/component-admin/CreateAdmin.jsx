@@ -16,6 +16,16 @@ import img4 from '../Components-user/img-user/20944139.jpg';
 import '../Components-user/css-User/MenuUser.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import AA from '../component-admin/img-admin/agregarAdmin.png'
+import Swal from 'sweetalert'
+
+const mostrarAlerta=()=>{
+  Swal({
+    title: "Excelente",
+    text: "Transferencia creada exitosamente",
+    icon: "success",
+    button: "Aceptar"
+  })
+}
 
 const CreateAdmin = () => {
   const [user, setUser] = useState('');
@@ -248,6 +258,7 @@ const CreateAdmin = () => {
             </div>
             <ul />
             <button
+            onClick={()=>mostrarAlerta()}
               type="submit"
               style={{
                 backgroundColor: '#c0a57d',
@@ -269,6 +280,13 @@ const CreateAdmin = () => {
 };
 
 export default CreateAdmin;
+
+
+
+
+
+
+
 
 
 

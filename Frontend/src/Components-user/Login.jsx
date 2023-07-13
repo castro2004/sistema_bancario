@@ -66,7 +66,7 @@ const VerticalLine = styled.div`
   margin: 0 10px;
 `;
 
-const Login = () => {
+export const Login = () => {
   return (
     <div>
       <LoginContainer className='card'>
@@ -94,5 +94,4 @@ const Login = () => {
   );
 };
 
-export default Login;
 

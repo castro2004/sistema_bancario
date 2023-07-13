@@ -71,133 +71,126 @@ const createAdmin = async(req, res) =>{
 
 //----------------------------------------------------------delete admin--------------------------------------------------------------
 
-const deleteAdmin = async(req, res) => {
+const deleteAdmin = async (req, res) => {
+  const { token } = req.body;
 
-    try {
-        const admin = req.params;
-        const id = req.params.id;
-        const result = await Admin.findByIdAndDelete(id);
+  try {
+    if (!token) {
+      return res.status(401).json({ msg: 'Acceso no autorizado' });
+    }
 
-        if(!admin){
-          res.status(410).send({
-            msg: "El administrador no existe, verificar si los datos son correctos"
-        });
-        }else{
-          res.status(201).send({
-              msg: "Se a eliminado el administador",
-              admin: result
-          });
-      }
-      } catch (error) {
-        console.error('Error al eliminar la cuenta del administrador:', error);
-        res.status(500).json({ mensaje: 'Error al eliminar la cuenta del administrador' });
-      }
-}
+    const admin = await Admin.findOneAndDelete({ token });
+
+    if (!admin) {
+      return res.status(404).json({ msg: 'Administrador no encontrado' });
+    } else {
+      return res.status(200).json({
+        msg: 'Administrador eliminado correctamente',
+      });
+    }
+  } catch (error) {
+    console.error('Error al eliminar el administrador:', error);
+    return res.status(500).json({ message: 'Error al eliminar el administrador' });
+  }
+};
 
 //---------------------------------------------------------update admin---------------------------------------------------------------------------------------------
 
-const updateAdmin = async(req, res) => {
+const updateAdmin = async (req, res) => {
+  const { token, ...adminData } = req.body;
 
-    try {
-       
-      const id = req.params.id;
-        const adminEdit = {...req.body};
+  try {
+    if (!token) {
+      return res.status(401).json({ msg: 'Acceso no autorizado' });
+    }
 
-        adminEdit.password = adminEdit.password
-        ? bcrypt.hashSync(adminEdit.password, bcrypt.genSaltSync())
-        : adminEdit.password;
+    const admin = await Admin.findOneAndUpdate({ token }, adminData, { new: true });
 
-        const adminComplete = await Admin.findByIdAndUpdate(id, adminEdit, {new: true});
-
-        if(!adminComplete){
-          res.status(401).send({
-              msg: "El administrador que desea actualizar, no existe"
-          });
-      }else{
-          // res.status(410).send({
-              return res.status(200).send({
-                  message: 'Perfil actualizado correctamente', adminComplete,
-              });
-      }
-
-      } catch (error) {
-        console.error('Error al editar la cuenta del administrador:', error);
-        res.status(500).json({ mensaje: 'Error al editar la cuenta del administrador' });
-      }
-
-}
+    if (!admin) {
+      return res.status(404).json({ msg: 'Administrador no encontrado' });
+    } else {
+      return res.status(200).json({
+        msg: 'Administrador actualizado correctamente',
+        admin,
+      });
+    }
+  } catch (error) {
+    console.error('Error al editar la cuenta del administrador:', error);
+    res.status(500).json({ mensaje: 'Error al editar la cuenta del administrador' });
+  }
+};
 
 //----------------------------------------------------viewDataAdmin admin------------------------------------------------------------------------
 
-const viewDataAdmin = async(req, res) =>{
+const viewDataAdmin = async (req, res) => {
   const token = req.headers['token'];
 
-    try {
-        
-      if (!token) {
-        return res.status(401).json({ msg: 'Acceso no autorizado' });
-      }
-  
-      const decodedToken = jwt.decode(token);
-  
-      if (!decodedToken) {
-        return res.status(401).json({ msg: 'Token inválido' });
-      }
+  try {
+    if (!token) {
+      return res.status(401).json({ msg: 'Acceso no autorizado' });
+    }
 
-      const adminId = decodedToken.adminId;
+    const admin = await Admin.findOne({ token });
 
-      const admin = await Admin.findById(adminId);
+    if (!admin) {
+      return res.status(404).json({ msg: 'Administrador no encontrado' });
+    }else{
+      res.status(200).json({
+        msg: 'Datos del administrador:',
+        admin
+      });
+    }
 
-      
-      if (!admin) {
-        return res.status(404).json({ msg: 'Administrador no encontrado' });
-      }
+    console.log(admin)
+    
+  } catch (error) {
+    console.error('Error al buscar el administrador:', error);
+    res.status(500).json({ mensaje: 'Error al buscar el administrador' });
+  }
+};
 
-        res.status(201).json({
-          msg: "Sis datos son:",
-          admin
-          });
-      } catch (error) {
-        console.error('Error al buscar el administrador:', error);
-        res.status(500).json({ mensaje: 'Error al buscar el administrador' });
-      }
-}
+
 
 //----------------------------------------------login administrador-------------------------------------------------------------------
 
 const loginAdmin = async (req, res) => {
-    const { user, password } = req.body;
-  
-    try {
-      // Buscar al administrador en la base de datos
-      const admin = await Admin.findOne({ user });
-  
-      // Verificar si el administrador existe
-      if (!admin) {
-        return res.status(401).json({ message: "Credenciales invalidas" });
-      }
-  
-      // Verificar la contraseña
-      const passwordValido = await bcrypt.compare(password, admin.password);
-  
-      if (!passwordValido) {
-        return res.status(401).json({ message: "Contraseña incorrecta" });
-      }
-  
-      const token = jwt.sign({adminId: admin._id}, 'mi_secreto', {
-        expiresIn: '10h',
-      })
+  const { user, password } = req.body;
 
-      // Envío de mensaje de éxito
-      res.json({
-        message: "Administrador autenticado correctamente",
-        token 
-      });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ message: "Error en el servidor" });
+  try {
+    // Buscar al administrador en la base de datos
+    const admin = await Admin.findOne({ user });
+
+    // Verificar si el administrador existe
+    if (!admin) {
+      return res.status(401).json({ message: "Credenciales inválidas" });
     }
-  };
+
+    // Verificar la contraseña
+    const passwordValido = await bcrypt.compare(password, admin.password);
+
+    if (!passwordValido) {
+      return res.status(401).json({ message: "Contraseña incorrecta" });
+    }
+
+    const token = jwt.sign({ adminId: admin._id }, "mi_secreto", {
+      expiresIn: "10h",
+    });
+
+    // Guardar el token en el cuerpo del administrador
+    admin.token = token;
+    await admin.save();
+
+    // Envío de mensaje de éxito
+    res.json({
+      message: "Administrador autenticado correctamente",
+      token,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+};
+
 
 //-------------------------------------------movimientos ascendentes => descendientes---------------------------------------------------------------
 
