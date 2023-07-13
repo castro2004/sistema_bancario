@@ -1,0 +1,42 @@
+.card-user {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #2e8991;
+  border-radius: 15px;
+  padding: 10px;
+  color: #f0f0f0;
+  width: 240px;
+  margin: 0 auto;
+}
+
+.profile1 {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.profile1 img {
+  border-radius: 50%;
+  width: 100px;
+}
+
+.card-user h2 {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.card-user p {
+  font-size: 16px;
+  margin: 5px 0;
+  text-align: right;
+}
+
+.card-user hr {
+  border: none;
+  border-top: 1px solid #f0f0f0;
+  width: 100%;
+  margin: 10px 0;
+}

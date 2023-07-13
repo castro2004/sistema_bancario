@@ -73,65 +73,57 @@ try{
   }
 }
 
+//-------------------------------------------------------Eliminar admin---------------------------------------------------------------------------------------------
+const deleteAdmin = async (req, res) => {
+  const { token } = req.body;
+
+  try {
+    if (!token) {
+      return res.status(401).json({ msg: 'Acceso no autorizado' });
+    }
+
+    const admin = await Admin.findOneAndDelete({ token });
+
+    if (!admin) {
+      return res.status(404).json({ msg: 'Administrador no encontrado' });
+    } else {
+      return res.status(200).json({
+        msg: 'Administrador eliminado correctamente',
+      });
+    }
+  } catch (error) {
+    console.error('Error al eliminar el administrador:', error);
+    return res.status(500).json({ message: 'Error al eliminar el administrador' });
+  }
+};
 
 
-//----------------------------------------------------------delete admin--------------------------------------------------------------
-
-const deleteAdmin = async(req, res) => {
-
-    try {
-        const admin = req.params;
-        const id = req.params.id;
-        const result = await Admin.findByIdAndDelete(id);
-
-        if(!admin){
-          res.status(410).send({
-            msg: "El administrador no existe, verificar si los datos son correctos"
-        });
-        }else{
-          res.status(201).send({
-              msg: "Se a eliminado el administador",
-              admin: result
-          });
-      }
-      } catch (error) {
-        console.error('Error al eliminar la cuenta del administrador:', error);
-        res.status(500).json({ mensaje: 'Error al eliminar la cuenta del administrador' });
-      }
-}
 
 //---------------------------------------------------------update admin---------------------------------------------------------------------------------------------
 
-const updateAdmin = async(req, res) => {
+const updateAdmin = async (req, res) => {
+  const { token, ...adminData } = req.body;
 
-    try {
-       
-      const id = req.params.id;
-        const adminEdit = {...req.body};
+  try {
+    if (!token) {
+      return res.status(401).json({ msg: 'Acceso no autorizado' });
+    }
 
-        adminEdit.password = adminEdit.password
-        ? bcrypt.hashSync(adminEdit.password, bcrypt.genSaltSync())
-        : adminEdit.password;
+    const admin = await Admin.findOneAndUpdate({ token }, adminData, { new: true });
 
-        const adminComplete = await Admin.findByIdAndUpdate(id, adminEdit, {new: true});
-
-        if(!adminComplete){
-          res.status(401).send({
-              msg: "El administrador que desea actualizar, no existe"
-          });
-      }else{
-          // res.status(410).send({
-              return res.status(200).send({
-                  message: 'Perfil actualizado correctamente', adminComplete,
-              });
-      }
-
-      } catch (error) {
-        console.error('Error al editar la cuenta del administrador:', error);
-        res.status(500).json({ mensaje: 'Error al editar la cuenta del administrador' });
-      }
-
-}
+    if (!admin) {
+      return res.status(404).json({ msg: 'Administrador no encontrado' });
+    } else {
+      return res.status(200).json({
+        msg: 'Administrador actualizado correctamente',
+        admin,
+      });
+    }
+  } catch (error) {
+    console.error('Error al editar la cuenta del administrador:', error);
+    res.status(500).json({ mensaje: 'Error al editar la cuenta del administrador' });
+  }
+};
 
 //----------------------------------------------------viewDataAdmin admin------------------------------------------------------------------------
 
@@ -266,7 +258,6 @@ module.exports = {
     getAccountsByTransactionCount,
     readAdmin
 }
-
 
 
 
