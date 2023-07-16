@@ -13,6 +13,8 @@ import banco from './img-user/banco.png';
 import CS from '../Components-user/img-user/cerrar-sesion.png';
 import menu from '../component-admin/img-admin/menu.png';
 import img4 from '../Components-user/img-user/20944139.jpg';
+import img_menu from '../component-admin/img-admin/img_menu.jpg'
+import '../component-admin/css/menuAdmin.css'
 
 
 const MenuUser = () => {
@@ -100,11 +102,11 @@ const MenuUser = () => {
                 </Link>
               </li>
               <li>
-                <a href="/menu-admin">
+                <a href="/menu-user">
                   <i className='bx bx-pie-chart-alt-2'></i>
                   <span className="link_name">Regresar al menu</span>
                 </a>
-                <Link to="/menu-admin">
+                <Link to="/menu-user">
                   <img src={menu} width={70}/>
                 </Link>
               </li>
@@ -122,11 +124,23 @@ const MenuUser = () => {
         </div>
       </div>
       <div>
+      <img src={img_menu} style={{ marginLeft: '-400px',width: '2200px', height: '700px', marginTop: '-300px'}}/>
         <center>
           <div className="content-container"> {/* Contenedor adicional para centrar */}
-            <h1 style={{ fontSize: '120px', color: 'white' }}>BIENVENIDO ADMINISTRDOR<img src={img4} width={200} /></h1>
-            <img src={banco} width={450} alt="" />
-            <p className="welcome-text" style={{ color: 'white' }}>Bienvenidos este es nuestro proyecto para un sistema Bancario</p>
+          <div className="container">
+          <div className="decorative-title"style={{ marginTop: '-300px' }}>
+            <div className="decorative-bar left vertical thick" style={{ marginTop: '20px' }}></div>
+            <div className="decorative-bar left horizontal thick" style={{ marginTop: '-455px' }}></div>
+            <div className="decorative-bar left horizontal thin" style={{ marginTop: '2px' }}></div>
+
+            <span>BIENVENIDO USUARIO</span>
+
+            <div className="decorative-bar right vertical thick" style={{ marginTop: '-600px' }}></div>
+            <div className="decorative-bar right horizontal thick"></div>
+            <div className="decorative-bar right horizontal thin"></div>
+          </div>
+          </div>
+          <p className="welcome-text" style={{ fontSize: '40px' ,color: 'black', marginTop: '100px' }}>Bienvenidos este es nuestro proyecto para un sistema Bancario</p>
             <div className="d-flex justify-content-center align-items-center flex-wrap"> {/* Agregamos "align-items-center" y "flex-wrap" */}
               <div className='card mx-2 my-2 text-center'>
                 <div className='polaroid'>

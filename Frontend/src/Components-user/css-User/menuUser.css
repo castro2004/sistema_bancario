@@ -10,7 +10,7 @@
   left: 0;
   height: 100%;
   width: 260px;
-  background: #a4acbc;
+  background: #386ad6;
   z-index: 100;
   transition: all 0.5s ease;
 }
@@ -96,9 +96,9 @@
   text-decoration: none;
 }
 .sidebar .nav-links li a .link_name {
-  font-size: 19px;
+  font-size: 21px;
   font-weight: 400;
-  color: #77619e;
+  color: #000000;
   transition: all 0.4s ease;
 }
 .sidebar.close .nav-links li a .link_name {
@@ -115,7 +115,7 @@
   display: block;
 }
 .sidebar .nav-links li .sub-menu a {
-  color: #77619e;
+  color: #000000;
   font-size: 15px;
   padding: 5px 0;
   white-space: nowrap;
@@ -169,7 +169,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #f3f1f6;
+  background: #000000;
   padding: 12px 0;
   transition: all 0.5s ease;
 }
@@ -194,7 +194,7 @@
 
 .sidebar .profile-details .profile_name,
 .sidebar .profile-details .job {
-  color: #77619e;
+  color: #000000;
   font-size: 18px;
   font-weight: 500;
   white-space: nowrap;
@@ -210,7 +210,7 @@
 }
 .home-section {
   position: relative;
-  background: #1c5484;
+  background: #000000;
   height: 100vh;
   left: 260px;
   width: calc(100% - 260px);
@@ -227,7 +227,7 @@
 }
 .home-section .home-content .bx-menu,
 .home-section .home-content .text {
-  color: #77619e;
+  color: #ffffff;
   font-size: 35px;
 }
 .home-section .home-content .bx-menu {

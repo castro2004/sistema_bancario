@@ -25,8 +25,8 @@ import ViewBalance from './Components-user/ViewBalanceUser';
 
 const App = () => {
   return (
-    <Router>
-      <div style={{ backgroundColor: '#1c5484' }}>
+    <Router style={{ backgroundColor: '#1c5484' }}>
+      <div >
         <div className="row justify-content-center align-items-center vh-100">
           <div className="col-md-6">
             <Routes>
@@ -94,7 +94,7 @@ export const Home2 = () => {
   return (
     <div>
       <ul/>
-          <center><ul/><img className='home-content4' src={bank_img} width={200} height={150} />
+          <center><ul/><img className='home-content4' src={bank_img} width={260} height={150} />
           </center>
     </div>
   )

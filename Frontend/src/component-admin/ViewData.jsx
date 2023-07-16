@@ -17,6 +17,7 @@ import img4 from '../Components-user/img-user/20944139.jpg';
 import '../component-admin/css/createAdmin.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import AA from '../component-admin/img-admin/agregarAdmin.png'
+import VC from '../component-admin/img-admin/VC.png'
 
 const ViewDataAdmin = () => {
   const [adminData, setAdminData] = useState(null);
@@ -68,7 +69,7 @@ const ViewDataAdmin = () => {
           <div className="logo-details">
             <i className='bx bxs-pyramid'></i>
           </div>
-          <img src={banco} width={250} />
+          <img src={banco} width={270} />
           <ul className='nav-links'>
             <li>
               <a>
@@ -159,9 +160,10 @@ const ViewDataAdmin = () => {
           </div>
         </div>
       </center>
-    <div  style={{marginLeft: 'auto', marginRight: '200px', marginTop: '100px', width: '750px'}} className='card'>
+       {/* <center><img src={VC} width={250} style={{marginTop: '100px'}}/></center>  */}
+    <div  style={{marginLeft: 'auto', marginRight: '100px', marginTop: '10px', width: '900px', height: '500px'}} className='card'>
       <center>
-        <img src={datos} width={90}/>
+        <img src={datos} width={200} height={200} style={{marginTop: '20px'}}/>
         <ul/>
       <p><strong className="font-weight-bold">Nombre:</strong> {adminData.user}</p>
       <p><strong className="font-weight-bold">Password:</strong> {adminData.password}</p>

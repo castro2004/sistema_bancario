@@ -4,6 +4,7 @@ const User = require('../model/userModel')
 const Transfers = require('../model/transferenciasModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const adminModel = require('../model/adminModel');
 
 //-----------------------------------------------------create User------------------------------------------------
 
@@ -90,28 +91,27 @@ const createUser = async(req, res) => {
 // ? FUNCION PARA ACTUALIZAR EL USUARIO */
 
 const updateUser = async(req, res) => {
+
+  const {token, ...userData} = req.body;
+
     try{
         
-        const id = req.params.id;
-        const userEdit = {...req.body};
-        
-        userEdit.password = userEdit.password
-        ? bcrypt.hashSync(userEdit.password, bcrypt.genSaltSync())
-        : userEdit.password;
-
-        const userComplete = await User.findByIdAndUpdate(id, userEdit, {new: true});
-
-        if(!userComplete){
-            res.status(401).send({
-                msg: "El usuario que desea actualizar, no existe"
-            });
-        }else{
-            // res.status(410).send({
-                return res.status(200).send({
-                    message: 'Perfil actualizado correctamente', userComplete,
-                });
+        if(!token){
+          return res.status(401).json({msg: 'Acceso no autorizado'});
         }
-    
+
+        const user = await User.findOneAndUpdate({token}, userData, {new: true});
+        
+        if(!user){
+          return res.status(404).json({
+            msg: 'Usuario no encontrado de forma exitosa',
+          });
+        }else {
+          return res.status(202).json({
+            msg: 'Usuario actualizado exitosamente',
+          })
+        }
+
     }catch(err){
 
         console.log(err);
@@ -131,29 +131,31 @@ const updateUser = async(req, res) => {
 
 const deleteUser = async(req, res) =>{
 
+  const {token} = req.body;
+
     try{
         
-        const user = req.params;
-        const id= req.params.id;
-        const result = await User.findByIdAndDelete(id);
-        
-        if(!user){
-            res.status(410).send({
-                msg: "El usuario no existe, verificar si los datos son correctos"
-            });
-        }else{
-            res.status(201).send({
-                msg: "Se a eliminado el ususario",
-                user: result
-            });
-        }
+      if(!token){
+        return res.status(401).json({msg: 'Acceso no autorizado'});
+      }  
+
+      const user = await User.findOneAndDelete({token})
+
+      if(!user){
+        return res.status(404).jsons({msg: 'Usuario no encontrador'})
+      }else{
+        return res.status(200).json({
+          msg: 'Usuario eliminado de forma exitosa'
+        })
+      }
+
     }catch(err){
 
         console.log(err);
         res.status(510).send({
             ok: false,
             msg: 'Error al actualizar el usuario',
-            error: err
+            error: eliminar
         });
 
     }

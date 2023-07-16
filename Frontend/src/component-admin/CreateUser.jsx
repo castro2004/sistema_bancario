@@ -274,7 +274,7 @@ const CreateUser = () => {
               <ul/>
               <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
                 <button
-                onClick={()=>mostrarAlerta()}
+                onClick={mostrarAlerta}
                   type="submit"
                   style={{
                     backgroundColor: '#c0a57d',

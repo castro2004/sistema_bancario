@@ -79,7 +79,7 @@ const TransactionHistory = () => {
                   </a>
                   <i className='bx bxs-chevron-down arrow'></i>
                 </div>
-                <Link to="/viewData-admin">
+                <Link to="/viewUserData-user">
                   <img src={viewdata_img} width={70} />
                 </Link>
               </li>
@@ -120,20 +120,20 @@ const TransactionHistory = () => {
                 </Link>
               </li>
               <li>
-                <a href="/menu-admin">
+                <a href="/menu-user">
                   <i className='bx bx-pie-chart-alt-2'></i>
                   <span className="link_name">Regresar al menu</span>
                 </a>
-                <Link to="/menu-admin">
+                <Link to="/menu-user">
                   <img src={menu} width={70}/>
                 </Link>
               </li>
               <li>
-                <a href="/login-admin">
+                <a href="/login-user">
                   <i className='bx bx-pie-chart-alt-2'></i>
                   <span className="link_name">Cerrar Sesion</span>
                 </a>
-                <Link to="/login-admin">
+                <Link to="/login-user">
                   <img src={CS} width={70}/>
                 </Link>
               </li>
@@ -142,13 +142,13 @@ const TransactionHistory = () => {
         </div>
       </div>
       <center>
-        <div className="container" style={{ backgroundColor: '#1c5484', marginTop: '50px' }}>
+        <div className="container">
           <div className="decorative-title" style={{ marginTop: '-300px' }}>
             <div className="decorative-bar left vertical thick" ></div>
             <div className="decorative-bar left horizontal thick" style={{ marginTop: '-300px' }}></div>
             <div className="decorative-bar left horizontal thin"></div>
 
-            <span> <img src={viewdata_img} width={60} />HISTORIAL DE TRANSACCIONES</span>
+            <span> <img src={viewdata_img} width={60} />Historial de Transacciones</span>
 
             <div className="decorative-bar right vertical thick" style={{ marginTop: '-300px' }}></div>
             <div className="decorative-bar right horizontal thick"></div>
@@ -156,19 +156,22 @@ const TransactionHistory = () => {
           </div>
         </div>
       </center>
-    <div style={{ backgroundColor: '#1c5484', marginTop: '390px' }}>
-      <ul className="transaction-list" style={{ backgroundColor: '#1c5484', marginTop: '50px' }}>
-        {transactionHistory.map((transaction, index) => (
-          <li className='card' style={{width: '300px'}} key={index}>
-            <p><strong className="font-weight-bold">Cuenta Origen: </strong>{transaction.cuentaOrigen}</p>
-            <p><strong className="font-weight-bold">Cuenta Destino: </strong>{transaction.cuentaDestino}</p>
-            <p><strong className="font-weight-bold">Monto: </strong>{transaction.monto}</p>
-            <p><strong className="font-weight-bold">Descripción: </strong>{transaction.descripcion}</p>
-            <p><strong className="font-weight-bold">Fecha: </strong>{transaction.date}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
+      <center>
+      <div style={{ backgroundColor: '#1c5484', marginTop: '150px' }}>
+        <ul className="transaction-list" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+          {transactionHistory.map((transaction, index) => (
+            <li className='card' style={{ width: '250px', margin: '10px' }} key={index}>
+              <center><img src={viewdata_img} width={50} style={{marginTop: '20px'}}/></center>
+              <p><strong className="font-weight-bold">Cuenta Origen: </strong>{transaction.cuentaOrigen}</p>
+              <p><strong className="font-weight-bold">Cuenta Destino: </strong>{transaction.cuentaDestino}</p>
+              <p><strong className="font-weight-bold">Monto: </strong>{transaction.monto}</p>
+              <p><strong className="font-weight-bold">Descripción: </strong>{transaction.descripcion}</p>
+              <p><strong className="font-weight-bold">Fecha: </strong>{transaction.date}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+      </center>
     </div>
 
     

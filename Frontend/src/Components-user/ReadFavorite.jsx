@@ -113,11 +113,11 @@ const ViewFavorite = () => {
                 </Link>
               </li>
               <li>
-                <a href="/menu-admin">
+                <a href="/menu-user">
                   <i className='bx bx-pie-chart-alt-2'></i>
                   <span className="link_name">Regresar al menu</span>
                 </a>
-                <Link to="/menu-admin">
+                <Link to="/menu-user">
                   <img src={menu} width={70}/>
                 </Link>
               </li>
@@ -126,7 +126,7 @@ const ViewFavorite = () => {
                   <i className='bx bx-pie-chart-alt-2'></i>
                   <span className="link_name">Cerrar Sesion</span>
                 </a>
-                <Link to="/login-admin">
+                <Link to="/login-user">
                   <img src={CS} width={70}/>
                 </Link>
               </li>

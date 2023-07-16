@@ -143,8 +143,11 @@ const OrderAcount = () => {
           padding: '10px',
           border: 'none',
           borderRadius: '5px',
-          width: '175px',
-          marginRight: '10px'
+          width: '150px',
+          height: '80px' ,
+          marginRight: '10px',
+          marginTop: '400px',
+          fontSize: '25px'
         }}
         onClick={() => fetchAccounts('asc')}
       >
@@ -160,6 +163,9 @@ const OrderAcount = () => {
           border: 'none',
           borderRadius: '5px',
           width: '200px',
+          height: '80px',
+          marginTop: '400px',
+          fontSize: '25px'
         }}
         onClick={() => fetchAccounts('desc')}
       >
@@ -169,12 +175,12 @@ const OrderAcount = () => {
   </div>
 </center>
 
-      <div>
-        <div className="row mt-4">
+      <div  style={{marginTop: '80px'}}>
+        <div className="row mt-4" style={{marginTop: '-200px'}}>
           {accounts.map((account) => (
-            <div className="col-md-4 mb-4" key={account._id}>
+            <div className="col-md-4 mb-4" style={{marginTop: '-10px'}} key={account._id}>
               <div className="card">
-                <div className="card-body">
+                <div className="card-body" >
                 <center>
                 <img src={user} width={100} />
                 <ul/>

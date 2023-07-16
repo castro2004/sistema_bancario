@@ -11,10 +11,10 @@
   .decorative-title span {
     display: block;
     padding: 2rem 0.5rem 1rem;
-    background-color: #363232;
-    color: #f2f2f2;
+    background-color: #ff1818;
+    color: #df0b0b;
     text-align: center;
-    font: 2rem sans-serif;
+    font: 1rem sans-serif;
     letter-spacing: 0.3rem;
   }
   @media (min-width: 576px) {
@@ -27,7 +27,7 @@
   }
   .decorative-bar {
     position: absolute;
-    background-color: #3a4040;
+    background-color: #632323;
   }
   .left.thick {
     left: -50px;
@@ -40,7 +40,7 @@
     top: -20px;
   }
   .left.horizontal.thin {
-    top: -16px;
+    top: -20px;
   }
   .right.thick {
     right: -70px;
@@ -65,7 +65,7 @@
   }
   .horizontal.thin {
     width: 90%;
-    height: 2px;
+    height: 10px;
   }
   
   @media screen and (min-width: 768px) {

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import EP from '../Components-user/img-User/EP.jpg'
+import '../Components-user/css-User/cssLogin.css';
 
 import iconUser from '../Components-user/img-user/login.jpg';
 import '../Components-user/css-User/cssLogin.css';
@@ -50,7 +52,8 @@ const LoginUser = () => {
 
   return (
     <div className='body'>
-      <div className="container">
+      <img src={EP} style={{marginLeft: '-640px', width: '1090px', height: '1240px', marginTop: '-50px'}}/>
+      <div className="container" style={{marginLeft: '500px'}}>
         <div className="backbox">
           <div className="loginMsg">
             <div className="textcontent">
