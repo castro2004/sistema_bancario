@@ -74,3 +74,12 @@
       align-items: center;
     }
   }
+
+  @media (min-width: 576px) {
+    .decorative-title {
+      width: 110%;
+    }
+    .decorative-title span {
+      font-size: 3rem;
+    }
+  }

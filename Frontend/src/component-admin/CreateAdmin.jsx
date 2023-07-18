@@ -76,7 +76,7 @@ const CreateAdmin = () => {
   const mostrarAlerta = () => {
     Swal({
       title: 'Excelente',
-      text: 'Transferencia creada exitosamente',
+      text: 'Administrador creado exitosamente',
       icon: 'success',
       button: 'Aceptar',
     });

@@ -49,6 +49,7 @@ const TransferForm = () => {
       });
 
       setMensaje(response.data.msg);
+      console.log(response.data.msg)
       // Aquí puedes actualizar el estado o realizar otras acciones después de la transferencia exitosa
     } catch (error) {
       setMensaje(error.response.data.msg);
@@ -169,7 +170,7 @@ const TransferForm = () => {
         <div className="container">
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label style={{color: 'white'}} htmlFor="cuentaOrigen" className="form-label">
+          <label style={{color: 'black'}} htmlFor="cuentaOrigen" className="form-label">
             Cuenta de Origen:
           </label>
           <input
@@ -181,7 +182,7 @@ const TransferForm = () => {
           />
         </div>
         <div className="mb-3">
-          <label style={{color: 'white'}} htmlFor="cuentaDestino" className="form-label">
+          <label style={{color: 'black'}} htmlFor="cuentaDestino" className="form-label">
             Cuenta de Destino:
           </label>
           <input
@@ -193,7 +194,7 @@ const TransferForm = () => {
           />
         </div>
         <div className="mb-3">
-          <label style={{color: 'white'}} htmlFor="monto" className="form-label">
+          <label style={{color: 'black'}} htmlFor="monto" className="form-label">
             Monto:
           </label>
           <input
@@ -205,7 +206,7 @@ const TransferForm = () => {
           />
         </div>
         <div className="mb-3">
-          <label style={{color: 'white'}} htmlFor="descripcion" className="form-label">
+          <label style={{color: 'black'}} htmlFor="descripcion" className="form-label">
             Descripción:
           </label>
           <input
@@ -228,5 +229,6 @@ const TransferForm = () => {
   
 
 export default TransferForm;
+
 
 

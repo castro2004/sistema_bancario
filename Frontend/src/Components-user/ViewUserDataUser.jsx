@@ -18,6 +18,38 @@ import img4 from '../Components-user/img-user/20944139.jpg';
 const ViewUserDataUser = () => {
   const [userData, setUserData] = useState(null);
   const [error, setError] = useState(null);
+  const [editing, setEditing] = useState(false);
+  const [updating, setUpdating] = useState(false);
+  const [deleted, setDeleted] = useState(false);
+
+  const deleteUser = async () => {
+    try {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        throw new Error('Acceso no autorizado');
+      }
+
+      const response = await fetch('http://localhost:3007/api/delete-user', {
+        method: 'DELETE',
+        headers: {
+          'Content-type': 'application/json',
+          token: token,
+        },
+        body: JSON.stringify({ token }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al eliminar el usuario');
+      }
+
+      const data = await response.json();
+      setAdminData(null);
+      setDeleted(true);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -51,6 +83,52 @@ const ViewUserDataUser = () => {
     fetchUserData();
   }, []);
 
+  const handleInputChange = (e) => {
+    setUserData({
+      ...userData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleUpdateUser = async () => {
+    try {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        throw new Error('Acceso no autorizado');
+      }
+
+      setUpdating(true);
+
+      const response = await fetch('http://localhost:3007/api/updateUser', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'token': token
+        },
+        body: JSON.stringify({
+          token,
+          ...userData
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al actualizar el usuario');
+      }
+
+      const data = await response.json();
+      console.log(data);
+
+      // Actualizar el estado de userData si es necesario
+
+      setUpdating(false);
+      setEditing(false); // Cambiar a la vista de solo lectura después de actualizar
+    } catch (error) {
+      setError(error.message);
+      setUpdating(false);
+    }
+  };
+
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -60,96 +138,96 @@ const ViewUserDataUser = () => {
   }
 
   return (
-      <div>
-        <div className="sidebar">
-          <div className="logo-details">
-            <i className='bx bxs-pyramid'></i>
-          </div>
-          <img src={banco} width={250} />
-          <ul className='nav-links'>
-            <li>
-              <a>
-                <i className='bx bx-grid-alt'></i>
-                <span className="link_name">ADMINSTRADOR</span>
-              </a>
-              <ul className='sub-menu blank'>
-                <li><a className="link_name" href="/view-favorite">Category</a></li>
-              </ul>
-            </li>
+    <div>
+      <div className="sidebar">
+        <div className="logo-details">
+          <i className='bx bxs-pyramid'></i>
+        </div>
+        <img src={banco} width={250} />
+        <ul className='nav-links'>
+          <li>
+            <a>
+              <i className='bx bx-grid-alt'></i>
+              <span className="link_name">ADMINSTRADOR</span>
+            </a>
+            <ul className='sub-menu blank'>
+              <li><a className="link_name" href="/view-favorite">Category</a></li>
+            </ul>
+          </li>
+          <ul/>
+          <li>
+            <ul/>
             <ul/>
             <li>
-              <ul/>
-              <ul/>
-              <li>
-                <div className="icon-link">
-                  <a href="/viewUserData-user">
-                    <i className='bx bx-book-alt'></i>
-                    <span className="link_name">Ver mis datos</span>
-                  </a>
-                  <i className='bx bxs-chevron-down arrow'></i>
-                </div>
-                <Link to="/viewUserData-user">
-                  <img src={viewdata_img} width={70} />
-                </Link>
-              </li>
-              <li>
-                <a href="/viewBalance-user">
-                  <i className='bx bx-pie-chart-alt-2'></i>
-                  <span className="link_name">Saldo Actual</span>
+              <div className="icon-link">
+                <a href="/viewUserData-user">
+                  <i className='bx bx-book-alt'></i>
+                  <span className="link_name">Ver mis datos</span>
                 </a>
-                <Link to="/viewBalance-user">
-                  <img src={viewSaldo_img} width={70} />
-                </Link>
-              </li>
-              <li>
-                <a href="/historyTransaction-user">
-                  <i className='bx bx-pie-chart-alt-2'></i>
-                  <span className="link_name">Historial de transacciones</span>
-                </a>
-                <Link to="/historyTransaction-user">
-                  <img src={historia_img} width={70} />
-                </Link>
-              </li>
-              <li>
-                <a href="/view-favorite">
-                  <i className='bx bx-pie-chart-alt-2'></i>
-                  <span className="link_name">Favoritos</span>
-                </a>
-                <Link to="/view-favorite">
-                  <img src={favoritos_img} width={70}/>
-                </Link>
-              </li>
-              <li>
-                <a href="/create-transfencias">
-                  <i className='bx bx-pie-chart-alt-2'></i>
-                  <span className="link_name">Crear transfencia</span>
-                </a>
-                <Link to="/create-transfencias">
-                  <img src={transaccion_img} width={70}/>
-                </Link>
-              </li>
-              <li>
-                <a href="/menu-user">
-                  <i className='bx bx-pie-chart-alt-2'></i>
-                  <span className="link_name">Regresar al menu</span>
-                </a>
-                <Link to="/menu-user">
-                  <img src={menu} width={70}/>
-                </Link>
-              </li>
-              <li>
-                <a href="/login-user">
-                  <i className='bx bx-pie-chart-alt-2'></i>
-                  <span className="link_name">Cerrar Sesion</span>
-                </a>
-                <Link to="/login-user">
-                  <img src={CS} width={70}/>
-                </Link>
-              </li>
+                <i className='bx bxs-chevron-down arrow'></i>
+              </div>
+              <Link to="/viewUserData-user">
+                <img src={viewdata_img} width={70} />
+              </Link>
             </li>
-          </ul>
-        </div>
-        <center>
+            <li>
+              <a href="/viewBalance-user">
+                <i className='bx bx-pie-chart-alt-2'></i>
+                <span className="link_name">Saldo Actual</span>
+              </a>
+              <Link to="/viewBalance-user">
+                <img src={viewSaldo_img} width={70} />
+              </Link>
+            </li>
+            <li>
+              <a href="/historyTransaction-user">
+                <i className='bx bx-pie-chart-alt-2'></i>
+                <span className="link_name">Historial de transacciones</span>
+              </a>
+              <Link to="/historyTransaction-user">
+                <img src={historia_img} width={70} />
+              </Link>
+            </li>
+            <li>
+              <a href="/view-favorite">
+                <i className='bx bx-pie-chart-alt-2'></i>
+                <span className="link_name">Favoritos</span>
+              </a>
+              <Link to="/view-favorite">
+                <img src={favoritos_img} width={70}/>
+              </Link>
+            </li>
+            <li>
+              <a href="/create-transfencias">
+                <i className='bx bx-pie-chart-alt-2'></i>
+                <span className="link_name">Crear transfencia</span>
+              </a>
+              <Link to="/create-transfencias">
+                <img src={transaccion_img} width={70}/>
+              </Link>
+            </li>
+            <li>
+              <a href="/menu-user">
+                <i className='bx bx-pie-chart-alt-2'></i>
+                <span className="link_name">Regresar al menu</span>
+              </a>
+              <Link to="/menu-user">
+                <img src={menu} width={70}/>
+              </Link>
+            </li>
+            <li>
+              <a href="/login-user">
+                <i className='bx bx-pie-chart-alt-2'></i>
+                <span className="link_name">Cerrar Sesion</span>
+              </a>
+              <Link to="/login-user">
+                <img src={CS} width={70}/>
+              </Link>
+            </li>
+          </li>
+        </ul>
+      </div>
+      <center>
         <div className="container">
           <div className="decorative-title" style={{ marginTop: '-300px' }}>
             <div className="decorative-bar left vertical thick" ></div>
@@ -164,29 +242,143 @@ const ViewUserDataUser = () => {
           </div>
         </div>
       </center>
-        <div  style={{marginLeft: 'auto', marginRight: '200px', width: '750px', marginTop: '200px'}} className='card'>
-      <center>
-      <img src={datos} width={90}/>
-        <ul/>
-      <p style={{fontSize: '18px'}}><strong>Nombre: </strong> {userData.name}</p>
-      <p style={{fontSize: '18px'}}><strong>Nombre de usuario: </strong> {userData.username}</p>
-      <p style={{fontSize: '18px'}}><strong>Rol: </strong> {userData.rol}</p>
-      <p style={{fontSize: '18px'}}><strong>Número de cuenta: </strong> {userData.accountNumber}</p>
-      <p style={{fontSize: '18px'}}><strong>Tipo de cuenta: </strong> {userData.typeAccount}</p>
-      <p style={{fontSize: '18px'}}><strong>DPI: </strong> {userData.dpi}</p>
-      <p style={{fontSize: '18px'}}><strong>Dirección: </strong> {userData.address}</p>
-      <p style={{fontSize: '18px'}}><strong>Teléfono celular: </strong> {userData.cellPhone}</p>
-      <p style={{fontSize: '18px'}}><strong>Email: </strong> {userData.email}</p>
-      <p style={{fontSize: '18px'}}><strong>Nombre del trabajo: </strong> {userData.nameWork}</p>
-      <p style={{fontSize: '18px'}}><strong>Ingreso mensual: </strong> {userData.incomeMonth}</p>
-      <p style={{fontSize: '18px'}}><strong>Saldo: </strong> {userData.balance}</p>
-      </center>
-    </div>
+      <div style={{ marginLeft: 'auto', marginRight: '200px', width: '750px', marginTop: '200px' }} className='card'>
+        {!editing ? (
+          <center>
+            <img src={datos} width={90}/>
+            <ul/>
+            <p style={{fontSize: '18px'}}><strong>Nombre: </strong> {userData.name}</p>
+            <p style={{fontSize: '18px'}}><strong>Nombre de usuario: </strong> {userData.username}</p>
+            <p style={{fontSize: '18px'}}><strong>Rol: </strong> {userData.rol}</p>
+            <p style={{fontSize: '18px'}}><strong>Número de cuenta: </strong> {userData.accountNumber}</p>
+            <p style={{fontSize: '18px'}}><strong>Tipo de cuenta: </strong> {userData.typeAccount}</p>
+            <p style={{fontSize: '18px'}}><strong>DPI: </strong> {userData.dpi}</p>
+            <p style={{fontSize: '18px'}}><strong>Dirección: </strong> {userData.address}</p>
+            <p style={{fontSize: '18px'}}><strong>Teléfono celular: </strong> {userData.cellPhone}</p>
+            <p style={{fontSize: '18px'}}><strong>Email: </strong> {userData.email}</p>
+            <p style={{fontSize: '18px'}}><strong>Nombre del trabajo: </strong> {userData.nameWork}</p>
+            <p style={{fontSize: '18px'}}><strong>Ingreso mensual: </strong> {userData.incomeMonth}</p>
+            <p style={{fontSize: '18px'}}><strong>Saldo: </strong> {userData.balance}</p>
+            <button onClick={() => setEditing(true)}>Actualizar Datos</button>
+          </center>
+        ) : (
+          <center>
+            <img src={datos} width={90}/>
+            <ul/>
+            <p style={{fontSize: '18px'}}><strong>Nombre: </strong>
+              <input
+                type="text"
+                name="name"
+                value={userData.name}
+                onChange={handleInputChange}
+              />
+            </p>
+            <p style={{fontSize: '18px'}}><strong>Nombre de usuario: </strong>
+              <input
+                type="text"
+                name="username"
+                value={userData.username}
+                onChange={handleInputChange}
+              />
+            </p>
+            <p style={{fontSize: '18px'}}><strong>Rol: </strong>
+              <input
+                type="text"
+                name="rol"
+                value={userData.rol}
+                onChange={handleInputChange}
+              />
+            </p>
+            <p style={{fontSize: '18px'}}><strong>Número de cuenta: </strong>
+              <input
+                type="text"
+                name="accountNumber"
+                value={userData.accountNumber}
+                onChange={handleInputChange}
+              />
+            </p>
+            <p style={{fontSize: '18px'}}><strong>Tipo de cuenta: </strong>
+              <input
+                type="text"
+                name="typeAccount"
+                value={userData.typeAccount}
+                onChange={handleInputChange}
+              />
+            </p>
+            <p style={{fontSize: '18px'}}><strong>DPI: </strong>
+              <input
+                type="text"
+                name="dpi"
+                value={userData.dpi}
+                onChange={handleInputChange}
+              />
+            </p>
+            <p style={{fontSize: '18px'}}><strong>Dirección: </strong>
+              <input
+                type="text"
+                name="address"
+                value={userData.address}
+                onChange={handleInputChange}
+              />
+            </p>
+            <p style={{fontSize: '18px'}}><strong>Teléfono celular: </strong>
+              <input
+                type="text"
+                name="cellPhone"
+                value={userData.cellPhone}
+                onChange={handleInputChange}
+              />
+            </p>
+            <p style={{fontSize: '18px'}}><strong>Email: </strong>
+              <input
+                type="text"
+                name="email"
+                value={userData.email}
+                onChange={handleInputChange}
+              />
+            </p>
+            <p style={{fontSize: '18px'}}><strong>Nombre del trabajo: </strong>
+              <input
+                type="text"
+                name="nameWork"
+                value={userData.nameWork}
+                onChange={handleInputChange}
+              />
+            </p>
+            <p style={{fontSize: '18px'}}><strong>Ingreso mensual: </strong>
+              <input
+                type="text"
+                name="incomeMonth"
+                value={userData.incomeMonth}
+                onChange={handleInputChange}
+              />
+            </p>
+            <p style={{fontSize: '18px'}}><strong>Saldo: </strong>
+              <input
+                type="text"
+                name="balance"
+                value={userData.balance}
+                onChange={handleInputChange}
+              />
+            </p>
+            <button onClick={handleUpdateUser} disabled={updating}>
+              {updating ? 'Actualizando...' : 'Actualizar Usuario'}
+            </button>
+            <ul/>
+            
+          </center>
+        )}
+        <button onClick={deleteUser}>DELETE USER</button>
+      </div>
     </div>
   );
 };
 
-export default ViewUserDataUser
-  ;
+export default ViewUserDataUser;
+
+
+
+
+
 
 
