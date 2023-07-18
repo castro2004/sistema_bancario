@@ -75,7 +75,7 @@ const LoginAdmin = () => {
               <input type="password" name="password" placeholder="CONTRASEÑA" value={password} onChange={handlePasswordChange}/>
             </div>
             <button type='button' onClick={handleLogin}>INGRESAR</button>
-            <Link to="/login">
+            <Link to="/">
             <button type='button' style={{marginRight: '110px'}} >REGRESAR</button>
             </Link>
           </div>
